@@ -40,6 +40,7 @@ class LGBMBaseline:
             eval_set = [(X_val, y_val)]
             if self.early_stopping_rounds and self.early_stopping_rounds > 0:
                 callbacks.append(lgb.early_stopping(stopping_rounds=self.early_stopping_rounds, verbose=False))
+            callbacks.append(lgb.log_evaluation(period=100))
 
         # flow_id là cột đầu tiên (index 0)
         self.model.fit(

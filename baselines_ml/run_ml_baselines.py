@@ -215,7 +215,8 @@ def run_ml_experiments(models=None, datasets=None, runs=5, quick_check=False, sk
                 except Exception as e:
                     print(f"    (Cảnh báo lưu checkpoint model: {e})")
 
-                print(f"      -> Test MSE={test_metrics['mse']*1000.0:.3f}e-3 | MAE={test_metrics['mae']*1000.0:.3f}e-3 | Inf Time={test_metrics['inference_time_ms']:.2f} ms")
+                print(f"[DONE] {m_name} {ds.upper()} run_{run_id} (seed {seed}) | Test MSE={test_metrics['mse']*1000.0:.3f}e-3 "
+                      f"MAE={test_metrics['mae']*1000.0:.3f}e-3 | Inf Time={test_metrics['inference_time_ms']:.2f} ms | fit {fit_time/60:.1f} phút", flush=True)
 
             # Lưu kết quả tổng hợp của mô hình trên dataset
             # Gộp với các run đã có trong results CSV (chạy theo đợt: run 5-9 rồi 0-4)

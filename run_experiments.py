@@ -294,8 +294,10 @@ def train_and_eval_model(model, train_loader, val_loader, test_loader, scaler=No
 
     model.to(device)
     print(f"Device: {device_name}", flush=True)
+    t_run0 = time.time()
 
     for epoch in range(epochs):
+        t_ep0 = time.time()
         model.train()
         train_losses = []
         for batch in train_loader:
@@ -351,9 +353,9 @@ def train_and_eval_model(model, train_loader, val_loader, test_loader, scaler=No
             saved_str = " "
 
         # in ra màn hình history kèm thông tin run
-        run_info = f" | Run {run_id + 1}/{total_runs} (Seed: {seed})" if total_runs > 1 else f" (Seed: {seed})"
+        run_info = f" | run_{run_id} (Seed: {seed})"
         tag = f"[{model_name}/{dataset_name.upper()}{run_info}]" if dataset_name else f"[{model_name}{run_info}]"
-        print(f"  {tag} Epoch {epoch+1:03d}/{epochs} | LR: {current_lr:.6f} | Train Loss: {mean_tr_loss:.6f} | Val Loss: {mean_val_loss:.6f} (Best: {best_val_loss:.6f}){saved_str} | Patience: {patience_counter}/{patience}", flush=True)
+        print(f"  {tag} Epoch {epoch+1:03d}/{epochs} | LR: {current_lr:.6f} | Train Loss: {mean_tr_loss:.6f} | Val Loss: {mean_val_loss:.6f} (Best: {best_val_loss:.6f}){saved_str} | Patience: {patience_counter}/{patience} | {time.time() - t_ep0:.1f}s/epoch", flush=True)
 
         if patience_counter >= patience:
             print(f"  --> Early stopping triggered at epoch {epoch+1}", flush=True)
@@ -453,6 +455,9 @@ def train_and_eval_model(model, train_loader, val_loader, test_loader, scaler=No
     np.save(os.path.join(logdir, 'y_pred_data.npy'), y_hat_np)
     np.save(os.path.join(logdir, 'y_real_data_raw.npy'), y_real_raw)
     np.save(os.path.join(logdir, 'y_pred_data_raw.npy'), y_hat_raw)
+    best_ep = int(pd.DataFrame(history)['val_loss'].idxmin()) + 1 if history else 0
+    print(f"[DONE] {model_name} {dataset_name.upper()} run_{run_id} (seed {seed}) | {len(history)} epoch, best epoch {best_ep} | "
+          f"Test MSE={test_metrics['mse']*1e3:.3f}e-3 MAE={test_metrics['mae']*1e3:.3f}e-3 | {(time.time() - t_run0)/60:.1f} phút", flush=True)
 
     # Dọn dẹp bộ nhớ RAM / VRAM
     model.to('cpu')

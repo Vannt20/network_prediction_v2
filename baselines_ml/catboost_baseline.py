@@ -71,7 +71,7 @@ class CatBoostBaseline:
             df_train, y_train,
             eval_set=eval_set,
             cat_features=cat_features,
-            verbose=False
+            verbose=100 if eval_set is not None else False
         )
         return self
 

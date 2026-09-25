@@ -46,7 +46,7 @@ class XGBoostBaseline:
         self.model.fit(
             X_train, y_train,
             eval_set=eval_set,
-            verbose=False
+            verbose=100 if eval_set is not None else False
         )
         return self
 

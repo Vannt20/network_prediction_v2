@@ -56,6 +56,7 @@ class LGBMResidualBaseline:
             eval_set = [(R_va, np.asarray(y_val) - l1_va)]
             if self.early_stopping_rounds and self.early_stopping_rounds > 0:
                 callbacks.append(lgb.early_stopping(stopping_rounds=self.early_stopping_rounds, verbose=False))
+            callbacks.append(lgb.log_evaluation(period=100))
 
         self.model.fit(
             R_tr, np.asarray(y_train) - l1_tr,
