@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+Agents/
+.reports/
+.draft/
+*.zip
+/.backup
+
+quytrinh/
+catboost_info/
+_archive_v2/
