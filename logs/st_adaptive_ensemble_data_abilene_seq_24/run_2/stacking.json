@@ -1,0 +1,30 @@
+{
+  "branch_names": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "config": {
+    "huber_delta": 0.05,
+    "shrink_lambda": 0.001,
+    "n_folds": 2,
+    "min_gain": 0.01,
+    "iters": 500,
+    "lr": 0.05
+  },
+  "selected": [
+    "huber",
+    "global"
+  ],
+  "cv_scores": {
+    "huber-global": 0.00027666077949106693,
+    "mse-global": 0.0002768270205706358,
+    "huber-perflow": 0.00027666059031616896,
+    "mse-perflow": 0.0002767931146081537
+  },
+  "weights": [
+    0.003535626921802759,
+    0.00953521579504013,
+    0.986929178237915
+  ]
+}
