@@ -10,6 +10,7 @@ if hasattr(sys.stderr, 'reconfigure'):
         sys.stderr.reconfigure(encoding='utf-8')
     except Exception:
         pass
+import glob
 import json
 import argparse
 import numpy as np
@@ -128,35 +129,38 @@ def evaluate_ablation_run(dataset_name, run_id=0):
     return records
 
 
-def run_ablation_experiments(datasets=None, runs=5, run_ids=None):
+def _run_logdir(ds_key, run_id):
+    seq_len = DATASET_CONFIGS[ds_key]['seq_len']
+    return os.path.join(parent_dir, 'logs', f"{MODEL_TAG}_data_{ds_key}_seq_{seq_len}", f"run_{run_id}")
+
+
+def summarize_ablation(datasets=None, run_ids=None):
+    """
+    Gộp kết quả ablation rồi lập bảng tổng hợp, không tính lại.
+    Nguồn: results/ablation_results.csv (các run cũ) + logs/<ensemble>/run_*/ablation.csv
+    (mỗi run một file; bản trong logs được ưu tiên). run_ids=None: mọi run đang có.
+    """
     if datasets is None or 'all' in datasets:
         datasets = ['sdn', 'geant', 'abilene']
-    run_id_list = parse_run_ids(run_ids, runs)
     results_dir = os.path.join(parent_dir, 'results')
     os.makedirs(results_dir, exist_ok=True)
-
-    print("=" * 80)
-    print(" ABLATION STUDY - ST-ADAPTIVE-ENSEMBLE v3")
-    print(f" Datasets: {datasets} | Run IDs: {run_id_list}")
-    print("=" * 80)
-
-    new_records = []
-    for ds in datasets:
-        for r in run_id_list:
-            print(f"  [*] {ds.upper()} run_{r}", flush=True)
-            new_records.extend(evaluate_ablation_run(ds, run_id=r))
-    df_new = pd.DataFrame(new_records)
-
     out_csv = os.path.join(results_dir, 'ablation_results.csv')
-    df_all = df_new
+    key = ['dataset', 'run', 'config']
+
+    parts = []
     if os.path.exists(out_csv):
-        old = pd.read_csv(out_csv)
-        key = ['dataset', 'run', 'config']
-        if set(key).issubset(old.columns):
-            merged = old.merge(df_new[key], on=key, how='left', indicator=True)
-            df_all = pd.concat([old[(merged['_merge'] == 'left_only').values], df_new], ignore_index=True)
+        parts.append(pd.read_csv(out_csv))
+    for ds_key in DATASET_CONFIGS:
+        base = os.path.dirname(_run_logdir(ds_key, 0))
+        for f in sorted(glob.glob(os.path.join(base, 'run_*', 'ablation.csv'))):
+            parts.append(pd.read_csv(f))
+    if not parts:
+        raise FileNotFoundError("Chưa có kết quả ablation nào")
+    df_all = pd.concat(parts, ignore_index=True).drop_duplicates(subset=key, keep='last')
+    df_all = df_all.sort_values(key).reset_index(drop=True)
     df_all.to_csv(out_csv, index=False)
 
+    run_id_list = sorted(df_all['run'].astype(int).unique()) if run_ids is None else parse_run_ids(run_ids)
     cur = df_all[df_all['run'].isin(run_id_list) & df_all['dataset'].isin([d.upper() for d in datasets])]
     summary = cur.groupby(['dataset', 'config']).agg(
         runs=('run', 'nunique'),
@@ -170,10 +174,30 @@ def run_ablation_experiments(datasets=None, runs=5, run_ids=None):
     summary_csv = os.path.join(results_dir, 'ablation_summary.csv')
     summary.to_csv(summary_csv, index=False, encoding='utf-8-sig')
 
-    print("\nBẢNG TỔNG HỢP ABLATION (MSE, MAE x 10^-3):")
+    print(f"\nBẢNG TỔNG HỢP ABLATION (MSE, MAE x 10^-3) | Run IDs: {run_id_list}")
     print(summary.drop(columns=['description']).to_string(index=False))
     print(f"\n-> {out_csv}\n-> {summary_csv}")
     return summary
+
+
+def run_ablation_experiments(datasets=None, runs=5, run_ids=None):
+    if datasets is None or 'all' in datasets:
+        datasets = ['sdn', 'geant', 'abilene']
+    run_id_list = parse_run_ids(run_ids, runs)
+
+    print("=" * 80)
+    print(" ABLATION STUDY - ST-ADAPTIVE-ENSEMBLE v3")
+    print(f" Datasets: {datasets} | Run IDs: {run_id_list}")
+    print("=" * 80)
+
+    for ds in datasets:
+        for r in run_id_list:
+            print(f"  [*] {ds.upper()} run_{r}", flush=True)
+            logdir = _run_logdir(ds.lower(), r)
+            os.makedirs(logdir, exist_ok=True)
+            pd.DataFrame(evaluate_ablation_run(ds, run_id=r)).to_csv(os.path.join(logdir, 'ablation.csv'), index=False)
+
+    return summarize_ablation(datasets=datasets, run_ids=run_id_list)
 
 
 if __name__ == '__main__':
@@ -181,6 +205,11 @@ if __name__ == '__main__':
     parser.add_argument('--datasets', type=str, default='all')
     parser.add_argument('--runs', type=int, default=5)
     parser.add_argument('--run_ids', type=str, default=None, help="Ví dụ '5-9' (ghi đè --runs)")
+    parser.add_argument('--summary_only', action='store_true',
+                        help="Chỉ gộp kết quả đã có (results/ablation_results.csv + logs/*/ablation.csv) và lập bảng")
     args = parser.parse_args()
     d_list = [d.strip() for d in args.datasets.split(',')] if args.datasets != 'all' else ['sdn', 'geant', 'abilene']
-    run_ablation_experiments(datasets=d_list, runs=args.runs, run_ids=args.run_ids)
+    if args.summary_only:
+        summarize_ablation(datasets=d_list, run_ids=args.run_ids)
+    else:
+        run_ablation_experiments(datasets=d_list, runs=args.runs, run_ids=args.run_ids)
