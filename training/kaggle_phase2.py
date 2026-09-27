@@ -3,7 +3,7 @@
 
 Mỗi account huấn luyện một nhóm dataset và push lên nhánh riêng (run_a / run_b):
   - GPU: mỗi run ST-WaveFormer là một tiến trình, 1 run / GPU; GPU rảnh nhận run kế tiếp.
-  - CPU, làn ML: 4 mô hình học máy (champion + lightgbm_res trước), chạy nice 19.
+  - CPU, làn ML: 4 mô hình học máy (champion + lightgbm_res trước), độ ưu tiên thường như đợt 1.
   - CPU, làn Ensemble: khi một (dataset, run) đủ 3 nhánh -> cache, stacking, ablation của run đó.
 Account xong trước thoát ngay (không tốn quota). Account xong sau gộp nhánh của account kia,
 dựng lại bảng kết quả, lập báo cáo cho toàn bộ run và push lên nhánh kết quả chung.
@@ -177,14 +177,14 @@ class Phase2:
         return out
 
     # ---------- khởi chạy tiến trình ----------
-    def _spawn(self, key, cmd, log_name, gpu=None, nice=None):
+    def _spawn(self, key, cmd, log_name, gpu=None, one_thread=False):
+        # Không dùng nice cho ML/Ensemble: LightGBM (OpenMP) và torch đồng bộ luồng ở mỗi bước, luồng nào bị
+        # tiến trình DL chiếm lõi sẽ kéo cả vòng lặp chậm hàng chục lần (đo được ở đợt 2: 5 phút -> 2-3 giờ / run).
         env = os.environ.copy()
         env.update(PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1",
                    CUDA_VISIBLE_DEVICES="" if gpu is None else str(gpu))
-        if nice is None:                       # tiến trình DL: 1 luồng CPU, nhường CPU cho ML/Ensemble
+        if one_thread:                         # tiến trình DL: 1 luồng CPU, phần tính chính nằm trên GPU
             env.update(OMP_NUM_THREADS="1", MKL_NUM_THREADS="1")
-        else:
-            cmd = ["nice", "-n", str(nice)] + cmd
         log = os.path.join(self.log_dir, log_name)
         with open(log, "a") as f:
             p = subprocess.Popen(cmd, cwd=self.wd, env=env, stdout=f, stderr=subprocess.STDOUT)
@@ -193,16 +193,16 @@ class Phase2:
     def _launch_dl(self, ds, r, gpu):
         cmd = [self.py, "run_experiments.py", "--model", "STWaveFormer", "--dataset", ds, "--run_ids", str(r),
                "--epochs", str(self.epochs), "--patience", str(self.patience), "--skip_existing"]
-        return self._spawn((ds, r), cmd, f"dl_{ds}_run{r}.log", gpu=gpu)
+        return self._spawn((ds, r), cmd, f"dl_{ds}_run{r}.log", gpu=gpu, one_thread=True)
 
     def _launch_ml(self, ds, models):
         cmd = [self.py, "baselines_ml/run_ml_baselines.py", "--models", ",".join(models), "--datasets", ds,
                "--run_ids", self.run_ids, "--skip_existing"]
-        return self._spawn((ds, tuple(models)), cmd, f"ml_{ds}_{'_'.join(models)}.log", nice=19)
+        return self._spawn((ds, tuple(models)), cmd, f"ml_{ds}_{'_'.join(models)}.log")
 
     def _launch_ens(self, ds, r):
         cmd = [self.py, "-c", ENS_DRIVER, ds, str(r)]
-        return self._spawn((ds, r), cmd, f"ens_{ds}_run{r}.log", gpu=self.gpus[0] if self.gpus else None, nice=10)
+        return self._spawn((ds, r), cmd, f"ens_{ds}_run{r}.log", gpu=self.gpus[0] if self.gpus else None)
 
     # ---------- vòng điều phối ----------
     def train(self):
