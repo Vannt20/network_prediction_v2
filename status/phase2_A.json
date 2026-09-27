@@ -1,0 +1,9 @@
+{
+  "account": "A",
+  "datasets": [
+    "geant"
+  ],
+  "run_ids": "5-9",
+  "finished_utc": "2026-09-27 10:52:10",
+  "session_hours": 10.43
+}
