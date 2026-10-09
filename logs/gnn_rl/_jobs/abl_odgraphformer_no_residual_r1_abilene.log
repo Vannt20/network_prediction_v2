@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
 [odgraphformer_no_residual ABILENE] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=3000 | max_minutes=15
     step   250/3000 | train MSE 1.6289e-3 | val MSE 1.2068e-3 * | 0.4 phút
     step   500/3000 | train MSE 1.2438e-3 | val MSE 1.1639e-3 * | 0.7 phút
+    step   750/3000 | train MSE 1.2187e-3 | val MSE 1.1459e-3 * | 1.1 phút

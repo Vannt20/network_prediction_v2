@@ -1,2 +1,34 @@
 
 $ /usr/bin/python3 training/precompute_cache.py --cache_version v4 --datasets abilene --run_ids 0-2 --branches stwaveformer,xgboost,lightgbm_res,odgraphformer --skip_existing
+
+=======================================================
+[*] PRECOMPUTE CACHE v4: ABILENE | Nhánh: ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | Run IDs: [0, 1, 2]
+=======================================================
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+  --> run_0
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=1.122e-3 | test MSE=1.947e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=0.958e-3 | test MSE=2.744e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=0.872e-3 | test MSE=1.850e-3
+      [odgraphformer] val MSE=1.066e-3 | test MSE=1.946e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/abilene_run_0.pt
+  --> run_1
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=1.121e-3 | test MSE=1.987e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=0.962e-3 | test MSE=2.778e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=0.880e-3 | test MSE=1.863e-3
+      [odgraphformer] val MSE=1.049e-3 | test MSE=1.916e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/abilene_run_1.pt
+  --> run_2
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=1.135e-3 | test MSE=1.973e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=0.968e-3 | test MSE=2.764e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=0.873e-3 | test MSE=1.862e-3
+      [odgraphformer] val MSE=1.025e-3 | test MSE=1.925e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/abilene_run_2.pt
