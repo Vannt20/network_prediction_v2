@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_floor --pha
   [rl_sac_no_floor SDN] tiền huấn luyện trên OOF (1752 bước), prior ('huber', 'global')
       SAC   250/3000 | Q 0.1406 | π -1.5484 | r -0.0323 | α 0.1253 | 3.0 phút
       SAC   500/3000 | Q 0.1556 | π -2.0648 | r -0.0325 | α 0.1162 | 4.9 phút
+      SAC   750/3000 | Q 0.1480 | π -2.4186 | r -0.0219 | α 0.1077 | 6.3 phút
