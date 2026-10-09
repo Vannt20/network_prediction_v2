@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 1 --max_steps 1500 --skip_existing
