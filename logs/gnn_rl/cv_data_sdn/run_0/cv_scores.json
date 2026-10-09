@@ -1,0 +1,16 @@
+{
+  "branches": [
+    "odgraphformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "selected": [
+    "huber",
+    "global"
+  ],
+  "cv_mse": {
+    "static": 0.00446329265832901,
+    "hedge": 0.004337116040922572,
+    "hedge_floor": 0.004337116040922572
+  }
+}

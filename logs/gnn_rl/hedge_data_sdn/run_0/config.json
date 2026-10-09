@@ -1,0 +1,11 @@
+{
+  "branches": [
+    "odgraphformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "eta": 30,
+  "beta": 0.995,
+  "alpha": 0.0,
+  "mse": 0.004327689991827818
+}
