@@ -3,3 +3,9 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
 
 [rl_sac SDN] nhánh ['odgraphformer', 'xgboost', 'lightgbm_res'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
       SAC   250/1000 | Q 0.1484 | π -3.0243 | r +0.0527 | α 0.0753 | 2.8 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 415
+  [rl_sac SDN run_0] Test MSE=4.5189e-3 | lệch TB khỏi static ‖a-w‖₁=0.271 | 4.2 phút
+      SAC   250/1000 | Q 0.1442 | π -3.0131 | r +0.0448 | α 0.0753 | 1.4 phút
+      SAC   500/1000 | Q 0.1447 | π -3.1449 | r +0.0477 | α 0.0698 | 3.6 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 536
+  [rl_sac SDN run_1] Test MSE=4.4609e-3 | lệch TB khỏi static ‖a-w‖₁=0.299 | 4.2 phút

@@ -1,3 +1,6 @@
 
 $ /usr/bin/python3 training/reproduce_v3.py --datasets abilene --run_ids 0-2
   [ABILENE run_0] v3 MSE tái lập=1.8410e-3 | CSV=1.8410e-3 | lệch 2.7e-08 | ('huber', 'global')
+  [ABILENE run_1] v3 MSE tái lập=1.8424e-3 | CSV=1.8424e-3 | lệch 1.5e-07 | ('huber', 'global')
+  [ABILENE run_2] v3 MSE tái lập=1.8581e-3 | CSV=1.8581e-3 | lệch 3.1e-08 | ('huber', 'global')
+[ABILENE] TB 3 run: 1.847e-3 (CSV 1.847e-3)
