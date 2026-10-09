@@ -8,3 +8,6 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_floor --pha
       SAC   750/3000 | Q 0.1480 | π -2.4186 | r -0.0219 | α 0.1077 | 6.3 phút
       SAC  1000/3000 | Q 0.1402 | π -2.6946 | r -0.0081 | α 0.1000 | 8.8 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 1094
+      SAC   250/1000 | Q 0.0979 | π -3.1331 | r +0.0066 | α 0.0903 | 1.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 441
+  [rl_sac_no_floor SDN run_0] Test MSE=4.5421e-3 | lệch TB khỏi static ‖a-w‖₁=0.229 | 4.2 phút
