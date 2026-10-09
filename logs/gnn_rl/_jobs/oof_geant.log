@@ -1,2 +1,8 @@
 
 $ /usr/bin/python3 training/build_oof.py --datasets geant --skip_existing
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['odgraphformer', 'xgboost', 'lightgbm_res']
+[OOF GEANT] MSE e-3: odgraphformer=0.836 | xgboost=0.770 | lightgbm_res=0.775 -> /kaggle/working/network_prediction_v2/cache/v4/geant_oof.pt
+dataset  run        branch  mse_oof  mse_val    ratio  ks_stat         ks_p  same_rank
+  geant    0 odgraphformer 0.000836 0.004608 0.181352  0.23270 0.000000e+00      False
+  geant    0       xgboost 0.000770 0.003149 0.244418  0.05405 7.842461e-26      False
+  geant    0  lightgbm_res 0.000775 0.004716 0.164361  0.04625 5.006577e-19      False
