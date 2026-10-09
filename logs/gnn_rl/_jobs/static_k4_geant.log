@@ -1,3 +1,8 @@
 
 $ /usr/bin/python3 training/run_hedge.py --branches stwaveformer,xgboost,lightgbm_res,odgraphformer --methods static --static_tag static_k4 --datasets geant --run_ids 0-2
   [GEANT run_0] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=0.718 | CV e-3: 
+  [GEANT run_1] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=0.723 | CV e-3: 
+  [GEANT run_2] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=0.729 | CV e-3: 
+                runs    mse_e3
+dataset method                
+geant   static     3  0.723441

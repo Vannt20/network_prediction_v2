@@ -2,3 +2,4 @@
 $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets geant --skip_existing
 
 [rl_sac GEANT] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res'] | OOF=False | reward {'lam_sw': 0.1, 'lam_kl': 0.01, 'floor': 0.2, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/3000 | Q 0.4635 | π -1.3045 | r -0.0471 | α 0.1253 | 3.7 phút
