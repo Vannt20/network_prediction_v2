@@ -9,3 +9,7 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
       SAC   500/1000 | Q 0.1447 | π -3.1449 | r +0.0477 | α 0.0698 | 3.6 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 536
   [rl_sac SDN run_1] Test MSE=4.4609e-3 | lệch TB khỏi static ‖a-w‖₁=0.299 | 4.2 phút
+      SAC   250/1000 | Q 0.1500 | π -3.0159 | r +0.0477 | α 0.0753 | 1.4 phút
+      SAC   500/1000 | Q 0.1484 | π -3.1533 | r +0.0495 | α 0.0698 | 2.8 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 712
+  [rl_sac SDN run_2] Test MSE=4.4608e-3 | lệch TB khỏi static ‖a-w‖₁=0.276 | 4.2 phút

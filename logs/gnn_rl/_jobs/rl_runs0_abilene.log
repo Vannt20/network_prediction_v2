@@ -1,2 +1,5 @@
 
 $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets abilene --run_ids 0,1,2 --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[rl_sac ABILENE] nhánh ['odgraphformer', 'xgboost', 'lightgbm_res'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda

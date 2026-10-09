@@ -1,2 +1,3 @@
 
 $ /usr/bin/python3 training/reproduce_v3.py --datasets sdn --run_ids 0-2
+  [SDN run_0] v3 MSE tái lập=4.0737e-3 | CSV=4.0737e-3 | lệch 3.7e-09 | ('mse', 'perflow')
