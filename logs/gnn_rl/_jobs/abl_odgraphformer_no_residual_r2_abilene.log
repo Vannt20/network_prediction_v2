@@ -1,2 +1,18 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids 2 --tag odgraphformer_no_residual --max_steps 3000 --skip_existing --no_residual
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[odgraphformer_no_residual ABILENE] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=3000 | max_minutes=15
+    step   250/3000 | train MSE 1.6783e-3 | val MSE 1.2667e-3 * | 0.5 phút
+    step   500/3000 | train MSE 1.3293e-3 | val MSE 1.1981e-3 * | 1.0 phút
+    step   750/3000 | train MSE 1.2748e-3 | val MSE 1.4927e-3 | 1.6 phút
+    step  1000/3000 | train MSE 1.3065e-3 | val MSE 1.1709e-3 * | 2.1 phút
+    step  1250/3000 | train MSE 1.2310e-3 | val MSE 1.1668e-3 * | 2.6 phút
+    step  1500/3000 | train MSE 1.2121e-3 | val MSE 1.1675e-3 | 3.0 phút
+    step  1750/3000 | train MSE 1.1982e-3 | val MSE 1.1453e-3 * | 3.5 phút
+    step  2000/3000 | train MSE 1.1998e-3 | val MSE 1.1396e-3 * | 4.0 phút
+    step  2250/3000 | train MSE 1.1734e-3 | val MSE 1.1209e-3 * | 4.5 phút
+    step  2500/3000 | train MSE 1.1516e-3 | val MSE 1.1224e-3 | 5.0 phút
+    step  2750/3000 | train MSE 1.1480e-3 | val MSE 1.1148e-3 * | 5.5 phút
+    step  3000/3000 | train MSE 1.1504e-3 | val MSE 1.1136e-3 * | 6.0 phút
+[DONE] odgraphformer_no_residual ABILENE run_2 | 3000 bước (tốt nhất 3000) | Val MSE=1.114e-3 | Test MSE=1.953e-3 | 6.0 phút

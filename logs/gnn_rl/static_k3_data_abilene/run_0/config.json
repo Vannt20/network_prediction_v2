@@ -1,0 +1,11 @@
+{
+  "branches": [
+    "odgraphformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "selected": [
+    "huber",
+    "global"
+  ]
+}
