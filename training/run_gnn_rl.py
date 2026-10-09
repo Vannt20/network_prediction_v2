@@ -49,9 +49,56 @@ def _hm(s):
     return f"{m // 60}h{m % 60:02d}m"
 
 
+def _tail_line(path, n=16384, width=95):
+    """Dòng tiến độ mới nhất trong log của job (bỏ cảnh báo thư viện)."""
+    if not path or not os.path.exists(path):
+        return ''
+    with open(path, 'rb') as f:
+        f.seek(max(0, os.path.getsize(path) - n))
+        lines = f.read().decode('utf-8', 'ignore').splitlines()
+    skip = ('Warning', 'warn(', 'warnings.', 'Consider using', 'return F.', 'self.get_booster', '$ ')
+    for ln in reversed(lines):
+        s = ln.strip()
+        if s and not any(k in s for k in skip):
+            return s if len(s) <= width else s[:width - 1] + '…'
+    return '(đang khởi động)'
+
+
+def _clear():
+    try:
+        from IPython.display import clear_output
+        clear_output(wait=True)
+    except Exception:
+        pass
+
+
+def _gpu_stats():
+    try:
+        r = subprocess.run(['nvidia-smi', '--query-gpu=index,utilization.gpu,memory.used',
+                            '--format=csv,noheader,nounits'], capture_output=True, text=True, timeout=10)
+        out = {}
+        for ln in r.stdout.strip().splitlines():
+            i, u, m = [x.strip() for x in ln.split(',')]
+            out[int(i)] = f"{u}% {float(m) / 1024:.1f}GB"
+        return out
+    except Exception:
+        return {}
+
+
+def _ram_free_gb():
+    try:
+        with open('/proc/meminfo') as f:
+            for ln in f:
+                if ln.startswith('MemAvailable'):
+                    return int(ln.split()[1]) / 1024 ** 2
+    except Exception:
+        pass
+    return float('nan')
+
+
 class Scheduler:
     def __init__(self, jobs, n_gpus, cpu_slots=2, time_budget_h=10.0, log_dir=None, on_tick=None, tick_s=20,
-                 status_every_s=60, max_retry=1):
+                 status_every_s=60, max_retry=1, live=False, title='V4'):
         self.jobs = {j.name: j for j in jobs}
         self.n_gpus, self.cpu_slots = n_gpus, cpu_slots
         self.budget_s = time_budget_h * 3600
@@ -60,6 +107,7 @@ class Scheduler:
         self.on_tick, self.tick_s, self.status_every_s, self.max_retry = on_tick, tick_s, status_every_s, max_retry
         self.t_start = time.time()
         self.events = []
+        self.live, self.title = live, title       # live: xóa output cũ, chỉ giữ bảng tiến độ mới nhất (notebook)
 
     def _gpu_free(self):
         used = {g: 0 for g in range(self.n_gpus)}
@@ -138,16 +186,40 @@ class Scheduler:
                 self.events.append(f"{time.strftime('%H:%M')} LỖI {j.name} (exit {rc}), xem {j.log}")
 
     def status(self):
+        """Bảng tiến độ: mỗi GPU / CPU một dòng kèm dòng log mới nhất của job, số job theo trạng thái, sự kiện gần đây."""
         el = time.time() - self.t_start
         cnt = {}
         for j in self.jobs.values():
             cnt[j.state] = cnt.get(j.state, 0) + 1
-        lines = [f"[{_hm(el)} / {_hm(self.budget_s)}] " + " | ".join(f"{k} {v}" for k, v in sorted(cnt.items()))]
-        for j in self.jobs.values():
-            if j.state == 'run':
-                lines.append(f"  chạy  {j.name:32s} {'GPU' + str(j.gpu) if j.gpu is not None else 'CPU':5s} "
-                             f"{_hm(time.time() - j.t0)}")
-        lines += [f"  {e}" for e in self.events[-8:]]
+        head = f"{self.title} | {_hm(el)} / {_hm(self.budget_s)} | {time.strftime('%H:%M:%S')}"
+        ram = _ram_free_gb()
+        if ram == ram:
+            head += f" | RAM trống {ram:.1f} GB"
+        if hasattr(os, 'getloadavg'):
+            head += f" | CPU load {os.getloadavg()[0]:.1f}/{os.cpu_count()}"
+        lines = [head]
+        running = [j for j in self.jobs.values() if j.state == 'run']
+        gs = _gpu_stats() if self.n_gpus else {}
+        for g in range(self.n_gpus):
+            on = [j for j in running if j.gpu == g]
+            if not on:
+                lines.append(f"GPU{g}  rảnh  {gs.get(g, '')}")
+            for j in on:
+                lines.append(f"GPU{g}  {j.name:28s} {_hm(time.time() - j.t0):>6s}  {gs.get(g, '')}")
+                lines.append(f"      {_tail_line(j.log)}")
+        for j in running:
+            if j.gpu is None:
+                lines.append(f"CPU   {j.name:28s} {_hm(time.time() - j.t0):>6s}")
+                lines.append(f"      {_tail_line(j.log)}")
+        if not any(j.gpu is None for j in running):
+            lines.append("CPU   rảnh")
+        lines.append(f"Xong {cnt.get('done', 0)}/{len(self.jobs)} | chạy {cnt.get('run', 0)} | chờ {cnt.get('wait', 0)} | "
+                     f"lỗi {cnt.get('fail', 0)} | bỏ {cnt.get('skip', 0)}")
+        if self.events:
+            lines.append("Gần đây")
+            lines += [f"  {e}" for e in self.events[-10:]]
+        if self.live:
+            _clear()
         print("\n".join(lines), flush=True)
 
     def run(self):
@@ -159,7 +231,7 @@ class Scheduler:
                 try:
                     self.on_tick(self)
                 except Exception as e:
-                    print(f"[CẢNH BÁO] on_tick lỗi: {e}", flush=True)
+                    self.events.append(f"{time.strftime('%H:%M')} on_tick lỗi: {str(e)[:80]}")
             if time.time() - last_status >= self.status_every_s:
                 self.status()
                 last_status = time.time()
@@ -273,7 +345,8 @@ def main(args):
     print(f"[V4] datasets={datasets} | run_ids={args.run_ids} | ablation run_ids={args.ablation_run_ids} | "
           f"GPU={n_gpus} | {len(jobs)} job | ngân sách {args.time_budget_h} giờ", flush=True)
     sch = Scheduler(jobs, n_gpus, args.cpu_slots, args.time_budget_h, status_every_s=args.status_every_s,
-                    tick_s=2 if args.quick_check else 20)
+                    tick_s=2 if args.quick_check else 20, live=args.live,
+                    title=f"V4 | {','.join(d.upper() for d in datasets)} | run {args.run_ids}")
     summary, failed = sch.run()
     os.makedirs(RESULTS_V4, exist_ok=True)
     with open(os.path.join(RESULTS_V4, f"jobs_{'_'.join(datasets)}.json"), 'w', encoding='utf-8') as f:
@@ -295,6 +368,7 @@ def build_parser():
     ap.add_argument('--no_ablation', action='store_true')
     ap.add_argument('--cpu_only', action='store_true')
     ap.add_argument('--quick_check', action='store_true')
+    ap.add_argument('--live', action='store_true', help="Chỉ giữ bảng tiến độ mới nhất (xóa output cũ, dùng trong notebook)")
     return ap
 
 

@@ -48,18 +48,26 @@ class KaggleV4:
         self.push_every_s, self.last_push = push_every_s, time.time()
         self.lock = threading.Lock()
         self.wd = parent_dir
+        self.sch, self.pushed = None, 0
         cur = self.git('rev-parse', '--abbrev-ref', 'HEAD', cwd=self.wd, quiet=True).stdout.strip()
         assert cur != 'main', "Không chạy V4 trên nhánh main"
         self.git('checkout', '-B', self.branch, cwd=self.wd, quiet=True)
 
     # ---------- git ----------
+    def _note(self, msg):
+        """Ghi vào danh sách sự kiện của bảng tiến độ (khi đang chạy) thay vì in xen vào output."""
+        if self.sch is not None:
+            self.sch.events.append(f"{time.strftime('%H:%M')} {msg}")
+        else:
+            print(msg, flush=True)
+
     def push(self, msg):
         with self.lock:
             paths = [p for p in PUSH_PATHS if os.path.exists(os.path.join(self.wd, p))]
             big = [os.path.join(a, f) for p in paths for a, _, fs in os.walk(os.path.join(self.wd, p)) for f in fs
                    if os.path.getsize(os.path.join(a, f)) > MAX_MB * 1024 ** 2]
             for f in big:
-                print(f"[CẢNH BÁO] bỏ qua file > {MAX_MB} MB: {f}", flush=True)
+                self._note(f"bỏ qua file > {MAX_MB} MB: {os.path.relpath(f, self.wd)}")
             self.git('add', '-A', *paths, cwd=self.wd, quiet=True)
             for f in big:
                 self.git('reset', '-q', '--', os.path.relpath(f, self.wd), cwd=self.wd, quiet=True, check=False)
@@ -69,10 +77,11 @@ class KaggleV4:
             for attempt in range(3):
                 if self.git('push', '-u', 'origin', self.branch, cwd=self.wd, auth=True, check=False,
                             quiet=True).returncode == 0:
-                    print(f"[push] {self.branch}: {msg}", flush=True)
+                    self.pushed += 1
+                    self._note(f"push {self.branch} ({self.pushed}): {msg}")
                     return True
                 time.sleep(15 * (attempt + 1))
-            print("[CẢNH BÁO] push lỗi, thử lại ở lần sau", flush=True)
+            self._note("push lỗi, thử lại ở lần sau")
             return False
 
     def _tick(self, sch):
@@ -94,9 +103,13 @@ class KaggleV4:
         from training.run_gnn_rl import build_jobs, Scheduler
         import torch
         jobs = build_jobs(self.datasets, self.run_ids, self.ablation_run_ids)
-        sch = Scheduler(jobs, torch.cuda.device_count(), cpu_slots=2, time_budget_h=self.budget, on_tick=self._tick)
+        sch = Scheduler(jobs, torch.cuda.device_count(), cpu_slots=2, time_budget_h=self.budget, on_tick=self._tick,
+                        live=True, title=f"V4 tài khoản {self.account} | {','.join(d.upper() for d in self.datasets)} | "
+                                         f"run {self.run_ids}")
+        self.sch = sch
         t0 = time.time()
         summary, failed = sch.run()
+        self.sch = None
         os.makedirs(os.path.join(self.wd, 'status'), exist_ok=True)
         with open(os.path.join(self.wd, 'status', f'gnn_rl_{self.account}.json'), 'w', encoding='utf-8') as f:
             json.dump({'account': self.account, 'datasets': self.datasets, 'run_ids': self.run_ids,
