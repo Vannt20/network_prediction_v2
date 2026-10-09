@@ -1,3 +1,4 @@
 
 $ /usr/bin/python3 training/run_hedge.py --static_tag static_k3 --datasets geant --run_ids 0-2
   [GEANT run_0] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: static=0.719 | hedge=0.746 | hedge_floor=0.730 | context_gate=0.857 | CV e-3: static=3.682 hedge=3.243 hedge_floor=3.255
+  [GEANT run_1] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: static=0.723 | hedge=0.749 | hedge_floor=0.725 | context_gate=0.846 | CV e-3: static=3.497 hedge=3.214 hedge_floor=3.223
