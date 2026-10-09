@@ -14,3 +14,4 @@ $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches xgboost,l
 [800]	validation_0-rmse:0.02807
 [900]	validation_0-rmse:0.02804
 [999]	validation_0-rmse:0.02800
+    [xgboost] OOF 13386 bước, 485 s
