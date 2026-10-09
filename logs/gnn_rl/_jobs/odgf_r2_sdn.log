@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 2 -
 /kaggle/working/network_prediction_v2/training/train_od_graphformer.py:140: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
   sched.step()
     step   250/1500 | train MSE 21.6028e-3 | val MSE 16.7170e-3 * | 0.6 phút
+    step   500/1500 | train MSE 14.9421e-3 | val MSE 13.0515e-3 * | 1.0 phút
