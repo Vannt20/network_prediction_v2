@@ -9,3 +9,5 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets 
       SAC   750/3000 | Q 0.0663 | π -2.2432 | r -0.0611 | α 0.1078 | 3.5 phút
       SAC  1000/3000 | Q 0.0610 | π -2.4859 | r -0.0557 | α 0.1001 | 5.4 phút
       SAC  1250/3000 | Q 0.0572 | π -2.6621 | r -0.0533 | α 0.0929 | 7.6 phút
+      SAC  1500/3000 | Q 0.0513 | π -2.7829 | r -0.0503 | α 0.0862 | 9.8 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1527
