@@ -2,3 +2,7 @@
 $ /usr/bin/python3 training/run_hedge.py --branches stwaveformer,xgboost,lightgbm_res,odgraphformer --methods static --static_tag static_k4 --datasets sdn --run_ids 0-2
   [SDN run_0] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=4.057 | CV e-3: 
   [SDN run_1] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=3.959 | CV e-3: 
+  [SDN run_2] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=3.986 | CV e-3: 
+                runs    mse_e3
+dataset method                
+sdn     static     3  4.000673
