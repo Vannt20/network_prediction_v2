@@ -1,0 +1,4 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets sdn --branches xgboost,lightgbm_res --skip_existing
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['xgboost', 'lightgbm_res']
+[0]	validation_0-rmse:0.30309

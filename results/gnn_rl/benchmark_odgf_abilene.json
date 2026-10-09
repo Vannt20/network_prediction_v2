@@ -1,0 +1,11 @@
+{
+  "dataset": "abilene",
+  "device": "cuda",
+  "s_per_step": 0.078581997,
+  "eval_s": 1.2520339260000242,
+  "max_steps": 3000,
+  "projected_minutes": 4.1795066352000045,
+  "target_minutes": 12,
+  "recommended_max_steps": 3000,
+  "n_params": 225490
+}
