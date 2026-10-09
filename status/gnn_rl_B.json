@@ -1,0 +1,261 @@
+{
+  "account": "B",
+  "datasets": [
+    "sdn",
+    "abilene"
+  ],
+  "run_ids": "0-2",
+  "finished_utc": "2026-10-09 15:10:29",
+  "session_hours": 3.04,
+  "failed": [],
+  "jobs": {
+    "p0_v3_sdn": {
+      "state": "done",
+      "minutes": 12.0
+    },
+    "p0_hedge_sdn": {
+      "state": "done",
+      "minutes": 9.7
+    },
+    "p0_headroom_sdn": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "bench_sdn": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "odgf_r0_sdn": {
+      "state": "done",
+      "minutes": 3.0
+    },
+    "odgf_r1_sdn": {
+      "state": "done",
+      "minutes": 3.0
+    },
+    "odgf_r2_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "cache_sdn": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "decision_sdn": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "static_k4_sdn": {
+      "state": "done",
+      "minutes": 7.7
+    },
+    "oof_odgf_sdn": {
+      "state": "done",
+      "minutes": 2.0
+    },
+    "oof_gbdt_sdn": {
+      "state": "done",
+      "minutes": 9.0
+    },
+    "oof_sdn": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "combiners_sdn": {
+      "state": "done",
+      "minutes": 20.7
+    },
+    "rl_grid_sdn": {
+      "state": "done",
+      "minutes": 48.1
+    },
+    "rl_runs0_sdn": {
+      "state": "done",
+      "minutes": 22.4
+    },
+    "rl_sup_sdn": {
+      "state": "done",
+      "minutes": 38.4
+    },
+    "abl_odgraphformer_no_residual_r0_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "abl_odgraphformer_no_residual_r1_sdn": {
+      "state": "done",
+      "minutes": 3.0
+    },
+    "abl_odgraphformer_no_residual_r2_sdn": {
+      "state": "done",
+      "minutes": 3.7
+    },
+    "abl_odgraphformer_no_route_r0_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "abl_odgraphformer_no_route_r1_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "abl_odgraphformer_no_route_r2_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "abl_odgraphformer_no_spatial_attn_r0_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "abl_odgraphformer_no_spatial_attn_r1_sdn": {
+      "state": "done",
+      "minutes": 3.0
+    },
+    "abl_odgraphformer_no_spatial_attn_r2_sdn": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "abl_rl_no_gnn_sdn": {
+      "state": "done",
+      "minutes": 26.7
+    },
+    "abl_rl_no_floor_sdn": {
+      "state": "done",
+      "minutes": 38.4
+    },
+    "abl_rl_no_oof_sdn": {
+      "state": "done",
+      "minutes": 31.4
+    },
+    "p5_sdn": {
+      "state": "done",
+      "minutes": 4.3
+    },
+    "p0_v3_abilene": {
+      "state": "done",
+      "minutes": 15.4
+    },
+    "p0_hedge_abilene": {
+      "state": "done",
+      "minutes": 9.0
+    },
+    "p0_headroom_abilene": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "bench_abilene": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "odgf_r0_abilene": {
+      "state": "done",
+      "minutes": 4.7
+    },
+    "odgf_r1_abilene": {
+      "state": "done",
+      "minutes": 5.0
+    },
+    "odgf_r2_abilene": {
+      "state": "done",
+      "minutes": 5.0
+    },
+    "cache_abilene": {
+      "state": "done",
+      "minutes": 0.7
+    },
+    "decision_abilene": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "static_k4_abilene": {
+      "state": "done",
+      "minutes": 12.0
+    },
+    "oof_odgf_abilene": {
+      "state": "done",
+      "minutes": 3.3
+    },
+    "oof_gbdt_abilene": {
+      "state": "done",
+      "minutes": 20.4
+    },
+    "oof_abilene": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "combiners_abilene": {
+      "state": "done",
+      "minutes": 102.5
+    },
+    "rl_grid_abilene": {
+      "state": "done",
+      "minutes": 66.5
+    },
+    "rl_runs0_abilene": {
+      "state": "done",
+      "minutes": 30.7
+    },
+    "rl_sup_abilene": {
+      "state": "done",
+      "minutes": 36.7
+    },
+    "abl_odgraphformer_no_residual_r0_abilene": {
+      "state": "done",
+      "minutes": 2.7
+    },
+    "abl_odgraphformer_no_residual_r1_abilene": {
+      "state": "done",
+      "minutes": 5.3
+    },
+    "abl_odgraphformer_no_residual_r2_abilene": {
+      "state": "done",
+      "minutes": 6.7
+    },
+    "abl_odgraphformer_no_route_r0_abilene": {
+      "state": "done",
+      "minutes": 5.7
+    },
+    "abl_odgraphformer_no_route_r1_abilene": {
+      "state": "done",
+      "minutes": 5.7
+    },
+    "abl_odgraphformer_no_route_r2_abilene": {
+      "state": "done",
+      "minutes": 5.7
+    },
+    "abl_odgraphformer_no_spatial_attn_r0_abilene": {
+      "state": "done",
+      "minutes": 5.3
+    },
+    "abl_odgraphformer_no_spatial_attn_r1_abilene": {
+      "state": "done",
+      "minutes": 5.0
+    },
+    "abl_odgraphformer_no_spatial_attn_r2_abilene": {
+      "state": "done",
+      "minutes": 5.0
+    },
+    "abl_rl_no_gnn_abilene": {
+      "state": "done",
+      "minutes": 30.4
+    },
+    "abl_rl_no_floor_abilene": {
+      "state": "done",
+      "minutes": 33.7
+    },
+    "abl_rl_no_oof_abilene": {
+      "state": "done",
+      "minutes": 34.7
+    },
+    "p5_abilene": {
+      "state": "done",
+      "minutes": 4.3
+    },
+    "report": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "report_full": {
+      "state": "done",
+      "minutes": 0.3
+    }
+  }
+}
