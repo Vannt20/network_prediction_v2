@@ -6,3 +6,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sup --datasets abilene --run
   [rl_sup ABILENE] tiền huấn luyện trên OOF (13386 bước), prior ('huber', 'global')
   [rl_sup ABILENE run_0] Test MSE=1.8045e-3 | lệch TB khỏi static ‖a-w‖₁=0.049 | 0.8 phút
   [rl_sup ABILENE run_1] Test MSE=1.8148e-3 | lệch TB khỏi static ‖a-w‖₁=0.070 | 0.7 phút
+  [rl_sup ABILENE run_2] Test MSE=1.8122e-3 | lệch TB khỏi static ‖a-w‖₁=0.054 | 2.3 phút
