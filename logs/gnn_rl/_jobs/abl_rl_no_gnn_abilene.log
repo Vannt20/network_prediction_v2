@@ -4,3 +4,12 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
 
 [rl_sac_no_gnn ABILENE] nhánh ['odgraphformer', 'xgboost', 'lightgbm_res'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': False, 'use_temporal': True} | device cuda
   [rl_sac_no_gnn ABILENE] tiền huấn luyện trên OOF (13386 bước), prior ('huber', 'global')
+      SAC   250/3000 | Q 0.0809 | π -1.4463 | r -0.0109 | α 0.1253 | 2.2 phút
+      SAC   500/3000 | Q 0.0878 | π -1.8834 | r -0.0139 | α 0.1161 | 4.4 phút
+      SAC   750/3000 | Q 0.0838 | π -2.2210 | r -0.0124 | α 0.1076 | 6.6 phút
+      SAC  1000/3000 | Q 0.0809 | π -2.5100 | r -0.0103 | α 0.0998 | 8.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1203
+      SAC   250/1000 | Q 6.6749 | π -6.8951 | r -0.0062 | α 0.0872 | 1.9 phút
+      SAC   500/1000 | Q 5.2244 | π -7.7830 | r -0.0072 | α 0.0809 | 3.2 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 590
+  [rl_sac_no_gnn ABILENE run_0] Test MSE=1.8225e-3 | lệch TB khỏi static ‖a-w‖₁=0.016 | 4.5 phút

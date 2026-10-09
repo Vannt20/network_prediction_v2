@@ -3,3 +3,10 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase
 [ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
 
 [rl_sac_no_oof ABILENE] nhánh ['odgraphformer', 'xgboost', 'lightgbm_res'] | OOF=False | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/3000 | Q 0.0397 | π -1.6129 | r -0.0065 | α 0.1253 | 2.2 phút
+      SAC   500/3000 | Q 0.0448 | π -2.1371 | r -0.0093 | α 0.1162 | 4.4 phút
+      SAC   750/3000 | Q 0.0466 | π -2.4908 | r -0.0064 | α 0.1077 | 6.1 phút
+      SAC  1000/3000 | Q 0.0453 | π -2.7723 | r -0.0053 | α 0.0999 | 7.8 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1244
+  [rl_sac_no_oof ABILENE run_0] Test MSE=1.8478e-3 | lệch TB khỏi static ‖a-w‖₁=0.013 | 10.5 phút
+      SAC   250/3000 | Q 0.0565 | π -1.5117 | r -0.0106 | α 0.1253 | 1.7 phút
