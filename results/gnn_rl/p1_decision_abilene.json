@@ -1,0 +1,17 @@
+{
+  "dataset": "abilene",
+  "rl_branches": [
+    "odgraphformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "use_oof": true,
+  "val_mse_mean": {
+    "stwaveformer": 0.0011259938667838771,
+    "xgboost": 0.0009626524018434187,
+    "lightgbm_res": 0.0008751766290515661,
+    "odgraphformer": 0.0010465804565077026
+  },
+  "n_runs": 3,
+  "forced": null
+}

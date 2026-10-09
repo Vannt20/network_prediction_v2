@@ -4,3 +4,4 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 1 -
 [odgraphformer_no_residual SDN] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=1500 | max_minutes=10
     step   250/1500 | train MSE 14.9093e-3 | val MSE 9.6888e-3 * | 0.5 phút
     step   500/1500 | train MSE 8.4932e-3 | val MSE 6.5945e-3 * | 0.9 phút
+    step   750/1500 | train MSE 6.6195e-3 | val MSE 5.4567e-3 * | 1.4 phút

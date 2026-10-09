@@ -1,2 +1,3 @@
 
 $ /usr/bin/python3 training/p1_decision.py --datasets abilene --run_ids 0-2
+[ABILENE] Val MSE e-3: stwaveformer=1.126 | xgboost=0.963 | lightgbm_res=0.875 | odgraphformer=1.047 -> nhánh học sâu cho RL-Gate: odgraphformer
