@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 1 --tag odgraphformer_no_residual --max_steps 1500 --skip_existing --no_residual
