@@ -1,0 +1,32 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets geant --skip_existing
+
+[rl_sac GEANT] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res'] | OOF=False | reward {'lam_sw': 0.1, 'lam_kl': 0.01, 'floor': 0.2, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/3000 | Q 0.4635 | π -1.3045 | r -0.0471 | α 0.1253 | 3.7 phút
+      SAC   500/3000 | Q 0.4241 | π -1.8384 | r -0.1768 | α 0.1162 | 7.5 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 671
+      SAC   250/3000 | Q 0.1993 | π -1.4501 | r +0.0200 | α 0.1253 | 3.7 phút
+      SAC   500/3000 | Q 0.2599 | π -2.0036 | r -0.0217 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 674
+  [rl_sac GEANT] lưới λ_sw=0.0 f=0.0: CV MSE 3.9662e-3
+      SAC   250/3000 | Q 0.4999 | π -1.1881 | r -0.1455 | α 0.1254 | 3.7 phút
+      SAC   500/3000 | Q 0.4888 | π -1.6607 | r -0.2937 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 673
+      SAC   250/3000 | Q 0.1959 | π -1.4062 | r -0.0139 | α 0.1253 | 3.7 phút
+      SAC   500/3000 | Q 0.2540 | π -1.9365 | r -0.0854 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 676
+  [rl_sac GEANT] lưới λ_sw=0.0 f=0.2: CV MSE 4.2626e-3
+      SAC   250/3000 | Q 0.4607 | π -1.1740 | r -0.1419 | α 0.1253 | 3.7 phút
+      SAC   500/3000 | Q 0.4190 | π -1.6170 | r -0.2643 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 675
+      SAC   250/3000 | Q 0.1985 | π -1.3175 | r -0.0768 | α 0.1253 | 3.7 phút
+      SAC   500/3000 | Q 0.2578 | π -1.7895 | r -0.1262 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 676
+  [rl_sac GEANT] lưới λ_sw=0.1 f=0.0: CV MSE 4.3215e-3
+      SAC   250/3000 | Q 0.4990 | π -1.0589 | r -0.2423 | α 0.1254 | 3.7 phút
+      SAC   500/3000 | Q 0.4875 | π -1.4468 | r -0.3878 | α 0.1163 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 675
+      SAC   250/3000 | Q 0.1956 | π -1.2707 | r -0.1037 | α 0.1254 | 3.7 phút
+      SAC   500/3000 | Q 0.2534 | π -1.7047 | r -0.1781 | α 0.1163 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 676
+  [rl_sac GEANT] lưới λ_sw=0.1 f=0.2: CV MSE 4.3689e-3

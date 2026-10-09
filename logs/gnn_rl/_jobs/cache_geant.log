@@ -1,0 +1,33 @@
+
+$ /usr/bin/python3 training/precompute_cache.py --cache_version v4 --datasets geant --run_ids 0-2 --branches stwaveformer,xgboost,lightgbm_res,odgraphformer --skip_existing
+
+=======================================================
+[*] PRECOMPUTE CACHE v4: GEANT | Nhánh: ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | Run IDs: [0, 1, 2]
+=======================================================
+  --> run_0
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=3.579e-3 | test MSE=0.728e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=3.149e-3 | test MSE=0.918e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=4.716e-3 | test MSE=0.752e-3
+      [odgraphformer] val MSE=4.608e-3 | test MSE=0.786e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/geant_run_0.pt
+  --> run_1
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=3.254e-3 | test MSE=0.739e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=3.145e-3 | test MSE=0.916e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=4.707e-3 | test MSE=0.752e-3
+      [odgraphformer] val MSE=4.740e-3 | test MSE=0.796e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/geant_run_1.pt
+  --> run_2
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=3.312e-3 | test MSE=0.741e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=3.141e-3 | test MSE=0.914e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=4.725e-3 | test MSE=0.750e-3
+      [odgraphformer] val MSE=4.437e-3 | test MSE=0.775e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/geant_run_2.pt

@@ -1,0 +1,3 @@
+
+$ /usr/bin/python3 training/p1_decision.py --datasets geant --run_ids 0-2
+[GEANT] Val MSE e-3: stwaveformer=3.382 | xgboost=3.145 | lightgbm_res=4.716 | odgraphformer=4.595 -> nhánh học sâu cho RL-Gate: stwaveformer

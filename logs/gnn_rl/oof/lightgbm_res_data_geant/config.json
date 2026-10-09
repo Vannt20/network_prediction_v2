@@ -1,0 +1,11 @@
+{
+  "branch": "lightgbm_res",
+  "dataset": "geant",
+  "train_frac": 0.6,
+  "seed": 42,
+  "cut": 4522,
+  "n_fit_steps": 4048,
+  "n_es_steps": 450,
+  "n_oof_steps": 3016,
+  "fit_time_s": 305.51879477500916
+}

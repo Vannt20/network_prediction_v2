@@ -1,0 +1,8 @@
+
+$ /usr/bin/python3 evaluation/plot_weight_trajectories.py --datasets geant
+[GEANT] k = 3 cụm (silhouette 0.328)
+         corr_ext_spike  mean_switch  mean_kl  frac_dev_01  mean_ext_weight   y_std   y_max  n_flows
+cluster                                                                                             
+0               -0.0518       0.0006   0.0006          0.0           0.3024  0.0130  0.2254      215
+1               -0.0825       0.0005   0.0005          0.0           0.3010  0.0111  0.1760      244
+2               -0.0046       0.0019   0.0005          0.0           0.3020  0.0817  0.7555       70

@@ -1,0 +1,11 @@
+{
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "eta": 300,
+  "beta": 0.995,
+  "alpha": 0.5,
+  "mse": 0.003167309081481575
+}

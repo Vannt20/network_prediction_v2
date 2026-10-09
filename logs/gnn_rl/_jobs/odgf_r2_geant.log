@@ -1,0 +1,19 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 2 --max_steps 3000 --skip_existing
+
+[odgraphformer GEANT] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=3000 | max_minutes=20
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:140: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/3000 | train MSE 1.0037e-3 | val MSE 4.8529e-3 * | 0.9 phút
+    step   500/3000 | train MSE 0.9348e-3 | val MSE 4.7777e-3 * | 1.8 phút
+    step   750/3000 | train MSE 0.8376e-3 | val MSE 4.6280e-3 * | 2.7 phút
+    step  1000/3000 | train MSE 0.8510e-3 | val MSE 4.6540e-3 | 3.6 phút
+    step  1250/3000 | train MSE 0.8292e-3 | val MSE 4.5533e-3 * | 4.4 phút
+    step  1500/3000 | train MSE 0.8842e-3 | val MSE 4.5034e-3 * | 5.3 phút
+    step  1750/3000 | train MSE 0.8791e-3 | val MSE 4.4918e-3 * | 6.2 phút
+    step  2000/3000 | train MSE 0.8368e-3 | val MSE 4.4594e-3 * | 7.1 phút
+    step  2250/3000 | train MSE 0.8471e-3 | val MSE 4.4523e-3 * | 8.0 phút
+    step  2500/3000 | train MSE 0.8867e-3 | val MSE 4.4374e-3 * | 8.8 phút
+    step  2750/3000 | train MSE 0.8188e-3 | val MSE 4.4376e-3 | 9.7 phút
+    step  3000/3000 | train MSE 0.8401e-3 | val MSE 4.4373e-3 * | 10.6 phút
+[DONE] odgraphformer GEANT run_2 | 3000 bước (tốt nhất 3000) | Val MSE=4.437e-3 | Test MSE=0.775e-3 | 10.6 phút

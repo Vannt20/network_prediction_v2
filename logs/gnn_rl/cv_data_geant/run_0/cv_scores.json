@@ -1,0 +1,16 @@
+{
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "selected": [
+    "huber",
+    "global"
+  ],
+  "cv_mse": {
+    "static": 0.0036817744839936495,
+    "hedge": 0.003242793151690399,
+    "hedge_floor": 0.0032550434358619685
+  }
+}

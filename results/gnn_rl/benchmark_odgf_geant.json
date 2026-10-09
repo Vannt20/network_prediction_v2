@@ -1,0 +1,11 @@
+{
+  "dataset": "geant",
+  "device": "cuda",
+  "s_per_step": 0.19408956954000017,
+  "eval_s": 1.081762378999997,
+  "max_steps": 3000,
+  "projected_minutes": 9.920830952800008,
+  "target_minutes": 15,
+  "recommended_max_steps": 3000,
+  "n_params": 246950
+}

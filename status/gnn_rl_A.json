@@ -1,0 +1,140 @@
+{
+  "account": "A",
+  "datasets": [
+    "geant"
+  ],
+  "run_ids": "0-2",
+  "finished_utc": "2026-10-09 14:07:07",
+  "session_hours": 3.15,
+  "failed": [],
+  "jobs": {
+    "p0_v3_geant": {
+      "state": "done",
+      "minutes": 5.7
+    },
+    "p0_hedge_geant": {
+      "state": "done",
+      "minutes": 11.4
+    },
+    "p0_headroom_geant": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "bench_geant": {
+      "state": "done",
+      "minutes": 0.7
+    },
+    "odgf_r0_geant": {
+      "state": "done",
+      "minutes": 11.4
+    },
+    "odgf_r1_geant": {
+      "state": "done",
+      "minutes": 11.4
+    },
+    "odgf_r2_geant": {
+      "state": "done",
+      "minutes": 11.0
+    },
+    "cache_geant": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "decision_geant": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "static_k4_geant": {
+      "state": "done",
+      "minutes": 12.7
+    },
+    "oof_odgf_geant": {
+      "state": "done",
+      "minutes": 6.7
+    },
+    "oof_gbdt_geant": {
+      "state": "done",
+      "minutes": 8.0
+    },
+    "oof_geant": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "combiners_geant": {
+      "state": "done",
+      "minutes": 40.1
+    },
+    "rl_grid_geant": {
+      "state": "done",
+      "minutes": 90.8
+    },
+    "rl_runs0_geant": {
+      "state": "done",
+      "minutes": 42.7
+    },
+    "rl_sup_geant": {
+      "state": "done",
+      "minutes": 38.7
+    },
+    "abl_odgraphformer_no_residual_r0_geant": {
+      "state": "done",
+      "minutes": 6.7
+    },
+    "abl_odgraphformer_no_residual_r1_geant": {
+      "state": "done",
+      "minutes": 5.7
+    },
+    "abl_odgraphformer_no_residual_r2_geant": {
+      "state": "done",
+      "minutes": 7.7
+    },
+    "abl_odgraphformer_no_route_r0_geant": {
+      "state": "done",
+      "minutes": 11.0
+    },
+    "abl_odgraphformer_no_route_r1_geant": {
+      "state": "done",
+      "minutes": 11.0
+    },
+    "abl_odgraphformer_no_route_r2_geant": {
+      "state": "done",
+      "minutes": 11.0
+    },
+    "abl_odgraphformer_no_spatial_attn_r0_geant": {
+      "state": "done",
+      "minutes": 9.7
+    },
+    "abl_odgraphformer_no_spatial_attn_r1_geant": {
+      "state": "done",
+      "minutes": 9.7
+    },
+    "abl_odgraphformer_no_spatial_attn_r2_geant": {
+      "state": "done",
+      "minutes": 9.7
+    },
+    "abl_rl_no_gnn_geant": {
+      "state": "done",
+      "minutes": 42.4
+    },
+    "abl_rl_no_floor_geant": {
+      "state": "done",
+      "minutes": 42.4
+    },
+    "abl_rl_no_oof_geant": {
+      "state": "done",
+      "minutes": 34.0
+    },
+    "p5_geant": {
+      "state": "done",
+      "minutes": 1.3
+    },
+    "report": {
+      "state": "done",
+      "minutes": 0.3
+    },
+    "report_full": {
+      "state": "done",
+      "minutes": 0.3
+    }
+  }
+}

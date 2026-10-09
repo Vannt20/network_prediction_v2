@@ -1,0 +1,13 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 2 --tag odgraphformer_no_residual --max_steps 3000 --skip_existing --no_residual
+
+[odgraphformer_no_residual GEANT] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=3000 | max_minutes=20
+    step   250/3000 | train MSE 1.2315e-3 | val MSE 3.3819e-3 * | 0.9 phút
+    step   500/3000 | train MSE 1.0208e-3 | val MSE 3.2448e-3 * | 1.8 phút
+    step   750/3000 | train MSE 0.8616e-3 | val MSE 3.2718e-3 | 2.7 phút
+    step  1000/3000 | train MSE 0.8862e-3 | val MSE 3.2398e-3 * | 3.6 phút
+    step  1250/3000 | train MSE 0.8751e-3 | val MSE 3.2783e-3 | 4.5 phút
+    step  1500/3000 | train MSE 0.9082e-3 | val MSE 3.3830e-3 | 5.4 phút
+    step  1750/3000 | train MSE 0.9158e-3 | val MSE 3.2771e-3 | 6.3 phút
+    step  2000/3000 | train MSE 0.8411e-3 | val MSE 3.2962e-3 | 7.2 phút
+[DONE] odgraphformer_no_residual GEANT run_2 | 2000 bước (tốt nhất 1000) | Val MSE=3.240e-3 | Test MSE=0.880e-3 | 7.2 phút
