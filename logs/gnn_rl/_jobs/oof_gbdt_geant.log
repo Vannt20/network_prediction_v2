@@ -1,0 +1,3 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets geant --branches xgboost,lightgbm_res --skip_existing
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['xgboost', 'lightgbm_res']

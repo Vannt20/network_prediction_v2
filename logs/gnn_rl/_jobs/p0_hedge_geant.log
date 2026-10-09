@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/run_hedge.py --cache_version v3 --tag_suffix _v3 --methods hedge,hedge_floor --datasets geant --run_ids 0-2
