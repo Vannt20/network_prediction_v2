@@ -18,7 +18,7 @@ for p in [parent_dir, current_dir]:
         sys.path.insert(0, p)
 
 from training.gnn_rl_common import (setup_utf8, parse_list, ALL_DATASETS, RESULTS_V4, load_cache, split_arrays,
-                                    save_combiner_result, save_json, run_dir)
+                                    save_combiner_result, save_json, load_json, run_dir, upsert_csv)
 from Graph_models.robust_stacking import RobustPerFlowStacking
 from baselines_ml.run_ml_baselines import parse_run_ids
 
@@ -55,10 +55,10 @@ def reproduce(datasets, run_ids):
                   f"lệch {rel:.1e} | {st.selected}", flush=True)
         sub = pd.DataFrame([x for x in rows if x['dataset'] == ds])
         print(f"[{ds.upper()}] TB {len(sub)} run: {sub['mse'].mean()*1e3:.3f}e-3 (CSV {sub['mse_ref'].mean()*1e3:.3f}e-3)")
-    df = pd.DataFrame(rows)
-    os.makedirs(RESULTS_V4, exist_ok=True)
-    df.to_csv(os.path.join(RESULTS_V4, 'p0_reproduce_v3.csv'), index=False)
-    save_json({'tolerance': TOL, 'n_bad': len(bad), 'bad': bad}, os.path.join(RESULTS_V4, 'p0_reproduce_v3.json'))
+    df = upsert_csv(pd.DataFrame(rows), os.path.join(RESULTS_V4, 'p0_reproduce_v3.csv'))
+    bad_all = [[r['dataset'], int(r['run']), float(r['rel_diff'])] for _, r in df.iterrows() if r['ok'] is False
+               or str(r['ok']) == 'False']
+    save_json({'tolerance': TOL, 'n_bad': len(bad_all), 'bad': bad_all}, os.path.join(RESULTS_V4, 'p0_reproduce_v3.json'))
     if bad:
         print(f"[CẢNH BÁO] {len(bad)} run lệch hơn {TOL:.0e}: {bad}")
     return df

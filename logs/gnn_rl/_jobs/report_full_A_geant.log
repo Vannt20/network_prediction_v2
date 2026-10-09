@@ -1,0 +1,39 @@
+
+$ /usr/bin/python3 evaluation/report_gnn_rl.py --datasets geant --run_ids 0-2
+[GEANT] chọn tầng kết hợp: hedge | CV e-3 static=3.6818 hedge=3.2428 rl=3.9662
+
+BẢNG TỔNG HỢP (MSE x10^-3)
+dataset                             name  runs  mse_mean  mse_std  mse_trim_jump_mean  n_better_than_v3
+  geant                      Persistence     3    0.8546   0.0000              0.3393                 0
+  geant                          XGBoost     3    0.9160   0.0020              0.3444                 0
+  geant                LightGBM-Residual     3    0.7512   0.0007              0.3102                 0
+  geant                    ST-WaveFormer     3    0.7362   0.0070              0.3251                 0
+  geant                   OD-GraphFormer     3    0.7857   0.0104              0.3107                 0
+  geant ST-Adaptive-Ensemble v3 (static)     3    0.7235   0.0052              0.3138                 0
+  geant                       Static K=4     3    0.7234   0.0052              0.3137                 3
+  geant            Static K=3 (nhánh RL)     3    0.7235   0.0052              0.3138                 0
+  geant                            Hedge     3    0.7509   0.0060              0.3096                 0
+  geant                      Hedge + sàn     3    0.7319   0.0084              0.3092                 0
+  geant             Cổng MLP ngữ cảnh v2     3    0.8503   0.0059              0.3190                 0
+  geant              Gate giám sát (γ=0)     3    0.8315   0.0089              0.3096                 0
+  geant                    RL-Gate (SAC)     3    0.7226   0.0064              0.3136                 2
+  geant          ST-Adaptive-Ensemble-RL     3    0.7509   0.0060              0.3096                 0
+
+ABLATION
+dataset                                    name  runs  mse_mean  mse_std  mse_trim_jump_mean  n_better_than_v3
+  geant     OD-GraphFormer: bỏ mục tiêu phần dư     3    0.8413   0.0452              0.4131                 0
+  geant              OD-GraphFormer: bỏ A_route     3    0.7779   0.0021              0.3101                 0
+  geant OD-GraphFormer: bỏ attention giữa luồng     3    0.7770   0.0087              0.3096                 0
+  geant                         RL-Gate: bỏ GNN     3    0.7247   0.0048              0.3136                 0
+  geant               RL-Gate: bỏ ràng buộc sàn     3    0.7229   0.0061              0.3137                 0
+  geant                 RL-Gate: không dùng OOF     3    0.7218   0.0059              0.3133                 0
+  geant                   OD-GraphFormer đầy đủ     3    0.7857   0.0104              0.3107                 0
+  geant                          RL-Gate đầy đủ     3    0.7226   0.0064              0.3136                 0
+
+KIỂM ĐỊNH
+dataset  model        vs  runs  mse_model_e3  mse_ref_e3  rel_change_pct   t_stat    t_p  n_runs_better  dm_mean  dm_n_sig_better  dm_n_sig_worse
+  geant  final v3_static     3        0.7509      0.7235          3.7892  43.2856 0.0005              0   1.0378                0               0
+  geant  final     hedge     3        0.7509      0.7509          0.0000      NaN    NaN              0   0.0000                0               0
+  geant rl_sac v3_static     3        0.7226      0.7235         -0.1286  -0.8861 0.4691              2  -0.3156                0               0
+  geant rl_sac     hedge     3        0.7226      0.7509         -3.7748 -64.9822 0.0002              3  -1.0481                0               0
+  geant rl_sac    rl_sup     3        0.7226      0.8315        -13.1021 -34.8958 0.0008              3  -1.1350                0               0

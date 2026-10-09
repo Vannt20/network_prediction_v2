@@ -17,7 +17,7 @@ for p in [parent_dir, current_dir]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from training.gnn_rl_common import setup_utf8, parse_list, RESULTS_V4, ALL_DATASETS
+from training.gnn_rl_common import setup_utf8, parse_list, RESULTS_V4, ALL_DATASETS, upsert_csv
 from baselines_ml.run_ml_baselines import parse_run_ids
 
 
@@ -44,10 +44,7 @@ def run_headroom(datasets, run_ids, cache_version='v3'):
             rows.append(row)
         sub = pd.DataFrame([x for x in rows if x['dataset'] == ds])
         print(f"[{ds.upper()}] " + " | ".join(f"{k}={sub[k].mean()*1e3:.3f}e-3" for k in sub.columns if k.startswith('oracle')))
-    df = pd.DataFrame(rows)
-    os.makedirs(RESULTS_V4, exist_ok=True)
-    df.to_csv(os.path.join(RESULTS_V4, f'p0_headroom_{cache_version}.csv'), index=False)
-    return df
+    return upsert_csv(pd.DataFrame(rows), os.path.join(RESULTS_V4, f'p0_headroom_{cache_version}.csv'))
 
 
 if __name__ == '__main__':

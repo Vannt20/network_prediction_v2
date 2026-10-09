@@ -205,6 +205,21 @@ def oof_ranges(T_train, seq_len, train_frac=0.6):
     return np.arange(seq_len, inner), np.arange(inner, cut), np.arange(cut, T_train)
 
 
+def upsert_csv(df, path, key=('dataset', 'run')):
+    """Ghi df vào path, chỉ thay các dòng trùng khóa (nhiều dataset / tài khoản ghi chung một file không đè nhau)."""
+    import pandas as pd
+    if os.path.exists(path):
+        old = pd.read_csv(path)
+        if all(k in old.columns for k in key):
+            idx = pd.MultiIndex.from_frame(df[list(key)].astype(str))
+            keep = ~pd.MultiIndex.from_frame(old[list(key)].astype(str)).isin(idx)
+            df = pd.concat([old[keep], df], ignore_index=True)
+    df = df.sort_values(list(key)).reset_index(drop=True)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    df.to_csv(path, index=False)
+    return df
+
+
 def jump_mask(y, last, q=0.001):
     """Mặt nạ cố định theo dữ liệu: True ở các điểm KHÔNG thuộc q lớn nhất của |y - lag_1|."""
     j = np.abs(np.asarray(y, dtype=np.float64) - np.asarray(last, dtype=np.float64))
