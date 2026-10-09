@@ -11,3 +11,8 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 0
     step  1250/3000 | train MSE 0.8920e-3 | val MSE 4.7251e-3 * | 4.5 phút
     step  1500/3000 | train MSE 0.9078e-3 | val MSE 4.6911e-3 * | 5.4 phút
     step  1750/3000 | train MSE 0.8188e-3 | val MSE 4.6538e-3 * | 6.3 phút
+    step  2000/3000 | train MSE 0.8554e-3 | val MSE 4.6427e-3 * | 7.2 phút
+    step  2250/3000 | train MSE 0.8011e-3 | val MSE 4.6175e-3 * | 8.1 phút
+    step  2500/3000 | train MSE 0.7757e-3 | val MSE 4.6089e-3 * | 9.0 phút
+    step  2750/3000 | train MSE 0.8058e-3 | val MSE 4.6090e-3 | 9.9 phút
+    step  3000/3000 | train MSE 0.8047e-3 | val MSE 4.6081e-3 * | 10.8 phút
