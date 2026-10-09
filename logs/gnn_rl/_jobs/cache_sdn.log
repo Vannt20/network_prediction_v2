@@ -1,2 +1,33 @@
 
 $ /usr/bin/python3 training/precompute_cache.py --cache_version v4 --datasets sdn --run_ids 0-2 --branches stwaveformer,xgboost,lightgbm_res,odgraphformer --skip_existing
+
+=======================================================
+[*] PRECOMPUTE CACHE v4: SDN | Nhánh: ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | Run IDs: [0, 1, 2]
+=======================================================
+  --> run_0
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=15.555e-3 | test MSE=15.445e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=5.302e-3 | test MSE=5.543e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=4.483e-3 | test MSE=4.770e-3
+      [odgraphformer] val MSE=10.974e-3 | test MSE=11.221e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/sdn_run_0.pt
+  --> run_1
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=14.913e-3 | test MSE=15.057e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=5.232e-3 | test MSE=5.474e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=4.406e-3 | test MSE=4.693e-3
+      [odgraphformer] val MSE=10.743e-3 | test MSE=11.011e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/sdn_run_1.pt
+  --> run_2
+      [stwaveformer] lấy từ cache v3 (cùng mô hình)
+      [stwaveformer] val MSE=14.681e-3 | test MSE=14.670e-3
+      [xgboost] lấy từ cache v3 (cùng mô hình)
+      [xgboost] val MSE=5.241e-3 | test MSE=5.489e-3
+      [lightgbm_res] lấy từ cache v3 (cùng mô hình)
+      [lightgbm_res] val MSE=4.431e-3 | test MSE=4.712e-3
+      [odgraphformer] val MSE=10.020e-3 | test MSE=10.239e-3
+      [CACHE] Đã lưu: /kaggle/working/network_prediction_v2/cache/v4/sdn_run_2.pt
