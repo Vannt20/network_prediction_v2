@@ -8,3 +8,6 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 0 -
     step   500/1500 | train MSE 15.0062e-3 | val MSE 13.9095e-3 * | 1.0 phút
     step   750/1500 | train MSE 12.7949e-3 | val MSE 11.5682e-3 * | 1.5 phút
     step  1000/1500 | train MSE 11.5968e-3 | val MSE 10.6794e-3 * | 2.0 phút
+    step  1250/1500 | train MSE 11.1465e-3 | val MSE 10.3347e-3 * | 2.4 phút
+    step  1500/1500 | train MSE 10.9816e-3 | val MSE 10.3065e-3 * | 2.9 phút
+[DONE] odgraphformer_no_route SDN run_0 | 1500 bước (tốt nhất 1500) | Val MSE=10.306e-3 | Test MSE=10.579e-3 | 2.9 phút
