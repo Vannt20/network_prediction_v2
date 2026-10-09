@@ -12,3 +12,8 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 430
   [rl_sac_no_gnn SDN run_0] Test MSE=4.6401e-3 | lệch TB khỏi static ‖a-w‖₁=0.171 | 4.1 phút
       SAC   250/1000 | Q 2.5444 | π -2.9266 | r -0.0069 | α 0.0915 | 2.2 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 451
+  [rl_sac_no_gnn SDN run_1] Test MSE=4.5616e-3 | lệch TB khỏi static ‖a-w‖₁=0.167 | 4.1 phút
+      SAC   250/1000 | Q 4.0536 | π -3.0898 | r -0.0092 | α 0.0915 | 2.6 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 451
+  [rl_sac_no_gnn SDN run_2] Test MSE=4.6008e-3 | lệch TB khỏi static ‖a-w‖₁=0.172 | 4.1 phút
