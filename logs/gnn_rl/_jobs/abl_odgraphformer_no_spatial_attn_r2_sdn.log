@@ -1,2 +1,10 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 2 --tag odgraphformer_no_spatial_attn --max_steps 1500 --skip_existing --no_spatial_attn
+
+[odgraphformer_no_spatial_attn SDN] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=1500 | max_minutes=10
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:140: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/1500 | train MSE 21.7762e-3 | val MSE 16.3293e-3 * | 0.5 phút
+    step   500/1500 | train MSE 14.9670e-3 | val MSE 13.3956e-3 * | 1.0 phút
+    step   750/1500 | train MSE 12.8245e-3 | val MSE 11.4729e-3 * | 1.5 phút
+    step  1000/1500 | train MSE 12.2529e-3 | val MSE 11.4333e-3 * | 2.0 phút
