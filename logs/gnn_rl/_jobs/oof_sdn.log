@@ -1,2 +1,8 @@
 
 $ /usr/bin/python3 training/build_oof.py --datasets sdn --skip_existing
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['odgraphformer', 'xgboost', 'lightgbm_res']
+[OOF SDN] MSE e-3: odgraphformer=12.006 | xgboost=4.817 | lightgbm_res=4.179 -> /kaggle/working/network_prediction_v2/cache/v4/sdn_oof.pt
+dataset  run        branch  mse_oof  mse_val    ratio  ks_stat         ks_p  same_rank
+    sdn    0 odgraphformer 0.012006 0.010974 1.094029  0.07105 2.425611e-44       True
+    sdn    0       xgboost 0.004817 0.005302 0.908587  0.01880 1.680632e-03       True
+    sdn    0  lightgbm_res 0.004179 0.004483 0.932197  0.02395 2.047963e-05       True
