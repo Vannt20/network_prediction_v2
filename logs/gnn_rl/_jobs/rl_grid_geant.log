@@ -28,3 +28,5 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets 
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 675
       SAC   250/3000 | Q 0.1956 | π -1.2707 | r -0.1037 | α 0.1254 | 3.7 phút
       SAC   500/3000 | Q 0.2534 | π -1.7047 | r -0.1781 | α 0.1163 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 676
+  [rl_sac GEANT] lưới λ_sw=0.1 f=0.2: CV MSE 4.3689e-3

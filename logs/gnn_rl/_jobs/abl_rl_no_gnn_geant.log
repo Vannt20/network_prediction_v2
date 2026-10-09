@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase runs --datasets geant --run_ids 0-2 --skip_existing
