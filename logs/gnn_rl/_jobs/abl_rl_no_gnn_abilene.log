@@ -18,3 +18,6 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 528
   [rl_sac_no_gnn ABILENE run_1] Test MSE=1.8607e-3 | lệch TB khỏi static ‖a-w‖₁=0.030 | 4.5 phút
       SAC   250/1000 | Q 6.5144 | π -5.1639 | r -0.0043 | α 0.0872 | 1.3 phút
+      SAC   500/1000 | Q 5.7107 | π -7.5173 | r -0.0049 | α 0.0809 | 3.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 569
+  [rl_sac_no_gnn ABILENE run_2] Test MSE=1.8617e-3 | lệch TB khỏi static ‖a-w‖₁=0.010 | 4.5 phút

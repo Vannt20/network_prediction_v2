@@ -2,3 +2,4 @@
 $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase runs --datasets sdn --run_ids 0-2 --skip_existing
 
 [rl_sac_no_oof SDN] nhánh ['odgraphformer', 'xgboost', 'lightgbm_res'] | OOF=False | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/3000 | Q 0.1183 | π -1.6574 | r -0.0319 | α 0.1253 | 2.8 phút
