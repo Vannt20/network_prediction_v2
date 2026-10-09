@@ -9,3 +9,5 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 313
   [rl_sac GEANT run_1] Test MSE=0.7203e-3 | lệch TB khỏi static ‖a-w‖₁=0.071 | 10.2 phút
       SAC   250/3000 | Q 0.1602 | π -1.3350 | r -0.0648 | α 0.1253 | 8.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 324
+  [rl_sac GEANT run_2] Test MSE=0.7298e-3 | lệch TB khỏi static ‖a-w‖₁=0.022 | 10.1 phút
