@@ -4,3 +4,12 @@ $ /usr/bin/python3 training/build_oof.py --datasets geant --branches odgraphform
 /kaggle/working/network_prediction_v2/training/train_od_graphformer.py:140: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
   sched.step()
     step   250/1800 | train MSE 0.9012e-3 | val MSE 0.5153e-3 * | 0.9 phút
+    step   500/1800 | train MSE 0.9043e-3 | val MSE 0.5261e-3 | 1.8 phút
+    step   750/1800 | train MSE 0.8647e-3 | val MSE 0.4975e-3 * | 2.6 phút
+    step  1000/1800 | train MSE 0.8355e-3 | val MSE 0.4965e-3 * | 3.5 phút
+    step  1250/1800 | train MSE 0.8526e-3 | val MSE 0.4954e-3 * | 4.4 phút
+    step  1500/1800 | train MSE 0.8795e-3 | val MSE 0.4948e-3 * | 5.3 phút
+    step  1750/1800 | train MSE 0.8180e-3 | val MSE 0.4945e-3 * | 6.1 phút
+    step  1800/1800 | train MSE 0.8262e-3 | val MSE 0.4945e-3 * | 6.3 phút
+    [OOF] 3016 bước, MSE=0.8357e-3
+[OOF GEANT] MSE e-3: odgraphformer=0.836 -> /kaggle/working/network_prediction_v2/cache/v4/geant_oof.pt
