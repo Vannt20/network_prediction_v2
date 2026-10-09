@@ -1,0 +1,36 @@
+{
+  "algo": "sac",
+  "variant": "main",
+  "branches": [
+    "odgraphformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "reward": {
+    "lam_sw": 0.0,
+    "lam_kl": 0.01,
+    "floor": 0.0,
+    "lam_floor": 1.0
+  },
+  "net": {
+    "use_gnn": true,
+    "use_temporal": true
+  },
+  "use_oof": true,
+  "use_sigma": true,
+  "static_selected": [
+    "huber",
+    "global"
+  ],
+  "minutes": 4.729538134733835,
+  "budget": {
+    "pretrain": 3000,
+    "finetune": 1000,
+    "grid_finetune": 500,
+    "sup": 2000,
+    "max_min_pretrain": 10,
+    "max_min_finetune": 4,
+    "max_min_grid": 3,
+    "max_min_sup": 3
+  }
+}

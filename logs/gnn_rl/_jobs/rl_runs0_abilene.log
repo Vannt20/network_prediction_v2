@@ -12,3 +12,7 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
       SAC   500/1000 | Q 0.0565 | π -3.1145 | r -0.0036 | α 0.0737 | 2.1 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 738
   [rl_sac ABILENE run_1] Test MSE=1.8585e-3 | lệch TB khỏi static ‖a-w‖₁=0.050 | 5.0 phút
+      SAC   250/1000 | Q 0.0417 | π -3.0094 | r -0.0030 | α 0.0794 | 2.0 phút
+      SAC   500/1000 | Q 0.0316 | π -3.1317 | r -0.0024 | α 0.0737 | 3.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 572
+  [rl_sac ABILENE run_2] Test MSE=1.8612e-3 | lệch TB khỏi static ‖a-w‖₁=0.011 | 4.7 phút
