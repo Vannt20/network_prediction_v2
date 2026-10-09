@@ -23,3 +23,8 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase
       SAC   500/3000 | Q 0.1253 | π -1.9102 | r -0.0225 | α 0.1162 | 2.8 phút
       SAC   750/3000 | Q 0.1169 | π -2.2904 | r -0.0129 | α 0.1078 | 4.2 phút
       SAC  1000/3000 | Q 0.1083 | π -2.5887 | r -0.0034 | α 0.1000 | 5.5 phút
+      SAC  1250/3000 | Q 0.1007 | π -2.8287 | r +0.0074 | α 0.0928 | 6.9 phút
+      SAC  1500/3000 | Q 0.1012 | π -3.0149 | r +0.0220 | α 0.0861 | 8.3 phút
+      SAC  1750/3000 | Q 0.1030 | π -3.1458 | r +0.0329 | α 0.0799 | 9.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1803
+  [rl_sac_no_oof SDN run_2] Test MSE=4.9040e-3 | lệch TB khỏi static ‖a-w‖₁=0.883 | 10.0 phút
