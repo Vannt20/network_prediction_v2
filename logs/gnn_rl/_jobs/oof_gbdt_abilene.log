@@ -15,3 +15,18 @@ $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches xgboost,l
 [900]	validation_0-rmse:0.02804
 [999]	validation_0-rmse:0.02800
     [xgboost] OOF 13386 bước, 485 s
+[100]	valid_0's l2: 0.000788627
+[200]	valid_0's l2: 0.00077642
+[300]	valid_0's l2: 0.0007699
+[400]	valid_0's l2: 0.000765731
+[500]	valid_0's l2: 0.000763393
+[600]	valid_0's l2: 0.000761806
+[700]	valid_0's l2: 0.0007597
+[800]	valid_0's l2: 0.000758229
+[900]	valid_0's l2: 0.00075672
+[1000]	valid_0's l2: 0.000755304
+    [lightgbm_res] OOF 13386 bước, 714 s
+[OOF ABILENE] MSE e-3: xgboost=0.841 | lightgbm_res=0.822 -> /kaggle/working/network_prediction_v2/cache/v4/abilene_oof.pt
+dataset  run       branch  mse_oof  mse_val    ratio  ks_stat     ks_p  same_rank
+abilene    0      xgboost 0.000841 0.000958 0.877169  0.00685 0.733316       True
+abilene    0 lightgbm_res 0.000822 0.000872 0.941799  0.00690 0.725074       True
