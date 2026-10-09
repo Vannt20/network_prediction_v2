@@ -10,3 +10,7 @@ $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches xgboost,l
 [400]	validation_0-rmse:0.02830
 [500]	validation_0-rmse:0.02823
 [600]	validation_0-rmse:0.02816
+[700]	validation_0-rmse:0.02811
+[800]	validation_0-rmse:0.02807
+[900]	validation_0-rmse:0.02804
+[999]	validation_0-rmse:0.02800
