@@ -1,3 +1,4 @@
 
 $ /usr/bin/python3 training/run_hedge.py --static_tag static_k3 --datasets sdn --run_ids 0-2
   [SDN run_0] ['odgraphformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: static=4.731 | hedge=4.584 | hedge_floor=4.584 | context_gate=4.733 | CV e-3: static=4.463 hedge=4.337 hedge_floor=4.337
+  [SDN run_1] ['odgraphformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: static=4.653 | hedge=4.509 | hedge_floor=4.509 | context_gate=4.655 | CV e-3: static=4.385 hedge=4.258 hedge_floor=4.258
