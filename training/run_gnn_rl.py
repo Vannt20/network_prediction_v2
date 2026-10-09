@@ -2,9 +2,9 @@
 Điều phối toàn bộ hướng V4 (P0 -> P5) cho một nhóm dataset, theo hàng đợi ưu tiên (spec Mục 10.2).
 
   1. Benchmark tốc độ OD-GraphFormer -> chỉnh max_steps cho vừa mục tiêu thời gian
-  2. OD-GraphFormer 10 seed
+  2. OD-GraphFormer theo --run_ids (giai đoạn hiện tại: 3 run, seed 42-44)
   3. OOF (OD-GraphFormer trên GPU, GBDT trên CPU song song) -> cache v4 -> quyết định nhánh
-  4. RL: tiền huấn luyện + lưới run_0 -> SAC 10 seed, gate giám sát; static/Hedge/cổng MLP (CPU)
+  4. RL: tiền huấn luyện + lưới run_0 -> SAC từng run, gate giám sát; static/Hedge/cổng MLP (CPU)
   5. Bảng chính P4
   6. Ablation (tùy chọn, bị bỏ khi đã dùng quá 75% ngân sách thời gian), P5, báo cáo đầy đủ
 
@@ -286,7 +286,7 @@ def main(args):
 def build_parser():
     ap = argparse.ArgumentParser(description="Điều phối hướng V4 (OD-GraphFormer + RL-Gate)")
     ap.add_argument('--datasets', default='all')
-    ap.add_argument('--run_ids', default='0-9')
+    ap.add_argument('--run_ids', default='0-2', help="Giai đoạn hiện tại: 3 run; '0-9' để chạy đủ 10 run")
     ap.add_argument('--ablation_run_ids', default='0-2')
     ap.add_argument('--time_budget_h', type=float, default=10.0)
     ap.add_argument('--cpu_slots', type=int, default=2)

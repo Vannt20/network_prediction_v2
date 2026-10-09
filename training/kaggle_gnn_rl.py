@@ -27,6 +27,8 @@ for p in [parent_dir, current_dir]:
         sys.path.insert(0, p)
 
 PLAN = {'A': ['geant'], 'B': ['sdn', 'abilene']}
+# Giai đoạn hiện tại chỉ chạy 3 run (seed 42-44); đổi thành '0-9' khi chạy đủ 10 run
+DEFAULT_RUN_IDS = '0-2'
 CODE_BRANCH = 'GNN_RL'
 FINAL_BRANCH = 'GNN_RL_results'
 LOCK_BRANCH = 'GNN_RL_final_lock'
@@ -35,7 +37,8 @@ MAX_MB = 95
 
 
 class KaggleV4:
-    def __init__(self, account, git, run_ids='0-9', ablation_run_ids='0-2', time_budget_h=10.0, push_every_s=900):
+    def __init__(self, account, git, run_ids=DEFAULT_RUN_IDS, ablation_run_ids='0-2', time_budget_h=10.0,
+                 push_every_s=900):
         assert account in PLAN
         self.account, self.git = account, git
         self.other = 'B' if account == 'A' else 'A'
