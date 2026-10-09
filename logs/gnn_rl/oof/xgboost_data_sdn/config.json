@@ -1,0 +1,11 @@
+{
+  "branch": "xgboost",
+  "dataset": "sdn",
+  "train_frac": 0.6,
+  "seed": 42,
+  "cut": 2627,
+  "n_fit_steps": 2310,
+  "n_es_steps": 257,
+  "n_oof_steps": 1752,
+  "fit_time_s": 112.90907859802246
+}

@@ -2,3 +2,8 @@
 $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches xgboost,lightgbm_res --skip_existing
 [ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
 [OOF ABILENE] học trên 20079 bước đầu Train, dự báo 13386 bước cuối | nhánh ['xgboost', 'lightgbm_res']
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[0]	validation_0-rmse:0.09881
+[100]	validation_0-rmse:0.02899
+[200]	validation_0-rmse:0.02861
+[300]	validation_0-rmse:0.02843
