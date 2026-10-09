@@ -1,2 +1,10 @@
 
 $ /usr/bin/python3 evaluation/plot_weight_trajectories.py --datasets sdn
+[SDN] k = 5 cụm (silhouette 0.454)
+         corr_ext_spike  mean_switch  mean_kl  frac_dev_01  mean_ext_weight   y_std   y_max  n_flows
+cluster                                                                                             
+0               -0.0025       0.0218   0.0071       0.2231           0.8005  0.0020  0.0503       17
+1                0.1044       0.5348   0.2853       0.8803           0.6892  0.2102  0.9549       36
+2                0.0534       0.2235   0.1144       0.8710           0.8754  0.1404  1.0009       87
+3                0.1317       0.6013   0.9005       0.9531           0.2976  0.1766  1.0067        2
+4                0.2804       0.1069   0.0268       0.5374           0.8378  0.0456  0.8657       54
