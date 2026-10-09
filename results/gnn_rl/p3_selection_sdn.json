@@ -1,0 +1,9 @@
+{
+  "dataset": "sdn",
+  "S_static": 0.00446329265832901,
+  "S_hedge": 0.004337116040922572,
+  "S_hedge_floor": 0.004337116040922572,
+  "S_rl": 0.004172329092398286,
+  "choice": "rl_sac",
+  "rule": "RL nếu S_rl < 0,99·min(S_static,S_hedge); Hedge nếu S_hedge < 0,99·S_static"
+}

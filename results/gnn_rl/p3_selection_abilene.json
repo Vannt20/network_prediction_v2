@@ -1,0 +1,9 @@
+{
+  "dataset": "abilene",
+  "S_static": 0.0008717007003724575,
+  "S_hedge": 0.000872282999871882,
+  "S_hedge_floor": 0.0008682002791243553,
+  "S_rl": 0.0008719928737264127,
+  "choice": "static_k3",
+  "rule": "RL nếu S_rl < 0,99·min(S_static,S_hedge); Hedge nếu S_hedge < 0,99·S_static"
+}

@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_floor --pha
 [rl_sac_no_floor ABILENE] nhánh ['odgraphformer', 'xgboost', 'lightgbm_res'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
   [rl_sac_no_floor ABILENE] tiền huấn luyện trên OOF (13386 bước), prior ('huber', 'global')
       SAC   250/3000 | Q 0.0786 | π -1.5706 | r -0.0107 | α 0.1253 | 1.4 phút
+      SAC   500/3000 | Q 0.0863 | π -2.1091 | r -0.0137 | α 0.1162 | 3.3 phút
