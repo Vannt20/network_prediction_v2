@@ -1,2 +1,20 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids 0 --tag odgraphformer_no_route --max_steps 3000 --skip_existing --graphs od,adp
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[odgraphformer_no_route ABILENE] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['od', 'adp'] | max_steps=3000 | max_minutes=15
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:140: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/3000 | train MSE 1.3062e-3 | val MSE 1.2656e-3 * | 0.5 phút
+    step   500/3000 | train MSE 1.2048e-3 | val MSE 1.1725e-3 * | 0.9 phút
+    step   750/3000 | train MSE 1.1812e-3 | val MSE 1.1622e-3 * | 1.4 phút
+    step  1000/3000 | train MSE 1.2071e-3 | val MSE 1.1590e-3 * | 1.8 phút
+    step  1250/3000 | train MSE 1.1623e-3 | val MSE 1.1597e-3 | 2.2 phút
+    step  1500/3000 | train MSE 1.1571e-3 | val MSE 1.1433e-3 * | 2.6 phút
+    step  1750/3000 | train MSE 1.1082e-3 | val MSE 1.0913e-3 * | 3.0 phút
+    step  2000/3000 | train MSE 1.0889e-3 | val MSE 1.0841e-3 * | 3.5 phút
+    step  2250/3000 | train MSE 1.0726e-3 | val MSE 1.0893e-3 | 3.9 phút
+    step  2500/3000 | train MSE 1.0758e-3 | val MSE 1.0753e-3 * | 4.3 phút
+    step  2750/3000 | train MSE 1.0737e-3 | val MSE 1.0674e-3 * | 4.7 phút
+    step  3000/3000 | train MSE 1.0800e-3 | val MSE 1.0704e-3 | 5.2 phút
+[DONE] odgraphformer_no_route ABILENE run_0 | 3000 bước (tốt nhất 2750) | Val MSE=1.067e-3 | Test MSE=1.918e-3 | 5.2 phút
