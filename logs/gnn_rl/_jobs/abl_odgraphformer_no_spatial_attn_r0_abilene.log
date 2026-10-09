@@ -6,3 +6,15 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
 /kaggle/working/network_prediction_v2/training/train_od_graphformer.py:140: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
   sched.step()
     step   250/3000 | train MSE 1.2970e-3 | val MSE 1.2259e-3 * | 0.4 phút
+    step   500/3000 | train MSE 1.1965e-3 | val MSE 1.1907e-3 * | 0.8 phút
+    step   750/3000 | train MSE 1.1620e-3 | val MSE 1.2017e-3 | 1.2 phút
+    step  1000/3000 | train MSE 1.2274e-3 | val MSE 1.1685e-3 * | 1.6 phút
+    step  1250/3000 | train MSE 1.1500e-3 | val MSE 1.1119e-3 * | 2.0 phút
+    step  1500/3000 | train MSE 1.1646e-3 | val MSE 1.1216e-3 | 2.4 phút
+    step  1750/3000 | train MSE 1.1238e-3 | val MSE 1.0777e-3 * | 2.8 phút
+    step  2000/3000 | train MSE 1.0972e-3 | val MSE 1.0836e-3 | 3.2 phút
+    step  2250/3000 | train MSE 1.0859e-3 | val MSE 1.0936e-3 | 3.6 phút
+    step  2500/3000 | train MSE 1.0817e-3 | val MSE 1.0702e-3 * | 3.9 phút
+    step  2750/3000 | train MSE 1.0821e-3 | val MSE 1.0682e-3 * | 4.3 phút
+    step  3000/3000 | train MSE 1.0855e-3 | val MSE 1.0713e-3 | 4.7 phút
+[DONE] odgraphformer_no_spatial_attn ABILENE run_0 | 3000 bước (tốt nhất 2750) | Val MSE=1.068e-3 | Test MSE=1.940e-3 | 4.7 phút
