@@ -1,0 +1,16 @@
+{
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res"
+  ],
+  "selected": [
+    "mse",
+    "perflow"
+  ],
+  "cv_mse": {
+    "static": 0.003931305021978915,
+    "hedge": 0.00384803905427677,
+    "hedge_floor": 0.0038329536502776105
+  }
+}

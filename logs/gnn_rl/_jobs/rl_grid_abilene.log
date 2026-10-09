@@ -21,3 +21,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets 
       SAC   250/500 | Q 0.0736 | π -2.9570 | r -0.0067 | α 0.0794 | 1.2 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 453
   [rl_sac ABILENE] lưới λ_sw=0.0 f=0.2: CV MSE 0.8721e-3
+      SAC   250/500 | Q 0.0280 | π -2.9722 | r -0.0276 | α 0.0794 | 1.1 phút
