@@ -1,0 +1,9 @@
+{
+  "dataset": "geant",
+  "S_static": 0.0036817744839936495,
+  "S_hedge": 0.003242793151690399,
+  "S_hedge_floor": 0.0032550434358619685,
+  "S_rl": 0.003966197546105832,
+  "choice": "hedge",
+  "rule": "RL nếu S_rl < 0,99·min(S_static,S_hedge); Hedge nếu S_hedge < 0,99·S_static"
+}
