@@ -33,11 +33,18 @@ from run_experiments import check_existing_run
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 DL_BRANCHES = ['stwaveformer']
+# Nhánh của hướng V4 (logs/gnn_rl/...), chỉ dùng với cache_version khác 'v3'
+V4_DL_BRANCHES = ['odgraphformer']
 CACHE_VERSION = 'v3'
 
 
-def cache_path(ds_key, run_id):
-    return os.path.join(parent_dir, 'cache', CACHE_VERSION, f"{ds_key}_run_{run_id}.pt")
+def cache_path(ds_key, run_id, version=CACHE_VERSION):
+    return os.path.join(parent_dir, 'cache', version, f"{ds_key}_run_{run_id}.pt")
+
+
+def _v4_logdir(name, ds_key, run_id, logs_dir):
+    seq_len = DATASET_CONFIGS[ds_key]['seq_len']
+    return os.path.join(logs_dir, 'gnn_rl', f"{name}_data_{ds_key}_seq_{seq_len}", f"run_{run_id}")
 
 
 def create_sliding_windows(traffic_norm, tod_arr, dow_arr, seq_len):
@@ -79,6 +86,8 @@ def source_fingerprint(branches, ds_key, run_id, logs_dir=None):
     for b in branches:
         if b in DL_BRANCHES:
             f = os.path.join(logs_dir, f"{b}_data_{ds_key}_seq_{seq_len}", f"run_{run_id}", 'best_model.pth')
+        elif b in V4_DL_BRANCHES:
+            f = os.path.join(_v4_logdir(b, ds_key, run_id, logs_dir), 'best_model.pth')
         else:
             f = os.path.join(logs_dir, f"{b}_data_{ds_key}_shared", f"run_{run_id}", 'model.bin')
         if os.path.exists(f):
@@ -137,6 +146,28 @@ def _dl_branch_preds(name, ds_key, run_id, cfg, x_val_win, y_test_win, x_test_wi
     return p_val.astype(np.float32), p_test, float(logged.get('inference_time_ms', np.nan))
 
 
+def _v4_dl_branch_preds(name, ds_key, run_id, y_val_win, y_test_win, logs_dir):
+    """Nhánh V4 (OD-GraphFormer): dự báo Val/Test và σ̂ đã lưu lúc huấn luyện, kiểm tra khớp nhãn."""
+    logdir = _v4_logdir(name, ds_key, run_id, logs_dir)
+    need = ['pred_val.npy', 'sigma_val.npy', 'y_pred_data.npy', 'sigma_test.npy', 'y_real_data.npy']
+    miss = [f for f in need if not os.path.exists(os.path.join(logdir, f))]
+    if miss:
+        raise FileNotFoundError(
+            f"[{name} {ds_key.upper()} run_{run_id}] thiếu {miss} trong {logdir}. Huấn luyện: "
+            f"python training/train_od_graphformer.py --datasets {ds_key} --run_ids {run_id}")
+
+    def ld(f):
+        return np.load(os.path.join(logdir, f)).astype(np.float32)
+    y_log, y_now = ld('y_real_data.npy'), y_test_win.numpy()
+    if y_log.shape != y_now.shape or not np.allclose(y_log, y_now, atol=1e-6):
+        raise RuntimeError(f"[{name} {ds_key.upper()} run_{run_id}] nhãn Test trong log không khớp dữ liệu hiện tại")
+    p_val, p_test = ld('pred_val.npy'), ld('y_pred_data.npy')
+    if p_val.shape != tuple(y_val_win.shape):
+        raise RuntimeError(f"[{name}] pred_val.npy có kích thước {p_val.shape}, cần {tuple(y_val_win.shape)}")
+    inf = float(pd.read_csv(os.path.join(logdir, 'test_metrics.csv')).iloc[0].get('inference_time_ms', np.nan))
+    return p_val, p_test, inf, ld('sigma_val.npy'), ld('sigma_test.npy')
+
+
 def _raw_predict(name, inst, X):
     """Dự báo chưa cắt về >= 0 (để hiệu chỉnh hệ số chặn chính xác)."""
     if name == 'lightgbm_res':
@@ -191,20 +222,22 @@ def _ml_branch_preds(name, ds_key, run_id, X_va, X_te, y_te_flat, feature_names,
     return p_val, p_test, inf
 
 
-def precompute_dataset_cache(dataset_name, runs=5, run_ids=None, branches=None, quick_check=False, skip_existing=False):
+def precompute_dataset_cache(dataset_name, runs=5, run_ids=None, branches=None, quick_check=False, skip_existing=False,
+                             cache_version=CACHE_VERSION):
     ds_key = dataset_name.lower()
     cfg = DATASET_CONFIGS[ds_key]
     seq_len, num_flows = cfg['seq_len'], cfg['flows']
     logs_dir = os.path.join(parent_dir, 'logs')
     branches = branches or default_branches()
     run_id_list = parse_run_ids(run_ids, runs)
+    is_v3 = cache_version == 'v3'
     for b in branches:
-        if b not in DL_BRANCHES and b not in MODEL_CLASSES:
+        if b not in DL_BRANCHES and b not in MODEL_CLASSES and (is_v3 or b not in V4_DL_BRANCHES):
             raise ValueError(f"Nhánh không hỗ trợ: {b}")
 
     todo = []
     for r in run_id_list:
-        f = cache_path(ds_key, r)
+        f = cache_path(ds_key, r, cache_version)
         if skip_existing and os.path.exists(f):
             try:
                 old = torch.load(f, map_location='cpu')
@@ -219,7 +252,7 @@ def precompute_dataset_cache(dataset_name, runs=5, run_ids=None, branches=None, 
         return
 
     print(f"\n=======================================================", flush=True)
-    print(f"[*] PRECOMPUTE CACHE {CACHE_VERSION}: {ds_key.upper()} | Nhánh: {branches} | Run IDs: {todo}", flush=True)
+    print(f"[*] PRECOMPUTE CACHE {cache_version}: {ds_key.upper()} | Nhánh: {branches} | Run IDs: {todo}", flush=True)
     print(f"=======================================================", flush=True)
 
     (_, _), (X_va, y_va), (X_te, y_te), meta = prepare_feature_store(
@@ -245,12 +278,33 @@ def precompute_dataset_cache(dataset_name, runs=5, run_ids=None, branches=None, 
             'context': extract_context_features_torch(xw),      # [T, N, 4] cho ablation cổng MLP
             'last': xw[:, -1, :, 0].clone(),                    # lag_1 - phân tích điểm vượt biên Train
         }
+        if not is_v3:
+            # Thời điểm của bước cần dự báo (cửa sổ j dự báo bước j + seq_len của split)
+            n_win = len(xw)
+            split_extra[split]['tod'] = torch.from_numpy(np.asarray(meta[f'tod_{split}'][seq_len:], dtype=np.float32)[:n_win])
+            split_extra[split]['dow'] = torch.from_numpy(np.asarray(meta[f'dow_{split}'][seq_len:], dtype=np.float32)[:n_win])
 
     for run_id in todo:
         print(f"  --> run_{run_id}", flush=True)
         P_val, P_test, inf_times = [], [], {}
+        sigma = {}
+        # V4: lấy lại nguyên dự báo của các nhánh v3 từ cache v3 khi đúng mô hình đã tạo ra nó (khớp tuyệt đối với v3)
+        v3c, fp = None, {}
+        if not is_v3 and os.path.exists(cache_path(ds_key, run_id, 'v3')):
+            v3c = torch.load(cache_path(ds_key, run_id, 'v3'), map_location='cpu', weights_only=False)
+            fp = source_fingerprint(branches, ds_key, run_id, logs_dir)
         for b in branches:
-            if b in DL_BRANCHES:
+            if v3c is not None and b in v3c['branches'] and fp.get(b) and v3c['sources'].get(b) == fp[b]:
+                k = v3c['branches'].index(b)
+                pv, pt = v3c['val']['P'][k].numpy()[:T_val], v3c['test']['P'][k].numpy()[:T_test]
+                it = v3c['inference_time_ms'].get(b, np.nan)
+                print(f"      [{b}] lấy từ cache v3 (cùng mô hình)", flush=True)
+            elif b in V4_DL_BRANCHES and not is_v3:
+                pv, pt, it, sv, stt = _v4_dl_branch_preds(b, ds_key, run_id, y_val_win, y_test_win, logs_dir)
+                if quick_check:
+                    pv, pt, sv, stt = pv[:T_val], pt[:T_test], sv[:T_val], stt[:T_test]
+                sigma = {'val': sv, 'test': stt}
+            elif b in DL_BRANCHES:
                 pv, pt, it = _dl_branch_preds(b, ds_key, run_id, cfg, x_val_win, y_test_win, x_test_win, logs_dir)
                 if quick_check:
                     pt = pt[:T_test]
@@ -263,8 +317,12 @@ def precompute_dataset_cache(dataset_name, runs=5, run_ids=None, branches=None, 
             print(f"      [{b}] val MSE={np.mean((pv - y_val_win.numpy()) ** 2)*1e3:.3f}e-3 | "
                   f"test MSE={np.mean((pt - y_test_win.numpy()) ** 2)*1e3:.3f}e-3", flush=True)
 
+        if not is_v3:
+            for split, T in (('val', T_val), ('test', T_test)):
+                s = sigma.get(split, np.full((T, num_flows), np.nan, dtype=np.float32))
+                split_extra[split]['sigma'] = torch.from_numpy(np.asarray(s, dtype=np.float32))
         data = {
-            'version': CACHE_VERSION,
+            'version': cache_version,
             'dataset': ds_key,
             'run_id': run_id,
             'branches': branches,
@@ -273,19 +331,20 @@ def precompute_dataset_cache(dataset_name, runs=5, run_ids=None, branches=None, 
             'val': {'P': torch.from_numpy(np.stack(P_val)), 'y': y_val_win.clone(), **split_extra['val']},
             'test': {'P': torch.from_numpy(np.stack(P_test)), 'y': y_test_win.clone(), **split_extra['test']},
         }
-        out = cache_path(ds_key, run_id)
+        out = cache_path(ds_key, run_id, cache_version)
         os.makedirs(os.path.dirname(out), exist_ok=True)
         with open(out, 'wb') as f:
             torch.save(data, f)
         print(f"      [CACHE] Đã lưu: {out}", flush=True)
 
 
-def run_precompute(datasets=None, runs=5, run_ids=None, branches=None, quick_check=False, skip_existing=False):
+def run_precompute(datasets=None, runs=5, run_ids=None, branches=None, quick_check=False, skip_existing=False,
+                   cache_version=CACHE_VERSION):
     if datasets is None or 'all' in datasets:
         datasets = ['sdn', 'geant', 'abilene']
     for ds in datasets:
         precompute_dataset_cache(ds, runs=runs, run_ids=run_ids, branches=branches,
-                                 quick_check=quick_check, skip_existing=skip_existing)
+                                 quick_check=quick_check, skip_existing=skip_existing, cache_version=cache_version)
 
 
 if __name__ == '__main__':
@@ -297,8 +356,10 @@ if __name__ == '__main__':
                         help="Danh sách nhánh, mặc định: stwaveformer,<champion>,lightgbm_res")
     parser.add_argument('--skip_existing', action='store_true')
     parser.add_argument('--quick_check', action='store_true')
+    parser.add_argument('--cache_version', type=str, default=CACHE_VERSION,
+                        help="v3 (mặc định, hành vi cũ) hoặc v4 (thêm nhánh odgraphformer, sigma, tod, dow)")
     args = parser.parse_args()
     d_list = [d.strip() for d in args.datasets.split(',')] if args.datasets != 'all' else ['sdn', 'geant', 'abilene']
     b_list = [b.strip() for b in args.branches.split(',')] if args.branches else None
     run_precompute(datasets=d_list, runs=args.runs, run_ids=args.run_ids, branches=b_list,
-                   quick_check=args.quick_check, skip_existing=args.skip_existing)
+                   quick_check=args.quick_check, skip_existing=args.skip_existing, cache_version=args.cache_version)
