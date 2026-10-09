@@ -70,7 +70,7 @@ def analyse(ds, run_id=0, tag='rl_sac'):
     cfg = load_json(os.path.join(d, 'config.json'))
     branches = cfg['branches']
     A = np.load(f)['w'].astype(np.float32)                                 # [T, N, K]
-    c = load_cache(ds, run_id, 'v4')
+    c = load_cache(ds, run_id)
     P, y, last = split_arrays(c, 'test', branches)
     ctx = c['test']['context'].numpy()
     from Graph_models.robust_stacking import RobustPerFlowStacking

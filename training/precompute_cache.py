@@ -43,8 +43,10 @@ def cache_path(ds_key, run_id, version=CACHE_VERSION):
 
 
 def _v4_logdir(name, ds_key, run_id, logs_dir):
+    # Log của V4 theo vòng thực nghiệm (logs/gnn_rl, logs/gnn_rl_r2, ...); logs_dir giữ lại cho tương thích chữ ký
+    from training.gnn_rl_common import LOGS_V4
     seq_len = DATASET_CONFIGS[ds_key]['seq_len']
-    return os.path.join(logs_dir, 'gnn_rl', f"{name}_data_{ds_key}_seq_{seq_len}", f"run_{run_id}")
+    return os.path.join(LOGS_V4, f"{name}_data_{ds_key}_seq_{seq_len}", f"run_{run_id}")
 
 
 def create_sliding_windows(traffic_norm, tod_arr, dow_arr, seq_len):

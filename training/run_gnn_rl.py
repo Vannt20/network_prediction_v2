@@ -28,13 +28,14 @@ for p in [parent_dir, current_dir]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from training.gnn_rl_common import setup_utf8, parse_list, ALL_DATASETS, RESULTS_V4, ODGF_MAX_STEPS
+from training.gnn_rl_common import (setup_utf8, parse_list, ALL_DATASETS, RESULTS_V4, LOGS_V4, ODGF_MAX_STEPS,
+                                    CACHE_VERSION_V4, V4_BRANCHES)
 
-V4_BRANCHES = 'stwaveformer,xgboost,lightgbm_res,odgraphformer'
-ODGF_ABLATIONS = {'odgraphformer_no_residual': ['--no_residual'],
+V4_BRANCHES_ARG = ','.join(V4_BRANCHES)
+ODGF_ABLATIONS = {'odgraphformer_anchor_other': ['--anchor', 'other'],
                   'odgraphformer_no_route': ['--graphs', 'od,adp'],
                   'odgraphformer_no_spatial_attn': ['--no_spatial_attn']}
-RL_ABLATIONS = ['no_gnn', 'no_floor', 'no_oof']
+RL_ABLATIONS = ['no_gnn', 'no_oof', 'static_prior']
 UNITS = {'gpu': 2, 'gpu_small': 1, 'cpu': 0}
 
 
@@ -102,7 +103,7 @@ class Scheduler:
         self.jobs = {j.name: j for j in jobs}
         self.n_gpus, self.cpu_slots = n_gpus, cpu_slots
         self.budget_s = time_budget_h * 3600
-        self.log_dir = log_dir or os.path.join(parent_dir, 'logs', 'gnn_rl', '_jobs')
+        self.log_dir = log_dir or os.path.join(LOGS_V4, '_jobs')
         os.makedirs(self.log_dir, exist_ok=True)
         self.on_tick, self.tick_s, self.status_every_s, self.max_retry = on_tick, tick_s, status_every_s, max_retry
         self.t_start = time.time()
@@ -283,22 +284,22 @@ def build_jobs(datasets, run_ids, abl_run_ids, quick_check=False, with_p0=True, 
             add(T(f'odgf_r{r}'), (lambda ds=ds, r=r: [py, 'training/train_od_graphformer.py', '--datasets', ds,
                                                       '--run_ids', str(r), '--max_steps', str(_bench_steps(ds)),
                                                       '--skip_existing'] + qc), 'gpu', odgf_deps, prio=1)
-        add(T('cache'), [py, 'training/precompute_cache.py', '--cache_version', 'v4', '--datasets', ds, '--run_ids', R,
-                         '--branches', V4_BRANCHES, '--skip_existing'], 'cpu', [T(f'odgf_r{r}') for r in rid], prio=1)
-        add(T('decision'), [py, 'training/p1_decision.py', '--datasets', ds, '--run_ids', R]
-            + (['--force', 'odgraphformer'] if quick_check else []), 'cpu', [T('cache')], prio=1)
-        add(T('static_k4'), [py, 'training/run_hedge.py', '--branches', V4_BRANCHES, '--methods', 'static',
-                             '--static_tag', 'static_k4', '--datasets', ds, '--run_ids', R] + qc, 'cpu', [T('cache')], prio=2)
-        # P2
+        add(T('cache'), [py, 'training/precompute_cache.py', '--cache_version', CACHE_VERSION_V4, '--datasets', ds,
+                         '--run_ids', R, '--branches', V4_BRANCHES_ARG, '--skip_existing'], 'cpu',
+            [T(f'odgf_r{r}') for r in rid], prio=1)
+        add(T('decision'), [py, 'training/p1_decision.py', '--datasets', ds, '--run_ids', R], 'cpu', [T('cache')], prio=1)
+        # P2: OOF của cả 4 nhánh. Các job OOF là tùy chọn: nếu lỗi, RL-Gate vẫn chạy nhưng chỉ học trên Val.
+        add(T('oof_st'), [py, 'training/build_oof.py', '--datasets', ds, '--branches', 'stwaveformer',
+                          '--skip_existing'] + qc, 'gpu', prio=2, optional=True)
         add(T('oof_odgf'), (lambda ds=ds: [py, 'training/build_oof.py', '--datasets', ds, '--branches', 'odgraphformer',
                                            '--max_steps', str(_bench_steps(ds, 0.6)), '--skip_existing'] + qc),
-            'gpu', odgf_deps, prio=2)
+            'gpu', odgf_deps, prio=2, optional=True)
         add(T('oof_gbdt'), [py, 'training/build_oof.py', '--datasets', ds, '--branches', 'xgboost,lightgbm_res',
-                            '--skip_existing'] + qc, 'cpu', prio=1)
-        add(T('oof'), [py, 'training/build_oof.py', '--datasets', ds, '--skip_existing'] + qc, 'cpu',
-            [T('oof_odgf'), T('oof_gbdt'), T('cache')], prio=1)
-        # P3
-        add(T('combiners'), [py, 'training/run_hedge.py', '--static_tag', 'static_k3', '--datasets', ds, '--run_ids', R]
+                            '--skip_existing'] + qc, 'cpu', prio=1, optional=True)
+        add(T('oof'), [py, 'training/build_oof.py', '--datasets', ds, '--assemble_only'] + qc, 'cpu',
+            [T('oof_st'), T('oof_odgf'), T('oof_gbdt'), T('cache')], prio=1, optional=True)
+        # P3: static K = 4, Hedge, Hedge + sàn, prior Hedge (Huber), cổng MLP v2
+        add(T('combiners'), [py, 'training/run_hedge.py', '--static_tag', 'static_k4', '--datasets', ds, '--run_ids', R]
             + qc, 'cpu', [T('decision')], prio=2)
         add(T('rl_grid'), [py, 'training/train_rl_gate.py', '--algo', 'sac', '--phase', 'grid', '--datasets', ds,
                            '--skip_existing'] + qc, 'gpu_small', [T('decision'), T('oof')], prio=1)

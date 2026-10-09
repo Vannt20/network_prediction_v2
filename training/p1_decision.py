@@ -1,10 +1,11 @@
 """
-Quyết định sau P1 (spec Mục 4.7), ghi results/gnn_rl/p1_decision_{ds}.json (một file mỗi dataset để
-hai tài khoản Kaggle không ghi đè nhau).
+Quyết định sau P1, ghi results/gnn_rl*/p1_decision_{ds}.json (một file mỗi dataset để hai tài khoản Kaggle
+không ghi đè nhau).
 
-Với từng dataset: nếu Val MSE trung bình của OD-GraphFormer thấp hơn ST-WaveFormer
-  -> tập nhánh RL-Gate = {odgraphformer, xgboost, lightgbm_res}, có OOF
-  ngược lại -> 3 nhánh v3, RL-Gate chỉ học trên Val (--no_oof), không huấn luyện lại ST-WaveFormer.
+Vòng 1 thay ST-WaveFormer bằng OD-GraphFormer khi Val MSE của nhánh đơn thấp hơn. Ở SDN, ST-WaveFormer đứng một
+mình rất kém nhưng bổ sung tốt cho tổ hợp: bỏ nó làm static tăng từ 4,00 lên 4,68 (x10^-3). Vòng 2 (spec Mục 15)
+giữ cả 4 nhánh cho RL-Gate và các tầng kết hợp; Static K = 4 tốt hơn v3 ở 3/3 run trên cả 3 dataset ở vòng 1.
+File vẫn ghi Val MSE từng nhánh để tham khảo.
 """
 import os
 import sys
@@ -26,32 +27,29 @@ def decision_file(ds_key):
     return os.path.join(RESULTS_V4, f'p1_decision_{ds_key}.json')
 
 
-def decide(datasets, run_ids, force=None):
+def decide(datasets, run_ids):
     out = {}
     for ds in datasets:
-        mse = {}
+        mse, branches = {}, None
         for r in run_ids:
-            c = load_cache(ds, r, 'v4')
+            c = load_cache(ds, r)
+            branches = c['branches']
             Pv, yv, _ = split_arrays(c, 'val')
-            for k, b in enumerate(c['branches']):
+            for k, b in enumerate(branches):
                 mse.setdefault(b, []).append(float(np.mean((Pv[k] - yv) ** 2)))
-            gml = [b for b in c['branches'] if b not in ('stwaveformer', 'odgraphformer')]
         m = {b: float(np.mean(v)) for b, v in mse.items()}
-        use_odgf = m['odgraphformer'] < m['stwaveformer'] if force is None else force == 'odgraphformer'
-        dl = 'odgraphformer' if use_odgf else 'stwaveformer'
-        out[ds] = {'dataset': ds, 'rl_branches': [dl] + gml, 'use_oof': bool(use_odgf), 'val_mse_mean': m,
-                   'n_runs': len(run_ids), 'forced': force}
+        out[ds] = {'dataset': ds, 'rl_branches': list(branches), 'use_oof': True, 'val_mse_mean': m,
+                   'n_runs': len(run_ids), 'rule': 'vòng 2: giữ cả 4 nhánh'}
         save_json(out[ds], decision_file(ds))
         print(f"[{ds.upper()}] Val MSE e-3: " + " | ".join(f"{b}={v*1e3:.3f}" for b, v in m.items())
-              + f" -> nhánh học sâu cho RL-Gate: {dl}", flush=True)
+              + f" -> RL-Gate dùng {len(branches)} nhánh: {branches}", flush=True)
     return out
 
 
 if __name__ == '__main__':
     setup_utf8()
-    ap = argparse.ArgumentParser(description="P1: chọn nhánh học sâu cho RL-Gate theo Val MSE")
+    ap = argparse.ArgumentParser(description="P1: tập nhánh cho RL-Gate và các tầng kết hợp")
     ap.add_argument('--datasets', default='all')
-    ap.add_argument('--run_ids', default='0-9')
-    ap.add_argument('--force', default=None, choices=['odgraphformer', 'stwaveformer'], help="Chỉ dùng cho quick_check")
+    ap.add_argument('--run_ids', default='0-2')
     a = ap.parse_args()
-    decide(parse_list(a.datasets, ALL_DATASETS), parse_run_ids(a.run_ids), a.force)
+    decide(parse_list(a.datasets, ALL_DATASETS), parse_run_ids(a.run_ids))

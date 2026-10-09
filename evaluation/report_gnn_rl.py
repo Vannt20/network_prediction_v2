@@ -1,9 +1,12 @@
 """
 P4 - Báo cáo cuối của hướng V4 (spec Mục 6.4.5 và 7).
 
-1. Quy tắc chọn tầng kết hợp theo từng dataset (cố định trên Val, run_0):
-   RL-Gate nếu S_rl < min(S_static, S_hedge)·0,99; nếu không Hedge nếu S_hedge < S_static·0,99; nếu không static.
-   -> results/gnn_rl/p3_selection_{ds}.json ; mô hình cuối "ST-Adaptive-Ensemble-RL" = cấu hình được chọn.
+1. Quy tắc chọn tầng kết hợp theo từng dataset, dùng CV 2 khối trên Val của run_0 (spec Mục 15):
+   vòng 2 (quy tắc chính): chấm bằng Huber; một tầng động (RL-Gate, Hedge, Hedge + sàn, prior Hedge) chỉ được chọn
+   khi Huber trung bình thấp hơn static ít nhất 1% VÀ thấp hơn static ở cả hai khối; trong các tầng đủ điều kiện,
+   chọn tầng có Huber trung bình thấp nhất; không có tầng nào đủ điều kiện thì giữ static.
+   vòng 1 (ghi lại để đối chiếu): MSE trung bình; RL nếu S_rl < 0,99·min(S_static, S_hedge), rồi Hedge, rồi static.
+   -> results/gnn_rl*/p3_selection_{ds}.json ; mô hình cuối "ST-Adaptive-Ensemble-RL" = cấu hình theo quy tắc chính.
 2. Bảng tổng hợp (mean ± std qua các run, chỉ số chính + phụ, số run tốt hơn v3).
 3. Kiểm định: t-test ghép cặp theo run và Diebold-Mariano trên từng run, mô hình cuối so với v3 và Hedge.
 
@@ -32,18 +35,24 @@ METRICS = ['mse', 'mae', 'mse_in_range', 'mse_trim_jump', 'top1_se_share', 'rise
 MAIN_MODELS = [
     ('persistence', 'Persistence'), ('branch_xgboost', 'XGBoost'), ('branch_lightgbm_res', 'LightGBM-Residual'),
     ('branch_stwaveformer', 'ST-WaveFormer'), ('branch_odgraphformer', 'OD-GraphFormer'),
-    ('v3_static', 'ST-Adaptive-Ensemble v3 (static)'), ('static_k4', 'Static K=4'), ('static_k3', 'Static K=3 (nhánh RL)'),
-    ('hedge', 'Hedge'), ('hedge_floor', 'Hedge + sàn'), ('context_gate', 'Cổng MLP ngữ cảnh v2'),
-    ('rl_sup', 'Gate giám sát (γ=0)'), ('rl_sac', 'RL-Gate (SAC)'), ('final', 'ST-Adaptive-Ensemble-RL'),
+    ('v3_static', 'ST-Adaptive-Ensemble v3 (static)'), ('hedge_v3', 'Hedge (3 nhánh v3)'),
+    ('hedge_floor_v3', 'Hedge + sàn (3 nhánh v3)'), ('static_k4', 'Static K=4'), ('static_k3', 'Static K=3 (nhánh RL)'),
+    ('hedge', 'Hedge'), ('hedge_floor', 'Hedge + sàn'), ('hedge_prior', 'Prior Hedge + sàn (Huber)'),
+    ('context_gate', 'Cổng MLP ngữ cảnh v2'), ('rl_sup', 'Gate giám sát (γ=0)'), ('rl_sac', 'RL-Gate (SAC)'),
+    ('final', 'ST-Adaptive-Ensemble-RL'),
 ]
 ABLATIONS = [
+    ('odgraphformer_anchor_other', 'OD-GraphFormer: đổi mốc neo'),
     ('odgraphformer_no_residual', 'OD-GraphFormer: bỏ mục tiêu phần dư'),
     ('odgraphformer_no_route', 'OD-GraphFormer: bỏ A_route'),
     ('odgraphformer_no_spatial_attn', 'OD-GraphFormer: bỏ attention giữa luồng'),
     ('rl_sac_no_gnn', 'RL-Gate: bỏ GNN'), ('rl_sac_no_floor', 'RL-Gate: bỏ ràng buộc sàn'),
     ('rl_sac_no_oof', 'RL-Gate: không dùng OOF'), ('rl_sac_no_temporal', 'RL-Gate: bỏ Transformer lịch sử'),
     ('rl_sac_no_kl', 'RL-Gate: bỏ phạt KL'), ('rl_sac_no_sigma', 'RL-Gate: bỏ σ̂'),
+    ('rl_sac_static_prior', 'RL-Gate: prior tĩnh thay cho Hedge'),
 ]
+DYNAMIC = ('rl_sac', 'hedge', 'hedge_floor', 'hedge_prior')
+STATIC_TAG = 'static_k4'
 
 
 def dm_from_loss(d):
@@ -71,7 +80,7 @@ def collect(ds, run_ids):
     """Trả về (DataFrame chỉ số theo run, dict se_t[(model, run)])."""
     rows, se = [], {}
     for r in run_ids:
-        c = load_cache(ds, r, 'v4')
+        c = load_cache(ds, r)
         P, y, last = split_arrays(c, 'test')
         y64, l64 = y.astype(np.float64), last.astype(np.float64)
         keep = jump_mask(y64, l64)
@@ -100,23 +109,50 @@ def collect(ds, run_ids):
     return pd.DataFrame(rows), se
 
 
+def choose_combiner(blocks, static='static', candidates=DYNAMIC, min_gain=0.01):
+    """
+    Quy tắc chính vòng 2. blocks: {tên: [Huber khối 1, Huber khối 2]} (phải có static).
+    Tầng động đủ điều kiện khi Huber TB <= (1 - min_gain) * static VÀ thấp hơn static ở mọi khối.
+    Trả về tên được chọn (static nếu không tầng nào đủ điều kiện).
+    """
+    s = np.asarray(blocks[static], dtype=np.float64)
+    ok = {}
+    for m in candidates:
+        if m not in blocks:
+            continue
+        b = np.asarray(blocks[m], dtype=np.float64)
+        if b.mean() <= (1 - min_gain) * s.mean() and np.all(b < s):
+            ok[m] = b.mean()
+    return min(ok, key=ok.get) if ok else static
+
+
 def select_final(ds):
-    """Quy tắc chọn tầng kết hợp (spec 6.4.5), dùng điểm CV Val của run_0."""
+    """Chọn tầng kết hợp theo quy tắc chính (Huber, thắng cả hai khối); ghi kèm lựa chọn theo quy tắc vòng 1."""
     cv_f = os.path.join(run_dir('cv', ds, 0, seq=False), 'cv_scores.json')
     grid_f = os.path.join(run_dir('rl_sac', ds, None, seq=False), 'grid.json')
     if not os.path.exists(cv_f):
         return None
-    cv = load_json(cv_f)['cv_mse']
-    s_static, s_hedge = cv['static'], cv['hedge']
-    s_rl = load_json(grid_f)['cv_mse'] if os.path.exists(grid_f) else float('inf')
-    if s_rl < min(s_static, s_hedge) * 0.99:
-        choice = 'rl_sac'
-    elif s_hedge < s_static * 0.99:
-        choice = 'hedge'
+    cv = load_json(cv_f)
+    hub = {m: v['huber'] for m, v in cv['blocks'].items()}
+    mse = {m: v['mse'] for m, v in cv['blocks'].items()}
+    if os.path.exists(grid_f):
+        g = load_json(grid_f)
+        hub['rl_sac'], mse['rl_sac'] = g['blocks']['huber'], g['blocks']['mse']
+    choice = choose_combiner(hub)
+    m_mean = {m: float(np.mean(v)) for m, v in mse.items()}
+    s_rl = m_mean.get('rl_sac', float('inf'))
+    if s_rl < min(m_mean['static'], m_mean['hedge']) * 0.99:
+        choice_v1 = 'rl_sac'
+    elif m_mean['hedge'] < m_mean['static'] * 0.99:
+        choice_v1 = 'hedge'
     else:
-        choice = 'static_k3'
-    out = {'dataset': ds, 'S_static': s_static, 'S_hedge': s_hedge, 'S_hedge_floor': cv.get('hedge_floor'),
-           'S_rl': s_rl, 'choice': choice, 'rule': 'RL nếu S_rl < 0,99·min(S_static,S_hedge); Hedge nếu S_hedge < 0,99·S_static'}
+        choice_v1 = 'static'
+    rename = lambda c: STATIC_TAG if c == 'static' else c
+    out = {'dataset': ds, 'choice': rename(choice), 'choice_rule_v1': rename(choice_v1),
+           'cv_huber': {m: float(np.mean(v)) for m, v in hub.items()}, 'cv_mse': m_mean,
+           'blocks_huber': hub, 'blocks_mse': mse,
+           'rule': 'Huber CV; tầng động chỉ được chọn khi thấp hơn static >= 1% (TB) và ở cả hai khối',
+           'rule_v1': 'MSE CV; RL nếu S_rl < 0,99·min(S_static,S_hedge); Hedge nếu S_hedge < 0,99·S_static'}
     save_json(out, os.path.join(RESULTS_V4, f'p3_selection_{ds}.json'))
     return out
 
@@ -173,12 +209,13 @@ def report(datasets, run_ids):
             for r in run_ids:
                 if (s['choice'], r) in se:
                     se[('final', r)] = se[(s['choice'], r)]
-            print(f"[{ds.upper()}] chọn tầng kết hợp: {s['choice']} | CV e-3 static={s['S_static']*1e3:.4f} "
-                  f"hedge={s['S_hedge']*1e3:.4f} rl={s['S_rl']*1e3:.4f}", flush=True)
+            print(f"[{ds.upper()}] chọn tầng kết hợp: {s['choice']} (quy tắc vòng 1 sẽ chọn {s['choice_rule_v1']}) | "
+                  f"CV Huber e-3: " + " ".join(f"{m}={v*1e3:.4f}" for m, v in s['cv_huber'].items()), flush=True)
         all_df.append(df)
         if s is not None:
-            all_tests += tests(df, se, ds, run_ids)
-        all_tests += tests(df, se, ds, run_ids, target='rl_sac', refs=('v3_static', 'hedge', 'rl_sup'))
+            all_tests += tests(df, se, ds, run_ids, refs=('v3_static', 'hedge_v3', 'static_k4'))
+        all_tests += tests(df, se, ds, run_ids, target='rl_sac',
+                           refs=('v3_static', 'hedge_v3', 'static_k4', 'hedge', 'hedge_prior', 'rl_sup'))
     df = pd.concat(all_df, ignore_index=True)
     os.makedirs(RESULTS_V4, exist_ok=True)
     df.to_csv(os.path.join(RESULTS_V4, 'chi_so_theo_run_gnn_rl.csv'), index=False)

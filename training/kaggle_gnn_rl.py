@@ -1,10 +1,11 @@
 """
 Chạy hướng V4 trên Kaggle với 2 tài khoản song song (spec Mục 0.3, 10.3), không đụng tới main.
 
-  Tài khoản A: GÉANT            -> push lên nhánh GNN_RL_a
-  Tài khoản B: SDN + Abilene    -> push lên nhánh GNN_RL_b
-Cả hai clone từ nhánh mã GNN_RL. Tài khoản xong sau gộp kết quả của tài khoản kia, dựng lại cache v4
-cho các dataset đó (chỉ đọc log, không huấn luyện) rồi lập báo cáo chung và push lên GNN_RL_results.
+  Tài khoản A: GÉANT            -> push lên nhánh GNN_RL_{vòng}_a   (vòng 1: GNN_RL_a)
+  Tài khoản B: SDN + Abilene    -> push lên nhánh GNN_RL_{vòng}_b
+Cả hai clone từ nhánh mã GNN_RL. Tài khoản xong sau gộp kết quả của tài khoản kia, dựng lại cache V4
+cho các dataset đó (chỉ đọc log, không huấn luyện) rồi lập báo cáo chung và push lên GNN_RL_{vòng}_results.
+Mỗi vòng có nhánh, file trạng thái và thư mục log riêng (GNN_RL_ROUND, mặc định r2) để không lẫn với vòng trước.
 
 Push ngay khi mỗi job xong (mỗi run OD-GraphFormer, mỗi nhóm run RL-Gate, OOF, báo cáo...), commit kèm MSE
 nếu có; thêm push định kỳ 15 phút làm dự phòng. Thư mục push: logs/gnn_rl, results/gnn_rl, data/graphs, status.
@@ -29,15 +30,18 @@ for p in [parent_dir, current_dir]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from training.gnn_rl_common import run_dir
+from training.gnn_rl_common import run_dir, ROUND, LOGS_V4, RESULTS_V4, CACHE_VERSION_V4, V4_BRANCHES
 
 PLAN = {'A': ['geant'], 'B': ['sdn', 'abilene']}
 # Giai đoạn hiện tại chỉ chạy 3 run (seed 42-44); đổi thành '0-9' khi chạy đủ 10 run
 DEFAULT_RUN_IDS = '0-2'
 CODE_BRANCH = 'GNN_RL'
-FINAL_BRANCH = 'GNN_RL_results'
-LOCK_BRANCH = 'GNN_RL_final_lock'
-PUSH_PATHS = ['logs/gnn_rl', 'results/gnn_rl', 'data/graphs', 'status']
+_RB = CODE_BRANCH if ROUND == 'r1' else f"{CODE_BRANCH}_{ROUND}"          # tiền tố nhánh kết quả của vòng
+FINAL_BRANCH = f"{_RB}_results"
+LOCK_BRANCH = f"{_RB}_final_lock"
+_REL = lambda p: os.path.relpath(p, parent_dir).replace(os.sep, '/')
+PUSH_PATHS = [_REL(LOGS_V4), _REL(RESULTS_V4), 'data/graphs', 'status']
+STATUS = lambda acc: f"status/gnn_rl_{acc}.json" if ROUND == 'r1' else f"status/gnn_rl_{ROUND}_{acc}.json"
 MAX_MB = 95
 
 
@@ -55,7 +59,7 @@ class KaggleV4:
         assert account in PLAN
         self.account, self.git = account, git
         self.other = 'B' if account == 'A' else 'A'
-        self.branch, self.other_branch = f"{CODE_BRANCH}_{account.lower()}", f"{CODE_BRANCH}_{self.other.lower()}"
+        self.branch, self.other_branch = f"{_RB}_{account.lower()}", f"{_RB}_{self.other.lower()}"
         self.datasets = PLAN[account]
         self.run_ids, self.ablation_run_ids, self.budget = run_ids, ablation_run_ids, time_budget_h
         self.push_every_s, self.last_push = push_every_s, time.time()
@@ -151,7 +155,7 @@ class KaggleV4:
         summary, failed = sch.run()
         self.sch = None
         os.makedirs(os.path.join(self.wd, 'status'), exist_ok=True)
-        with open(os.path.join(self.wd, 'status', f'gnn_rl_{self.account}.json'), 'w', encoding='utf-8') as f:
+        with open(os.path.join(self.wd, STATUS(self.account)), 'w', encoding='utf-8') as f:
             json.dump({'account': self.account, 'datasets': self.datasets, 'run_ids': self.run_ids,
                        'finished_utc': time.strftime('%Y-%m-%d %H:%M:%S'),
                        'session_hours': round((time.time() - t0) / 3600, 2), 'failed': failed, 'jobs': summary},
@@ -164,7 +168,7 @@ class KaggleV4:
 
     def final(self):
         """Tài khoản xong sau: gộp kết quả tài khoản kia, dựng lại cache v4, báo cáo chung."""
-        if not self._remote_has(self.other_branch, f"status/gnn_rl_{self.other}.json"):
+        if not self._remote_has(self.other_branch, STATUS(self.other)):
             print(f"Tài khoản {self.other} chưa xong -> dừng (tài khoản {self.other} sẽ làm phần cuối).")
             return True
         if self.git('push', 'origin', f"HEAD:refs/heads/{LOCK_BRANCH}", cwd=self.wd, auth=True, check=False,
@@ -181,8 +185,8 @@ class KaggleV4:
         py = sys.executable
         all_ds = PLAN['A'] + PLAN['B']
         for ds in other_ds:
-            subprocess.run([py, 'training/precompute_cache.py', '--cache_version', 'v4', '--datasets', ds,
-                            '--run_ids', self.run_ids, '--branches', 'stwaveformer,xgboost,lightgbm_res,odgraphformer'],
+            subprocess.run([py, 'training/precompute_cache.py', '--cache_version', CACHE_VERSION_V4, '--datasets', ds,
+                            '--run_ids', self.run_ids, '--branches', ','.join(V4_BRANCHES)],
                            cwd=self.wd, check=True)
         subprocess.run([py, 'evaluation/report_gnn_rl.py', '--datasets', ','.join(all_ds), '--run_ids', self.run_ids],
                        cwd=self.wd, check=True)

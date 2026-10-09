@@ -1,7 +1,7 @@
 """
 Gate giám sát (gamma = 0) - đối chứng bắt buộc của RL-Gate (spec Mục 6.3).
 
-Cùng kiến trúc actor, hành động tất định u = c * tanh(mu), a_{t-1} cố định bằng w_static (không có thành phần
+Cùng kiến trúc actor, hành động tất định u = c * tanh(mu), a_{t-1} cố định bằng prior p_t (không có thành phần
 tuần tự), tối thiểu hóa trực tiếp  SE/c + λ_KL KL + λ_floor sàn  bằng lan truyền ngược.
 Dừng sớm theo 20% cuối của đoạn huấn luyện.
 """
@@ -23,11 +23,11 @@ def train_supervised(actor, task, n_updates=2000, lr=1e-3, batch_t=64, eval_ever
     best, best_state, wait, hist, t0 = float('inf'), copy.deepcopy(actor.state_dict()), 0, [], time.time()
 
     def loss_on(ts):
-        a_prev = task.w[None].expand(len(ts), -1, -1)
+        a_prev = task.prior[ts]
         u, _ = actor(*task.state(ts, a_prev), deterministic=True, with_logp=False)
-        a = mix(task.logw, u)
+        a = mix(task.logp[ts], u)
         se = ((a * d.P[ts]).sum(-1) - d.y[ts]) ** 2
-        return (se / task.c + task.penalties(a, a_prev)).mean(), se.mean()
+        return (se / task.c + task.penalties(a, a_prev, task.logp[ts])).mean(), se.mean()
 
     for it in range(1, n_updates + 1):
         actor.train()

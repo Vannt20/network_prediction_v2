@@ -73,14 +73,14 @@ class SAC:
             return torch.randint(0, max(1, T - ep_len), (n,), generator=g).to(dev)
         ts = new_start(c['n_envs'])
         t_end = ts + ep_len
-        a_prev = task.w[None].expand(c['n_envs'], N, K).clone()
+        a_prev = task.prior[ts].clone()
         hist, t0, alpha = [], time.time(), self.log_alpha.exp().item()
         acc = {'q': 0.0, 'pi': 0.0, 'r': 0.0, 'n': 0}
         for it in range(1, n_updates + 1):
             # 1) Tương tác: một bước cho mỗi episode song song
             with torch.no_grad():
                 u, _ = self.actor(*task.state(ts, a_prev), with_logp=False)
-                a = mix(task.logw, u)
+                a = mix(task.logp[ts], u)
                 r = task.reward(ts, a, a_prev)
             n = len(ts)
             idx = (torch.arange(n, device=dev) + ptr) % cap
@@ -93,13 +93,13 @@ class SAC:
                 k = int(done.sum())
                 ts[done] = new_start(k)
                 t_end[done] = ts[done] + ep_len
-                a_prev[done] = task.w[None].expand(k, N, K)
+                a_prev[done] = task.prior[ts[done]]
 
             # 2) Cập nhật
             if size >= c['batch_t']:
                 bi = torch.randint(0, size, (c['batch_t'],), generator=g).to(dev)
                 bt, bap, bu, br = buf_t[bi], buf_ap[bi].float(), buf_u[bi].float(), buf_r[bi]
-                ba = mix(task.logw, bu)                                         # a_t = trạng thái tiếp theo
+                ba = mix(task.logp[bt], bu)                                     # a_t = trạng thái tiếp theo
                 bt1 = (bt + 1).clamp(max=T - 1)
                 notdone = (bt + 1 < T).float()[:, None]
                 with torch.no_grad():

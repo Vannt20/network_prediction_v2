@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pytest
 
-from training.gnn_rl_common import jump_mask, oof_ranges, ROOT
+from training.gnn_rl_common import jump_mask, oof_ranges, ROOT, cache_file
 from evaluation.extra_metrics import extra_metrics
 
 
@@ -36,11 +36,11 @@ def test_oof_ranges():
     assert len(es) == 600 - 24 - int((600 - 24) * 0.9)
 
 
-@pytest.mark.skipif(not os.path.exists(os.path.join(ROOT, 'cache', 'v4', 'sdn_run_0.pt')), reason="chưa có cache v4")
+@pytest.mark.skipif(not os.path.exists(cache_file('sdn', 0)), reason="chưa có cache V4 của vòng hiện tại")
 def test_cache_v4_matches_v3():
     from training.gnn_rl_common import torch_load
     a = torch_load(os.path.join(ROOT, 'cache', 'v3', 'sdn_run_0.pt'))
-    b = torch_load(os.path.join(ROOT, 'cache', 'v4', 'sdn_run_0.pt'))
+    b = torch_load(cache_file('sdn', 0))
     for s in ('val', 'test'):
         assert b['branches'][:3] == a['branches']
         assert (a[s]['P'] == b[s]['P'][:3]).all()

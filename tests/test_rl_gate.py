@@ -68,7 +68,7 @@ def test_reward_zero_for_static_without_penalty():
     P, y, last, ctx, sigma, w = _arrays()
     task = GateTask(_data(P, y, last, ctx, sigma), w, [2], lam_sw=0.1, lam_kl=0.01, floor=0.0)
     ts = torch.arange(5)
-    a = task.w[None].expand(5, N, K)
+    a = task.prior[ts]
     r = task.reward(ts, a, a)
     torch.testing.assert_close(r, torch.zeros_like(r), atol=1e-6, rtol=0)
 
@@ -82,6 +82,50 @@ def test_sac_and_supervised_run():
     ag.set_norm(data.norm_stats())
     hist = ag.train(task, 6, verbose=False, log_every=3)
     assert len(hist) >= 1
+    actor = _actor(data, perturb=False)
+    train_supervised(actor, task, n_updates=5, eval_every=5, verbose=False)
+    pred, A = task.rollout_static_prev(actor)
+    assert pred.shape == (T, N) and np.allclose(A.sum(-1), 1.0, atol=1e-5)
+
+
+def _hedge_prior(P, y, w):
+    from Graph_models.online_hedge import prior_weights
+    return prior_weights(P, y, w.T, {'eta': 100.0, 'beta': 0.95, 'alpha': 0.25})      # [T, N, K]
+
+
+def test_init_policy_equals_hedge_prior():
+    P, y, last, ctx, sigma, w = _arrays()
+    data = _data(P, y, last, ctx, sigma)
+    prior = _hedge_prior(P, y, w)
+    assert not np.allclose(prior[0], prior[-1])                 # prior thay đổi theo bước
+    pred, A = GateTask(data, prior, [2]).rollout(_actor(data, perturb=False))
+    np.testing.assert_allclose(A, prior, atol=1e-5)
+    np.testing.assert_allclose(pred, (prior * np.moveaxis(P, 0, -1)).sum(-1), atol=1e-5)
+
+
+def test_rollout_causal_with_hedge_prior():
+    """Prior Hedge cũng nhân quả: đổi nhãn từ t0 thì trọng số tại các bước <= t0 không đổi."""
+    P, y, last, ctx, sigma, w = _arrays()
+    t0 = 30
+    y2, last2 = y.copy(), last.copy()
+    y2[t0:] += 5.0
+    last2[t0 + 1:] = y2[t0:-1]
+    d1, d2 = _data(P, y, last, ctx, sigma), _data(P, y2, last2, ctx, sigma)
+    actor = _actor(d1)
+    _, A1 = GateTask(d1, _hedge_prior(P, y, w), [2]).rollout(actor)
+    _, A2 = GateTask(d2, _hedge_prior(P, y2, w), [2]).rollout(actor)
+    np.testing.assert_allclose(A1[:t0 + 1], A2[:t0 + 1], atol=1e-6)
+    assert not np.allclose(A1[t0 + 1:], A2[t0 + 1:], atol=1e-4)
+
+
+def test_sac_runs_with_hedge_prior():
+    P, y, last, ctx, sigma, w = _arrays()
+    data = _data(P, y, last, ctx, sigma)
+    task = GateTask(data, _hedge_prior(P, y, w), [2])
+    ag = SAC(K, data.F, [np.eye(N, dtype=np.float32)],
+             {'d': 16, 'd_t': 8, 'H': 4, 'n_envs': 2, 'batch_t': 4, 'ep_len': 10}, 'cpu')
+    ag.set_norm(data.norm_stats())
+    ag.train(task, 6, verbose=False, log_every=3)
     actor = _actor(data, perturb=False)
     train_supervised(actor, task, n_updates=5, eval_every=5, verbose=False)
     pred, A = task.rollout_static_prev(actor)

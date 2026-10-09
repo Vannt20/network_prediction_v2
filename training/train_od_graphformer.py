@@ -32,7 +32,7 @@ for p in [parent_dir, current_dir]:
 
 from training.gnn_rl_common import (setup_utf8, parse_list, ALL_DATASETS, RESULTS_V4, ODGF_MAX_STEPS,
                                     ODGF_MAX_MINUTES, load_splits, comb_array, gather_windows, run_dir, save_json,
-                                    load_json, set_seed, get_device, oof_ranges)
+                                    load_json, set_seed, get_device, oof_ranges, huber)
 from features.feature_store import DATASET_CONFIGS
 from features.graph_builder import build_flow_graphs, resolve_topology, node_ids
 from Graph_models.od_graphformer import ODGraphFormer, build_odgf_from_config
@@ -41,7 +41,7 @@ from baselines_ml.run_ml_baselines import parse_run_ids
 
 TAG = 'odgraphformer'
 PATCH_LEN = {'sdn': 10, 'geant': 6, 'abilene': 6}
-TARGET_MINUTES = {'sdn': 6, 'geant': 15, 'abilene': 12}   # mục tiêu thiết kế / run (spec Mục 0.3)
+TARGET_MINUTES = {'sdn': 12, 'geant': 35, 'abilene': 18}  # mục tiêu thiết kế / run (vòng 2, spec Mục 15)
 
 
 def default_config(ds_key, args):
@@ -50,7 +50,8 @@ def default_config(ds_key, args):
         'dataset': ds_key, 'seq_len': cfg['seq_len'], 'num_flows': cfg['flows'],
         'd_model': args.d_model, 'n_temporal': args.layers, 'n_spatial': args.layers, 'nhead': 4,
         'dropout': 0.1, 'patch_len': args.patch_len or PATCH_LEN[ds_key], 'patch_stride': None, 'eps_s': 1e-3,
-        'residual': not args.no_residual, 'use_identity': not args.no_identity, 'spatial_attn': not args.no_spatial_attn,
+        'anchor': 'mean' if args.no_residual else args.anchor,
+        'use_identity': not args.no_identity, 'spatial_attn': not args.no_spatial_attn,
         'use_adp': 'adp' in args.graphs, 'fixed_graphs': [g for g in ('route', 'od') if g in args.graphs],
         'lambda_nll': args.lambda_nll, 'lr': args.lr, 'weight_decay': 1e-4, 'batch_size': args.batch_size,
         'max_steps': args.max_steps or ODGF_MAX_STEPS[ds_key], 'warmup': args.warmup,
@@ -58,6 +59,35 @@ def default_config(ds_key, args):
         'max_minutes': args.max_minutes or ODGF_MAX_MINUTES[ds_key], 'amp': not args.no_amp,
         'topology': resolve_topology(ds_key, args.topology), 'train_frac': args.train_frac,
     }
+
+
+def choose_anchor(comb_val, L):
+    """
+    Mốc neo của OD-GraphFormer theo Val (spec Mục 15): so Huber (delta 0,05) của hai dự báo không cần học trên Val,
+    'last' = x_{t-1} (Persistence) và 'mean' = trung bình L bước của cửa sổ. Mốc nào sai số nhỏ hơn được chọn.
+    Dùng Huber thay MSE vì MSE trên Val của GÉANT bị vài đỉnh chi phối (MSE chọn 'mean', Huber chọn 'last');
+    với Huber, kết quả trùng với Val của các mô hình OD-GraphFormer đã huấn luyện ở vòng 1 trên cả 3 dataset.
+    """
+    x = comb_val[..., 0].double().cpu().numpy()
+    T = x.shape[0]
+    cs = np.concatenate([np.zeros((1, x.shape[1])), np.cumsum(x, axis=0)], axis=0)
+    t = np.arange(L, T)
+    y = x[t]
+    e_last, e_mean = x[t - 1] - y, (cs[t] - cs[t - L]) / L - y
+    info = {'mse_last': float(np.mean(e_last ** 2)), 'mse_mean': float(np.mean(e_mean ** 2)),
+            'huber_last': huber(e_last), 'huber_mean': huber(e_mean), 'criterion': 'huber'}
+    info['auto'] = 'last' if info['huber_last'] <= info['huber_mean'] else 'mean'
+    return info
+
+
+def resolve_anchor(ds_key, cfg, comb_val):
+    """'auto' -> mốc tốt hơn trên Val; 'other' -> mốc còn lại (ablation); 'last' / 'mean' giữ nguyên."""
+    info = choose_anchor(comb_val, cfg['seq_len'])
+    a = cfg.get('anchor', 'auto')
+    chosen = info['auto'] if a == 'auto' else ({'last': 'mean', 'mean': 'last'}[info['auto']] if a == 'other' else a)
+    cfg.update({'anchor': chosen, 'anchor_info': info, 'residual': chosen == 'last'})
+    save_json({'dataset': ds_key, **info}, os.path.join(RESULTS_V4, f'odgf_anchor_{ds_key}.json'))
+    return chosen
 
 
 def prepare(ds_key, cfg, device):
@@ -68,6 +98,7 @@ def prepare(ds_key, cfg, device):
                 'num_nodes': len(label2idx), 'steps_per_day': sp['steps_per_day'], 'graph_meta': g['meta']})
     graphs = {'route': g['A_route'], 'od': g['A_od']}
     combs = {k: torch.from_numpy(comb_array(sp[k])).to(device) for k in ('train', 'val', 'test')}
+    resolve_anchor(ds_key, cfg, combs['val'])
     return combs, graphs
 
 
@@ -240,7 +271,9 @@ def run(args):
         combs, graphs = prepare(ds, cfg, device)
         print(f"\n[{args.tag} {ds.upper()}] device={device} | topology={cfg['topology']} "
               f"({cfg['graph_meta']['note']}) | đồ thị {cfg['fixed_graphs'] + (['adp'] if cfg['use_adp'] else [])} | "
-              f"max_steps={cfg['max_steps']} | max_minutes={cfg['max_minutes']}", flush=True)
+              f"max_steps={cfg['max_steps']} | max_minutes={cfg['max_minutes']} | mốc neo {cfg['anchor']} "
+              f"(Val Huber last={cfg['anchor_info']['huber_last']*1e3:.4f}e-3, "
+              f"mean={cfg['anchor_info']['huber_mean']*1e3:.4f}e-3)", flush=True)
         if args.benchmark:
             train_one(ds, 0, cfg, combs, graphs, None, device, benchmark=args.benchmark)
             continue
@@ -272,22 +305,24 @@ def load_trained(out_dir, device=None):
 def build_parser():
     ap = argparse.ArgumentParser(description="Huấn luyện OD-GraphFormer (V4)")
     ap.add_argument('--datasets', default='all')
-    ap.add_argument('--run_ids', default='0-9')
-    ap.add_argument('--tag', default=TAG, help="Tên thư mục log, ví dụ odgraphformer_no_residual cho ablation")
+    ap.add_argument('--run_ids', default='0-2')
+    ap.add_argument('--tag', default=TAG, help="Tên thư mục log, ví dụ odgraphformer_anchor_other cho ablation")
     ap.add_argument('--max_steps', type=int, default=None)
     ap.add_argument('--max_minutes', type=float, default=None)
     ap.add_argument('--batch_size', type=int, default=64)
     ap.add_argument('--lr', type=float, default=1e-3)
     ap.add_argument('--warmup', type=int, default=200)
     ap.add_argument('--eval_every', type=int, default=250)
-    ap.add_argument('--patience_evals', type=int, default=4)
+    ap.add_argument('--patience_evals', type=int, default=6)
     ap.add_argument('--lambda_nll', type=float, default=0.1)
     ap.add_argument('--d_model', type=int, default=64)
     ap.add_argument('--layers', type=int, default=2)
     ap.add_argument('--patch_len', type=int, default=None)
     ap.add_argument('--topology', default='auto', choices=['auto', 'physical', 'knn'])
     ap.add_argument('--graphs', default='route,od,adp', help="Tập đồ thị dùng, ví dụ 'od,adp' (bỏ A_route)")
-    ap.add_argument('--no_residual', action='store_true')
+    ap.add_argument('--anchor', default='auto', choices=['auto', 'last', 'mean', 'other'],
+                    help="Mốc neo: auto = chọn theo Val; other = mốc còn lại (ablation)")
+    ap.add_argument('--no_residual', action='store_true', help="Tương đương --anchor mean (giữ để tương thích)")
     ap.add_argument('--no_identity', action='store_true')
     ap.add_argument('--no_spatial_attn', action='store_true')
     ap.add_argument('--no_amp', action='store_true')

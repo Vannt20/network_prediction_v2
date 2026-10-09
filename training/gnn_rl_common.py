@@ -1,8 +1,10 @@
 """
 Tiện ích dùng chung cho hướng V4 (ST-Adaptive-Ensemble-RL: OD-GraphFormer + RL-Gate).
 
-Mọi sản phẩm của V4 ghi ra thư mục riêng để không đụng tới v3:
-  logs/gnn_rl/...   results/gnn_rl/...   cache/v4/...
+Mọi sản phẩm của V4 ghi ra thư mục riêng để không đụng tới v3, tách theo vòng thực nghiệm
+(biến môi trường GNN_RL_ROUND, mặc định 'r2'):
+  vòng 1 (r1): logs/gnn_rl/      results/gnn_rl/      cache/v4/
+  vòng 2 (r2): logs/gnn_rl_r2/   results/gnn_rl_r2/   cache/v4_r2/
 """
 import os
 import sys
@@ -19,17 +21,29 @@ for p in [parent_dir, current_dir]:
 from features.feature_store import DATASET_CONFIGS, load_raw_dataset
 
 ROOT = parent_dir
-LOGS_V4 = os.path.join(ROOT, 'logs', 'gnn_rl')
-RESULTS_V4 = os.path.join(ROOT, 'results', 'gnn_rl')
-CACHE_V4 = os.path.join(ROOT, 'cache', 'v4')
+ROUND = os.environ.get('GNN_RL_ROUND', 'r2')
+_SFX = '' if ROUND == 'r1' else f'_{ROUND}'
+LOGS_V4 = os.path.join(ROOT, 'logs', f'gnn_rl{_SFX}')
+RESULTS_V4 = os.path.join(ROOT, 'results', f'gnn_rl{_SFX}')
+CACHE_VERSION_V4 = f'v4{_SFX}'
+CACHE_V4 = os.path.join(ROOT, 'cache', CACHE_VERSION_V4)
 ALL_DATASETS = ['sdn', 'geant', 'abilene']
+V4_BRANCHES = ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer']
 
 # Nhánh dự báo được vượt biên Train (dự báo phần dư so với lag_1) - dùng cho ràng buộc sàn của RL-Gate
 EXTRAP_BRANCHES = ('lightgbm_res', 'odgraphformer')
 
-# Mục tiêu thiết kế ngân sách 1 ngày (spec Mục 4.3)
-ODGF_MAX_STEPS = {'sdn': 1500, 'geant': 3000, 'abilene': 3000}
-ODGF_MAX_MINUTES = {'sdn': 10, 'geant': 20, 'abilene': 15}
+# Ngân sách OD-GraphFormer. Vòng 1: 1500/3000/3000 bước (Val chưa bão hòa) -> vòng 2 tăng 3 lần (spec Mục 15)
+ODGF_MAX_STEPS = {'sdn': 4500, 'geant': 9000, 'abilene': 9000}
+ODGF_MAX_MINUTES = {'sdn': 20, 'geant': 45, 'abilene': 30}
+
+HUBER_DELTA = 0.05      # như tiêu chí CV của robust_stacking (v3)
+
+
+def huber(err, delta=HUBER_DELTA):
+    """Huber trung bình, giống torch.nn.functional.huber_loss(reduction='mean')."""
+    a = np.abs(np.asarray(err, dtype=np.float64))
+    return float(np.where(a <= delta, 0.5 * a ** 2, delta * (a - 0.5 * delta)).mean())
 
 
 def set_seed(seed):
@@ -137,7 +151,7 @@ def gather_windows(comb_t, target_idx, seq_len):
     return comb_t[win], comb_t[target_idx, :, 0]
 
 
-def cache_file(ds_key, run_id, version='v4'):
+def cache_file(ds_key, run_id, version=CACHE_VERSION_V4):
     return os.path.join(ROOT, 'cache', version, f"{ds_key}_run_{run_id}.pt")
 
 
@@ -151,7 +165,7 @@ def torch_load(path):
         return torch.load(f, map_location='cpu', weights_only=False)
 
 
-def load_cache(ds_key, run_id, version='v4'):
+def load_cache(ds_key, run_id, version=CACHE_VERSION_V4):
     f = cache_file(ds_key, run_id, version)
     if not os.path.exists(f):
         raise FileNotFoundError(f"Chưa có cache {f}. Chạy: python training/precompute_cache.py --cache_version {version} "

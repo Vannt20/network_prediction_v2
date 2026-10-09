@@ -3,13 +3,15 @@ Các tầng kết hợp không dùng học tăng cường, chạy trên cache (s
   static       : RobustPerFlowStacking fit trên Val (như v3) trên đúng tập nhánh
   hedge        : Hedge per-flow, (eta, beta) chọn trên Val
   hedge_floor  : Hedge + sàn trọng số tĩnh, (eta, beta, alpha) chọn trên Val
+  hedge_prior  : Hedge + sàn, alpha ∈ {0..1} (1 = static), chọn theo Huber trên Val - đúng prior của RL-Gate
+                 vòng 2, báo cáo riêng để tách phần RL đóng góp
   context_gate : cổng MLP ngữ cảnh v2 (evaluation/ablation_study.train_context_gate)
 
-Ngoài kết quả Test, mỗi run ghi điểm CV 2 khối trên Val (cv_scores.json) cho static và Hedge,
-dùng ở quy tắc chọn tầng kết hợp (spec Mục 6.4.5).
+Ngoài kết quả Test, mỗi run ghi điểm CV 2 khối trên Val (cv_scores.json): MSE và Huber của từng khối cho
+static, Hedge, Hedge + sàn, prior; dùng ở quy tắc chọn tầng kết hợp (spec Mục 6.4.5 và 15).
 
 P0 (trên cache v3, 3 nhánh v3):  --cache_version v3 --tag_suffix _v3
-P3 (trên cache v4, tập nhánh RL): --cache_version v4  (nhánh lấy từ results/gnn_rl/p1_decision_{ds}.json)
+P3 (cache V4 của vòng hiện tại, tập nhánh RL lấy từ results/gnn_rl*/p1_decision_{ds}.json)
 """
 import os
 import sys
@@ -23,17 +25,17 @@ for p in [parent_dir, current_dir]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from training.gnn_rl_common import (setup_utf8, parse_list, ALL_DATASETS, RESULTS_V4, load_cache, split_arrays,
-                                    save_combiner_result, save_json, load_json, run_dir)
+from training.gnn_rl_common import (setup_utf8, parse_list, ALL_DATASETS, load_cache, split_arrays,
+                                    save_combiner_result, save_json, load_json, run_dir, huber, CACHE_VERSION_V4)
 from Graph_models.robust_stacking import RobustPerFlowStacking, fit_convex_weights, blend, DEFAULT_CONFIG
-from Graph_models.online_hedge import hedge_predict, select_hedge
+from Graph_models.online_hedge import hedge_predict, select_hedge, select_prior
 from baselines_ml.run_ml_baselines import parse_run_ids
 
-ALL_METHODS = ['static', 'hedge', 'hedge_floor', 'context_gate']
+ALL_METHODS = ['static', 'hedge', 'hedge_floor', 'hedge_prior', 'context_gate']
 
 
 def rl_branches(ds_key):
-    """Tập nhánh K = 3 của RL-Gate cho dataset (spec Mục 4.7)."""
+    """Tập nhánh của RL-Gate cho dataset (vòng 2: cả 4 nhánh, spec Mục 15)."""
     from training.p1_decision import decision_file
     f = decision_file(ds_key)
     if not os.path.exists(f):
@@ -60,21 +62,34 @@ def val_blocks(T):
     return [(np.arange(0, h), np.arange(h, T)), (np.arange(h, T), np.arange(0, h))]
 
 
+def block_scores(pred, y):
+    e = np.asarray(pred, dtype=np.float64) - np.asarray(y, dtype=np.float64)
+    return float(np.mean(e ** 2)), huber(e)
+
+
 def cv_scores(Pv, yv, selected):
-    """CV 2 khối trên Val: fit trên khối A, chấm MSE trên khối B rồi đổi vai (static, Hedge, Hedge + sàn)."""
-    out = {'static': [], 'hedge': [], 'hedge_floor': []}
+    """
+    CV 2 khối trên Val: fit trên khối A, chấm trên khối B rồi đổi vai.
+    Trả về {phương pháp: {'mse': [khối 1, khối 2], 'huber': [...]}} cho static, Hedge, Hedge + sàn, prior.
+    """
+    out = {m: {'mse': [], 'huber': []} for m in ('static', 'hedge', 'hedge_floor', 'hedge_prior')}
+
+    def add(m, pred, y):
+        s_mse, s_hub = block_scores(pred, y)
+        out[m]['mse'].append(s_mse)
+        out[m]['huber'].append(s_hub)
     for a, b in val_blocks(len(yv)):
         w0 = _fit_weights_selected(Pv[:, a], yv[a], selected)
-        out['static'].append(float(np.mean((blend(w0, Pv[:, b]) - yv[b]) ** 2)))
+        add('static', blend(w0, Pv[:, b]), yv[b])
         h, hf, _ = select_hedge(Pv[:, a], yv[a], w0)
-        ph, _ = hedge_predict(Pv[:, b], yv[b], w0, h['eta'], h['beta'])
-        out['hedge'].append(float(np.mean((ph - yv[b]) ** 2)))
-        pf, _ = hedge_predict(Pv[:, b], yv[b], w0, hf['eta'], hf['beta'], hf['alpha'])
-        out['hedge_floor'].append(float(np.mean((pf - yv[b]) ** 2)))
-    return {k: float(np.mean(v)) for k, v in out.items()}
+        add('hedge', hedge_predict(Pv[:, b], yv[b], w0, h['eta'], h['beta'])[0], yv[b])
+        add('hedge_floor', hedge_predict(Pv[:, b], yv[b], w0, hf['eta'], hf['beta'], hf['alpha'])[0], yv[b])
+        pp = select_prior(Pv[:, a], yv[a], w0)
+        add('hedge_prior', hedge_predict(Pv[:, b], yv[b], w0, pp['eta'], pp['beta'], pp['alpha'])[0], yv[b])
+    return out
 
 
-def run_combiners(datasets, run_ids, cache_version='v4', branches=None, methods=None, tag_suffix='',
+def run_combiners(datasets, run_ids, cache_version=CACHE_VERSION_V4, branches=None, methods=None, tag_suffix='',
                   static_tag=None, quick_check=False):
     methods = methods or ALL_METHODS
     rows = []
@@ -105,6 +120,11 @@ def run_combiners(datasets, run_ids, cache_version='v4', branches=None, methods=
                                                               config={'branches': br, **hf})
                 pd.DataFrame(grid).to_csv(os.path.join(run_dir('hedge' + tag_suffix, ds, r, seq=False),
                                                        'val_grid.csv'), index=False)
+            if 'hedge_prior' in methods:
+                pp = select_prior(Pv, yv, W)
+                p, _ = hedge_predict(Pt, yt, W, pp['eta'], pp['beta'], pp['alpha'])
+                res['hedge_prior'] = save_combiner_result('hedge_prior' + tag_suffix, ds, r, p, yt, lt,
+                                                          config={'branches': br, **pp, 'criterion': 'huber'})
             if 'context_gate' in methods:
                 from evaluation.ablation_study import train_context_gate
                 ctx_v = c['val']['context'].numpy()
@@ -118,11 +138,14 @@ def run_combiners(datasets, run_ids, cache_version='v4', branches=None, methods=
             cv = {}
             if 'hedge' in methods:
                 cv = cv_scores(Pv, yv, st.selected)
-                save_json({'branches': br, 'selected': list(st.selected), 'cv_mse': cv},
+                save_json({'branches': br, 'selected': list(st.selected),
+                           'cv_mse': {m: float(np.mean(v['mse'])) for m, v in cv.items()},
+                           'cv_huber': {m: float(np.mean(v['huber'])) for m, v in cv.items()},
+                           'blocks': cv},
                           os.path.join(run_dir('cv' + tag_suffix, ds, r, seq=False), 'cv_scores.json'))
             msg = " | ".join(f"{k}={v['mse']*1e3:.3f}" for k, v in res.items())
-            print(f"  [{ds.upper()} run_{r}] {br} Test MSE e-3: {msg} | CV e-3: "
-                  + " ".join(f"{k}={v*1e3:.3f}" for k, v in cv.items()), flush=True)
+            print(f"  [{ds.upper()} run_{r}] {br} Test MSE e-3: {msg} | CV Huber e-3: "
+                  + " ".join(f"{k}={np.mean(v['huber'])*1e3:.4f}" for k, v in cv.items()), flush=True)
             for k, v in res.items():
                 rows.append({'dataset': ds, 'run': r, 'method': k, 'mse': v['mse']})
     df = pd.DataFrame(rows)
@@ -136,7 +159,7 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(description="Tầng kết hợp static / Hedge / Hedge + sàn / cổng MLP trên cache")
     ap.add_argument('--datasets', default='all')
     ap.add_argument('--run_ids', default='0-9')
-    ap.add_argument('--cache_version', default='v4', choices=['v3', 'v4'])
+    ap.add_argument('--cache_version', default=CACHE_VERSION_V4, help="v3 (P0) hoặc cache V4 của vòng hiện tại")
     ap.add_argument('--branches', default=None, help="Mặc định: v3 -> mọi nhánh trong cache; v4 -> p1_decision.json")
     ap.add_argument('--methods', default=','.join(ALL_METHODS))
     ap.add_argument('--tag_suffix', default='', help="Ví dụ '_v3' cho P0")
