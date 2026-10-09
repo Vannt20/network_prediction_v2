@@ -1,2 +1,4 @@
 
 $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase runs --datasets geant --run_ids 0-2 --skip_existing
+
+[rl_sac_no_oof GEANT] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res'] | OOF=False | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
