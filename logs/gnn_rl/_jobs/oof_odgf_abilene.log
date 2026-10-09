@@ -7,3 +7,11 @@ $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches odgraphfo
 [ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
     step   250/1800 | train MSE 1.3645e-3 | val MSE 1.1391e-3 * | 0.4 phút
     step   500/1800 | train MSE 1.2813e-3 | val MSE 1.0793e-3 * | 0.8 phút
+    step   750/1800 | train MSE 1.2235e-3 | val MSE 1.0227e-3 * | 1.1 phút
+    step  1000/1800 | train MSE 1.2058e-3 | val MSE 1.0677e-3 | 1.5 phút
+    step  1250/1800 | train MSE 1.1569e-3 | val MSE 1.0049e-3 * | 1.9 phút
+    step  1500/1800 | train MSE 1.1465e-3 | val MSE 0.9806e-3 * | 2.2 phút
+    step  1750/1800 | train MSE 1.1495e-3 | val MSE 0.9763e-3 * | 2.6 phút
+    step  1800/1800 | train MSE 1.1364e-3 | val MSE 0.9764e-3 | 2.7 phút
+    [OOF] 13386 bước, MSE=0.9954e-3
+[OOF ABILENE] MSE e-3: odgraphformer=0.995 -> /kaggle/working/network_prediction_v2/cache/v4/abilene_oof.pt
