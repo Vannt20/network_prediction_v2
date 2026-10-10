@@ -16,3 +16,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant static_prior -
   [rl_sac_static_prior ABILENE run_0] Test MSE=1.8470e-3 (prior static 1.8383e-3) | lệch TB khỏi prior ‖a-p‖₁=0.024 | 4.5 phút
       SAC   250/1000 | Q 0.0685 | π -4.2110 | r -0.0096 | α 0.0858 | 2.1 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 467
+  [rl_sac_static_prior ABILENE run_1] Test MSE=1.8578e-3 (prior static 1.8415e-3) | lệch TB khỏi prior ‖a-p‖₁=0.044 | 4.6 phút
