@@ -6,3 +6,9 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
       SAC   250/1000 | Q 0.1111 | π -4.0780 | r -0.0096 | α 0.0859 | 1.0 phút
       SAC   500/1000 | Q 0.0791 | π -4.2786 | r -0.0093 | α 0.0797 | 2.0 phút
       SAC   750/1000 | Q 0.0744 | π -4.3630 | r -0.0097 | α 0.0739 | 3.0 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 887
+  [rl_sac ABILENE run_0] Test MSE=1.7535e-3 (prior hedge 1.6923e-3) | lệch TB khỏi prior ‖a-p‖₁=0.041 | 4.9 phút
+      SAC   250/1000 | Q 0.0930 | π -4.0297 | r -0.0078 | α 0.0859 | 1.2 phút
+      SAC   500/1000 | Q 0.0724 | π -4.2437 | r -0.0090 | α 0.0797 | 3.3 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 587
+  [rl_sac ABILENE run_1] Test MSE=1.7100e-3 (prior hedge 1.6906e-3) | lệch TB khỏi prior ‖a-p‖₁=0.052 | 4.5 phút
