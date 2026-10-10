@@ -49,3 +49,6 @@ Device: GPU: Tesla T4 (VRAM: 14.56 GB)
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 043/60 | LR: 0.000207 | Train Loss: 0.012058 | Val Loss: 0.010979 (Best: 0.010897)  | Patience: 8/10 | 39.8s/epoch
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 044/60 | LR: 0.000186 | Train Loss: 0.012045 | Val Loss: 0.011321 (Best: 0.010897)  | Patience: 9/10 | 39.8s/epoch
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 045/60 | LR: 0.000166 | Train Loss: 0.012051 | Val Loss: 0.010888 (Best: 0.010888)* | Patience: 0/10 | 39.6s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 046/60 | LR: 0.000147 | Train Loss: 0.012055 | Val Loss: 0.010926 (Best: 0.010888)  | Patience: 1/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 047/60 | LR: 0.000129 | Train Loss: 0.012035 | Val Loss: 0.010887 (Best: 0.010887)* | Patience: 0/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 048/60 | LR: 0.000112 | Train Loss: 0.012028 | Val Loss: 0.010872 (Best: 0.010872)* | Patience: 0/10 | 39.3s/epoch
