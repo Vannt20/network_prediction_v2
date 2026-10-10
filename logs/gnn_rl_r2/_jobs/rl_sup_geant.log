@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sup --datasets geant --run_i
   [rl_sup GEANT] tiền huấn luyện trên OOF (3016 bước), stacking ('huber', 'global'), prior hedge {'eta': 30, 'beta': 0.995, 'alpha': 0.5}
   [rl_sup GEANT run_0] Test MSE=0.7443e-3 (prior hedge 0.7434e-3) | lệch TB khỏi prior ‖a-p‖₁=0.088 | 4.1 phút
   [rl_sup GEANT run_1] Test MSE=0.7969e-3 (prior hedge 0.7248e-3) | lệch TB khỏi prior ‖a-p‖₁=0.160 | 4.1 phút
+  [rl_sup GEANT run_2] Test MSE=0.8007e-3 (prior hedge 0.7278e-3) | lệch TB khỏi prior ‖a-p‖₁=0.142 | 4.1 phút

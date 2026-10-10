@@ -1,0 +1,44 @@
+{
+  "algo": "sup",
+  "variant": "main",
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res",
+    "odgraphformer"
+  ],
+  "reward": {
+    "lam_sw": 0.0,
+    "lam_kl": 0.01,
+    "floor": 0.0,
+    "lam_floor": 1.0
+  },
+  "net": {
+    "use_gnn": true,
+    "use_temporal": true
+  },
+  "use_oof": true,
+  "use_sigma": true,
+  "static_selected": [
+    "huber",
+    "global"
+  ],
+  "prior": "hedge",
+  "prior_params": {
+    "eta": 100,
+    "beta": 0.995,
+    "alpha": 0.25
+  },
+  "test_mse_prior": 0.0007278093253262341,
+  "minutes": 4.091499515374502,
+  "budget": {
+    "pretrain": 3000,
+    "finetune": 1000,
+    "grid_finetune": 500,
+    "sup": 2000,
+    "max_min_pretrain": 10,
+    "max_min_finetune": 4,
+    "max_min_grid": 3,
+    "max_min_sup": 3
+  }
+}

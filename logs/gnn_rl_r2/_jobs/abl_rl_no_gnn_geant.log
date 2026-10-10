@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
   [rl_sac_no_gnn GEANT] tiền huấn luyện trên OOF (3016 bước), stacking ('huber', 'global'), prior hedge {'eta': 30, 'beta': 0.995, 'alpha': 0.5}
       SAC   250/3000 | Q 0.2372 | π -1.8719 | r -0.0241 | α 0.1252 | 6.1 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 380
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 135
