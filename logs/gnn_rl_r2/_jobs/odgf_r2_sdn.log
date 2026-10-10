@@ -10,3 +10,6 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 2 -
     step  1500/4500 | train MSE 4.4799e-3 | val MSE 3.7701e-3 * | 2.8 phút
     step  1750/4500 | train MSE 4.1390e-3 | val MSE 3.5224e-3 * | 3.3 phút
     step  2000/4500 | train MSE 3.9319e-3 | val MSE 3.4036e-3 * | 3.7 phút
+    step  2250/4500 | train MSE 3.7967e-3 | val MSE 3.3525e-3 * | 4.0 phút
+    step  2500/4500 | train MSE 3.6002e-3 | val MSE 3.3529e-3 | 4.4 phút
+    step  2750/4500 | train MSE 3.5220e-3 | val MSE 3.1632e-3 * | 4.8 phút
