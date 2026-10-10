@@ -181,6 +181,15 @@ class KaggleV4:
         files = [f for f in files if any(f"_{d}" in f or f.startswith('status/') for d in other_ds)]
         for i in range(0, len(files), 200):
             self.git('checkout', f"origin/{self.other_branch}", '--', *files[i:i + 200], cwd=self.wd, quiet=True)
+        # File P0 dùng chung tên cho mọi dataset: ghép dòng của tài khoản kia thay vì bỏ qua (vòng 1, 2 bị thiếu)
+        import io
+        import pandas as pd
+        from training.gnn_rl_common import upsert_csv
+        for name in ('p0_reproduce_v3.csv', 'p0_headroom_v3.csv'):
+            rel = f"{_REL(RESULTS_V4)}/{name}"
+            r = self.git('show', f"origin/{self.other_branch}:{rel}", cwd=self.wd, check=False, quiet=True)
+            if r.returncode == 0 and r.stdout.strip():
+                upsert_csv(pd.read_csv(io.StringIO(r.stdout)), os.path.join(self.wd, rel))
         print(f"Gộp {len(files)} file từ {self.other_branch}", flush=True)
         py = sys.executable
         all_ds = PLAN['A'] + PLAN['B']
