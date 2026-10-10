@@ -14,3 +14,29 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
     step  1750/9000 | train MSE 1.1381e-3 | val MSE 1.1103e-3 | 1.6 phút
     step  2000/9000 | train MSE 1.1153e-3 | val MSE 1.0736e-3 | 1.8 phút
     step  2250/9000 | train MSE 1.0944e-3 | val MSE 1.0606e-3 | 2.0 phút
+    step  2500/9000 | train MSE 1.0926e-3 | val MSE 1.0537e-3 | 2.3 phút
+    step  2750/9000 | train MSE 1.0701e-3 | val MSE 1.0220e-3 * | 2.5 phút
+    step  3000/9000 | train MSE 1.0885e-3 | val MSE 1.0368e-3 | 2.7 phút
+    step  3250/9000 | train MSE 1.0542e-3 | val MSE 1.0247e-3 | 2.9 phút
+    step  3500/9000 | train MSE 1.0379e-3 | val MSE 1.0304e-3 | 3.2 phút
+    step  3750/9000 | train MSE 1.0388e-3 | val MSE 1.0315e-3 | 3.4 phút
+    step  4000/9000 | train MSE 1.0643e-3 | val MSE 1.0266e-3 | 3.6 phút
+    step  4250/9000 | train MSE 1.0365e-3 | val MSE 1.0047e-3 * | 3.9 phút
+    step  4500/9000 | train MSE 1.0393e-3 | val MSE 1.0068e-3 | 4.1 phút
+    step  4750/9000 | train MSE 1.0492e-3 | val MSE 0.9965e-3 * | 4.3 phút
+    step  5000/9000 | train MSE 1.0217e-3 | val MSE 0.9884e-3 * | 4.5 phút
+    step  5250/9000 | train MSE 1.0196e-3 | val MSE 0.9932e-3 | 4.8 phút
+    step  5500/9000 | train MSE 1.0207e-3 | val MSE 1.0122e-3 | 5.0 phút
+    step  5750/9000 | train MSE 1.0264e-3 | val MSE 0.9945e-3 | 5.2 phút
+    step  6000/9000 | train MSE 1.0136e-3 | val MSE 0.9951e-3 | 5.4 phút
+    step  6250/9000 | train MSE 1.0046e-3 | val MSE 0.9919e-3 | 5.7 phút
+    step  6500/9000 | train MSE 0.9874e-3 | val MSE 0.9882e-3 * | 5.9 phút
+    step  6750/9000 | train MSE 1.0162e-3 | val MSE 0.9874e-3 * | 6.1 phút
+    step  7000/9000 | train MSE 1.0100e-3 | val MSE 0.9825e-3 * | 6.4 phút
+    step  7250/9000 | train MSE 1.0027e-3 | val MSE 0.9892e-3 | 6.6 phút
+    step  7500/9000 | train MSE 1.0059e-3 | val MSE 0.9883e-3 | 6.8 phút
+    step  7750/9000 | train MSE 1.0097e-3 | val MSE 0.9861e-3 | 7.0 phút
+    step  8000/9000 | train MSE 1.0073e-3 | val MSE 0.9839e-3 | 7.3 phút
+    step  8250/9000 | train MSE 1.0124e-3 | val MSE 0.9846e-3 | 7.5 phút
+    step  8500/9000 | train MSE 1.0048e-3 | val MSE 0.9840e-3 | 7.7 phút
+[DONE] odgraphformer_no_spatial_attn ABILENE run_1 | 8500 bước (tốt nhất 7000) | Val MSE=0.983e-3 | Test MSE=1.806e-3 | 7.7 phút
