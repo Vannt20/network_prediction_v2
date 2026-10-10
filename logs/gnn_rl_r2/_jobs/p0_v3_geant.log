@@ -1,0 +1,6 @@
+
+$ /usr/bin/python3 training/reproduce_v3.py --datasets geant --run_ids 0-2
+  [GEANT run_0] v3 MSE tái lập=0.7185e-3 | CSV=0.7185e-3 | lệch 4.4e-07 | ('huber', 'global')
+  [GEANT run_1] v3 MSE tái lập=0.7230e-3 | CSV=0.7230e-3 | lệch 6.4e-07 | ('huber', 'global')
+  [GEANT run_2] v3 MSE tái lập=0.7289e-3 | CSV=0.7289e-3 | lệch 3.1e-07 | ('huber', 'global')
+[GEANT] TB 3 run: 0.724e-3 (CSV 0.724e-3)

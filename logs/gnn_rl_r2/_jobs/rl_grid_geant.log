@@ -1,0 +1,20 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets geant --skip_existing
+
+[rl_sac GEANT] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.1, 'lam_kl': 0.01, 'floor': 0.2, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+  [rl_sac GEANT] tiền huấn luyện trên OOF (3016 bước), stacking ('huber', 'global'), prior hedge {'eta': 30, 'beta': 0.995, 'alpha': 0.5}
+      SAC   250/3000 | Q 0.2173 | π -1.8040 | r -0.1344 | α 0.1253 | 3.6 phút
+      SAC   500/3000 | Q 0.3288 | π -2.4044 | r -0.1489 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 669
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 207
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 201
+  [rl_sac GEANT] lưới λ_sw=0.0 f=0.0: CV Huber 0.1292e-3 | MSE 3.3071e-3
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 203
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 200
+  [rl_sac GEANT] lưới λ_sw=0.0 f=0.2: CV Huber 0.1294e-3 | MSE 3.3461e-3
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 206
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 201
+  [rl_sac GEANT] lưới λ_sw=0.1 f=0.0: CV Huber 0.1292e-3 | MSE 3.3048e-3
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 206
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 201
+  [rl_sac GEANT] lưới λ_sw=0.1 f=0.2: CV Huber 0.1294e-3 | MSE 3.3429e-3

@@ -1,0 +1,13 @@
+{
+  "branch": "stwaveformer",
+  "dataset": "geant",
+  "train_frac": 0.6,
+  "seed": 42,
+  "cut": 4522,
+  "epochs_max": 60,
+  "patience": 10,
+  "n_fit_steps": 4048,
+  "n_es_steps": 450,
+  "n_oof_steps": 3016,
+  "fit_time_s": 2534.8216235637665
+}

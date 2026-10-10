@@ -1,0 +1,10 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets geant --run_ids 0,1,2 --skip_existing
+
+[rl_sac GEANT] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 176
+  [rl_sac GEANT run_0] Test MSE=0.7431e-3 (prior hedge 0.7434e-3) | lệch TB khỏi prior ‖a-p‖₁=0.201 | 4.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 125
+  [rl_sac GEANT run_1] Test MSE=0.7256e-3 (prior hedge 0.7248e-3) | lệch TB khỏi prior ‖a-p‖₁=0.216 | 4.2 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 172
+  [rl_sac GEANT run_2] Test MSE=0.7288e-3 (prior hedge 0.7278e-3) | lệch TB khỏi prior ‖a-p‖₁=0.163 | 4.1 phút
