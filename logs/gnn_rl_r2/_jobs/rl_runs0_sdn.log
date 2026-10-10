@@ -2,3 +2,11 @@
 $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets sdn --run_ids 0,1,2 --skip_existing
 
 [rl_sac SDN] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/1000 | Q 0.3856 | π -3.7737 | r -0.0318 | α 0.0722 | 2.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 360
+  [rl_sac SDN run_0] Test MSE=2.4961e-3 (prior hedge 2.4473e-3) | lệch TB khỏi prior ‖a-p‖₁=0.584 | 4.1 phút
+      SAC   250/1000 | Q 0.4010 | π -3.7617 | r -0.0420 | α 0.0722 | 1.7 phút
+      SAC   500/1000 | Q 0.3986 | π -3.8651 | r -0.0276 | α 0.0670 | 4.0 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 501
+  [rl_sac SDN run_1] Test MSE=2.5295e-3 (prior hedge 2.4528e-3) | lệch TB khỏi prior ‖a-p‖₁=0.652 | 4.1 phút
+      SAC   250/1000 | Q 0.4219 | π -3.7682 | r -0.0328 | α 0.0722 | 2.7 phút
