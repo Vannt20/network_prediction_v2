@@ -17,3 +17,8 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant static_prior -
       SAC   250/1000 | Q 0.0685 | π -4.2110 | r -0.0096 | α 0.0858 | 2.1 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 467
   [rl_sac_static_prior ABILENE run_1] Test MSE=1.8578e-3 (prior static 1.8415e-3) | lệch TB khỏi prior ‖a-p‖₁=0.044 | 4.6 phút
+      SAC   250/1000 | Q 0.0429 | π -4.2177 | r -0.0043 | α 0.0858 | 1.0 phút
+      SAC   500/1000 | Q 0.0321 | π -4.3971 | r -0.0036 | α 0.0796 | 1.9 phút
+      SAC   750/1000 | Q 0.0253 | π -4.4623 | r -0.0034 | α 0.0738 | 2.9 phút
+      SAC  1000/1000 | Q 0.0216 | π -4.4797 | r -0.0034 | α 0.0685 | 3.9 phút
+  [rl_sac_static_prior ABILENE run_2] Test MSE=1.8600e-3 (prior static 1.8560e-3) | lệch TB khỏi prior ‖a-p‖₁=0.009 | 4.2 phút
