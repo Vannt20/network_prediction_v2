@@ -16,3 +16,6 @@ Device: GPU: Tesla T4 (VRAM: 14.56 GB)
   [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 012/60 | LR: 0.000919 | Train Loss: 0.005964 | Val Loss: 0.004014 (Best: 0.004008)  | Patience: 2/10 | 49.1s/epoch
   [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 013/60 | LR: 0.000905 | Train Loss: 0.005952 | Val Loss: 0.004008 (Best: 0.004008)* | Patience: 0/10 | 49.8s/epoch
   [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 014/60 | LR: 0.000889 | Train Loss: 0.005958 | Val Loss: 0.004017 (Best: 0.004008)  | Patience: 1/10 | 45.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 015/60 | LR: 0.000872 | Train Loss: 0.005947 | Val Loss: 0.004010 (Best: 0.004008)  | Patience: 2/10 | 42.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 016/60 | LR: 0.000854 | Train Loss: 0.005953 | Val Loss: 0.003999 (Best: 0.003999)* | Patience: 0/10 | 42.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 017/60 | LR: 0.000835 | Train Loss: 0.005924 | Val Loss: 0.004010 (Best: 0.003999)  | Patience: 1/10 | 42.1s/epoch
