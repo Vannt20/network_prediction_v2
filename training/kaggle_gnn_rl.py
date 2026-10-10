@@ -1,11 +1,12 @@
 """
 Chạy hướng V4 trên Kaggle với 2 tài khoản song song (spec Mục 0.3, 10.3), không đụng tới main.
 
-  Tài khoản A: GÉANT            -> push lên nhánh GNN_RL_{vòng}_a   (vòng 1: GNN_RL_a)
-  Tài khoản B: SDN + Abilene    -> push lên nhánh GNN_RL_{vòng}_b
-Cả hai clone từ nhánh mã GNN_RL. Tài khoản xong sau gộp kết quả của tài khoản kia, dựng lại cache V4
-cho các dataset đó (chỉ đọc log, không huấn luyện) rồi lập báo cáo chung và push lên GNN_RL_{vòng}_results.
-Mỗi vòng có nhánh, file trạng thái và thư mục log riêng (GNN_RL_ROUND, mặc định r2) để không lẫn với vòng trước.
+  Tài khoản A: GÉANT            -> push lên nhánh gnn_rl_v4_{vòng}_a
+  Tài khoản B: SDN + Abilene    -> push lên nhánh gnn_rl_v4_{vòng}_b
+Cả hai clone từ nhánh mã gnn_rl_v4. Tài khoản xong sau gộp kết quả của tài khoản kia, dựng lại cache V4
+cho các dataset đó (chỉ đọc log, không huấn luyện) rồi lập báo cáo chung và push lên gnn_rl_v4_{vòng}_results.
+Mỗi vòng có nhánh, file trạng thái và thư mục log riêng (biến môi trường GNN_RL_ROUND, mặc định r2).
+Vòng 1, 2 đã chạy trên các nhánh GNN_RL_* (tên cũ); kết quả đã gộp vào gnn_rl_v4 và các nhánh tạm đã xóa.
 
 Push ngay khi mỗi job xong (mỗi run OD-GraphFormer, mỗi nhóm run RL-Gate, OOF, báo cáo...), commit kèm MSE
 nếu có; thêm push định kỳ 15 phút làm dự phòng. Thư mục push: logs/gnn_rl, results/gnn_rl, data/graphs, status.
@@ -35,7 +36,7 @@ from training.gnn_rl_common import run_dir, ROUND, LOGS_V4, RESULTS_V4, CACHE_VE
 PLAN = {'A': ['geant'], 'B': ['sdn', 'abilene']}
 # Giai đoạn hiện tại chỉ chạy 3 run (seed 42-44); đổi thành '0-9' khi chạy đủ 10 run
 DEFAULT_RUN_IDS = '0-2'
-CODE_BRANCH = 'GNN_RL'
+CODE_BRANCH = 'gnn_rl_v4'
 _RB = CODE_BRANCH if ROUND == 'r1' else f"{CODE_BRANCH}_{ROUND}"          # tiền tố nhánh kết quả của vòng
 FINAL_BRANCH = f"{_RB}_results"
 LOCK_BRANCH = f"{_RB}_final_lock"
