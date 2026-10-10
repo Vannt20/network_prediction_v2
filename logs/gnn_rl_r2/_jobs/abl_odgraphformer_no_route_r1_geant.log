@@ -1,2 +1,22 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 1 --tag odgraphformer_no_route --max_steps 9000 --skip_existing --graphs od,adp
+
+[odgraphformer_no_route GEANT] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['od', 'adp'] | max_steps=9000 | max_minutes=45 | mốc neo last (Val Huber last=0.1475e-3, mean=0.2446e-3)
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/9000 | train MSE 0.8940e-3 | val MSE 4.9093e-3 * | 0.9 phút
+    step   500/9000 | train MSE 0.8724e-3 | val MSE 4.8587e-3 * | 1.8 phút
+    step   750/9000 | train MSE 0.9301e-3 | val MSE 4.7620e-3 * | 2.7 phút
+    step  1000/9000 | train MSE 0.8822e-3 | val MSE 4.6387e-3 * | 3.6 phút
+    step  1250/9000 | train MSE 0.7770e-3 | val MSE 4.6298e-3 * | 4.5 phút
+    step  1500/9000 | train MSE 0.8192e-3 | val MSE 4.5806e-3 * | 5.4 phút
+    step  1750/9000 | train MSE 0.8286e-3 | val MSE 4.5859e-3 | 6.3 phút
+    step  2000/9000 | train MSE 0.8098e-3 | val MSE 4.5774e-3 * | 7.2 phút
+    step  2250/9000 | train MSE 0.8759e-3 | val MSE 4.5183e-3 * | 8.1 phút
+    step  2500/9000 | train MSE 0.8633e-3 | val MSE 4.4846e-3 * | 9.0 phút
+    step  2750/9000 | train MSE 0.8333e-3 | val MSE 4.4628e-3 * | 9.9 phút
+    step  3000/9000 | train MSE 0.7980e-3 | val MSE 4.5270e-3 | 10.8 phút
+    step  3250/9000 | train MSE 0.7913e-3 | val MSE 4.4792e-3 | 11.7 phút
+    step  3500/9000 | train MSE 0.8003e-3 | val MSE 4.4774e-3 | 12.6 phút
+    step  3750/9000 | train MSE 0.7849e-3 | val MSE 4.4256e-3 * | 13.5 phút
+    step  4000/9000 | train MSE 0.8464e-3 | val MSE 4.4723e-3 | 14.4 phút
