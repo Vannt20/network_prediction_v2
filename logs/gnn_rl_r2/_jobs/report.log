@@ -1,2 +1,42 @@
 
 $ /usr/bin/python3 evaluation/report_gnn_rl.py --datasets geant --run_ids 0-2
+[GEANT] chọn tầng kết hợp: hedge_prior (quy tắc vòng 1 sẽ chọn hedge) | CV Huber e-3: static=0.1315 hedge=0.1292 hedge_floor=0.1296 hedge_prior=0.1291 rl_sac=0.1292
+
+BẢNG TỔNG HỢP (MSE x10^-3)
+dataset                             name  runs  mse_mean  mse_std  mse_trim_jump_mean  n_better_than_v3
+  geant                      Persistence     3    0.8546   0.0000              0.3393                 0
+  geant                          XGBoost     3    0.9160   0.0020              0.3444                 0
+  geant                LightGBM-Residual     3    0.7512   0.0007              0.3102                 0
+  geant                    ST-WaveFormer     3    0.7362   0.0070              0.3251                 0
+  geant                   OD-GraphFormer     3    0.7685   0.0082              0.3086                 0
+  geant ST-Adaptive-Ensemble v3 (static)     3    0.7235   0.0052              0.3138                 0
+  geant               Hedge (3 nhánh v3)     3    0.7509   0.0060              0.3096                 0
+  geant         Hedge + sàn (3 nhánh v3)     3    0.7319   0.0084              0.3092                 0
+  geant                       Static K=4     3    0.7234   0.0052              0.3137                 3
+  geant                            Hedge     3    0.7467   0.0068              0.3057                 0
+  geant                      Hedge + sàn     3    0.7238   0.0079              0.3055                 1
+  geant        Prior Hedge + sàn (Huber)     3    0.7320   0.0100              0.3055                 1
+  geant             Cổng MLP ngữ cảnh v2     3    0.8349   0.0136              0.3175                 0
+  geant              Gate giám sát (γ=0)     3    0.7806   0.0315              0.3110                 0
+  geant                    RL-Gate (SAC)     3    0.7325   0.0093              0.3049                 1
+  geant          ST-Adaptive-Ensemble-RL     3    0.7320   0.0100              0.3055                 1
+
+ABLATION
+dataset                        name  runs  mse_mean  mse_std  mse_trim_jump_mean  n_better_than_v3
+  geant OD-GraphFormer: đổi mốc neo     3    0.8530   0.0605              0.4106                 0
+  geant  OD-GraphFormer: bỏ A_route     3    0.7687   0.0033              0.3096                 0
+  geant             RL-Gate: bỏ GNN     1    0.7435      NaN              0.3069                 0
+  geant       OD-GraphFormer đầy đủ     3    0.7685   0.0082              0.3086                 0
+  geant              RL-Gate đầy đủ     3    0.7325   0.0093              0.3049                 0
+
+KIỂM ĐỊNH
+dataset  model          vs  runs  mse_model_e3  mse_ref_e3  rel_change_pct  t_stat    t_p  n_runs_better  dm_mean  dm_n_sig_better  dm_n_sig_worse
+  geant  final   v3_static     3        0.7320      0.7235          1.1728  1.0315 0.4107              1   0.4475                0               0
+  geant  final    hedge_v3     3        0.7320      0.7509         -2.5208 -2.2539 0.1529              3  -0.6288                0               0
+  geant  final   static_k4     3        0.7320      0.7234          1.1897  1.0479 0.4046              1   0.4563                0               0
+  geant rl_sac   v3_static     3        0.7325      0.7235          1.2452  1.1531 0.3681              1   0.4892                0               0
+  geant rl_sac    hedge_v3     3        0.7325      0.7509         -2.4511 -2.3047 0.1477              3  -0.6300                0               0
+  geant rl_sac   static_k4     3        0.7325      0.7234          1.2621  1.1707 0.3623              1   0.4978                0               0
+  geant rl_sac       hedge     3        0.7325      0.7467         -1.8987 -1.9095 0.1964              3  -1.9123                1               0
+  geant rl_sac hedge_prior     3        0.7325      0.7320          0.0716  1.2669 0.3328              1  -0.0495                0               0
+  geant rl_sac      rl_sup     3        0.7325      0.7806         -6.1654 -2.0512 0.1767              3  -0.8862                0               0
