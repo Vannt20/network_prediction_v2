@@ -1,0 +1,12 @@
+{
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res",
+    "odgraphformer"
+  ],
+  "eta": 3,
+  "beta": 0.9,
+  "alpha": 0.0,
+  "criterion": "huber"
+}

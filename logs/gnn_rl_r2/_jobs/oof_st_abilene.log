@@ -30,3 +30,20 @@ Device: GPU: Tesla T4 (VRAM: 14.56 GB)
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 024/60 | LR: 0.000680 | Train Loss: 0.012078 | Val Loss: 0.010980 (Best: 0.010912)  | Patience: 1/10 | 40.1s/epoch
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 025/60 | LR: 0.000655 | Train Loss: 0.012085 | Val Loss: 0.011313 (Best: 0.010912)  | Patience: 2/10 | 40.7s/epoch
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 026/60 | LR: 0.000630 | Train Loss: 0.012120 | Val Loss: 0.010923 (Best: 0.010912)  | Patience: 3/10 | 40.1s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 027/60 | LR: 0.000604 | Train Loss: 0.012115 | Val Loss: 0.010910 (Best: 0.010910)* | Patience: 0/10 | 40.5s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 028/60 | LR: 0.000579 | Train Loss: 0.012081 | Val Loss: 0.011204 (Best: 0.010910)  | Patience: 1/10 | 40.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 029/60 | LR: 0.000553 | Train Loss: 0.012076 | Val Loss: 0.011030 (Best: 0.010910)  | Patience: 2/10 | 40.5s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 030/60 | LR: 0.000527 | Train Loss: 0.012097 | Val Loss: 0.010995 (Best: 0.010910)  | Patience: 3/10 | 40.4s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 031/60 | LR: 0.000501 | Train Loss: 0.012061 | Val Loss: 0.011452 (Best: 0.010910)  | Patience: 4/10 | 39.6s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 032/60 | LR: 0.000474 | Train Loss: 0.012083 | Val Loss: 0.010968 (Best: 0.010910)  | Patience: 5/10 | 39.6s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 033/60 | LR: 0.000448 | Train Loss: 0.012079 | Val Loss: 0.011130 (Best: 0.010910)  | Patience: 6/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 034/60 | LR: 0.000422 | Train Loss: 0.012061 | Val Loss: 0.010909 (Best: 0.010909)* | Patience: 0/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 035/60 | LR: 0.000397 | Train Loss: 0.012057 | Val Loss: 0.010897 (Best: 0.010897)* | Patience: 0/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 036/60 | LR: 0.000371 | Train Loss: 0.012064 | Val Loss: 0.011237 (Best: 0.010897)  | Patience: 1/10 | 39.6s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 037/60 | LR: 0.000346 | Train Loss: 0.012067 | Val Loss: 0.010948 (Best: 0.010897)  | Patience: 2/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 038/60 | LR: 0.000321 | Train Loss: 0.012062 | Val Loss: 0.011087 (Best: 0.010897)  | Patience: 3/10 | 39.6s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 039/60 | LR: 0.000297 | Train Loss: 0.012082 | Val Loss: 0.011290 (Best: 0.010897)  | Patience: 4/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 040/60 | LR: 0.000274 | Train Loss: 0.012065 | Val Loss: 0.011007 (Best: 0.010897)  | Patience: 5/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 041/60 | LR: 0.000251 | Train Loss: 0.012053 | Val Loss: 0.010899 (Best: 0.010897)  | Patience: 6/10 | 39.7s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 042/60 | LR: 0.000228 | Train Loss: 0.012045 | Val Loss: 0.010920 (Best: 0.010897)  | Patience: 7/10 | 39.6s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 043/60 | LR: 0.000207 | Train Loss: 0.012058 | Val Loss: 0.010979 (Best: 0.010897)  | Patience: 8/10 | 39.8s/epoch

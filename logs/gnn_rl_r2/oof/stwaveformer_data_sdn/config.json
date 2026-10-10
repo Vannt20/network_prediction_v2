@@ -1,0 +1,13 @@
+{
+  "branch": "stwaveformer",
+  "dataset": "sdn",
+  "train_frac": 0.6,
+  "seed": 42,
+  "cut": 2627,
+  "epochs_max": 60,
+  "patience": 10,
+  "n_fit_steps": 2310,
+  "n_es_steps": 257,
+  "n_oof_steps": 1752,
+  "fit_time_s": 1533.1281373500824
+}
