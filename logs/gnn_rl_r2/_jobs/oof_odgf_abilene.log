@@ -1,2 +1,6 @@
 
 $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches odgraphformer --max_steps 5400 --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[OOF ABILENE] học trên 20079 bước đầu Train, dự báo 13386 bước cuối | nhánh ['odgraphformer']
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()

@@ -1,2 +1,3 @@
 
 $ /usr/bin/python3 training/build_oof.py --datasets sdn --branches odgraphformer --max_steps 2700 --skip_existing
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['odgraphformer']
