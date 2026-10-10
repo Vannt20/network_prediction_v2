@@ -12,3 +12,21 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
     step  1250/9000 | train MSE 1.1184e-3 | val MSE 1.0686e-3 * | 2.4 phút
     step  1500/9000 | train MSE 1.1071e-3 | val MSE 1.1232e-3 | 2.7 phút
     step  1750/9000 | train MSE 1.1378e-3 | val MSE 1.0980e-3 | 3.1 phút
+    step  2000/9000 | train MSE 1.1109e-3 | val MSE 1.0725e-3 | 3.5 phút
+    step  2250/9000 | train MSE 1.0906e-3 | val MSE 1.0417e-3 * | 3.9 phút
+    step  2500/9000 | train MSE 1.0807e-3 | val MSE 1.0583e-3 | 4.3 phút
+    step  2750/9000 | train MSE 1.0717e-3 | val MSE 1.0338e-3 * | 4.7 phút
+    step  3000/9000 | train MSE 1.1403e-3 | val MSE 1.0558e-3 | 5.1 phút
+    step  3250/9000 | train MSE 1.0605e-3 | val MSE 1.0384e-3 | 5.4 phút
+    step  3500/9000 | train MSE 1.0584e-3 | val MSE 1.0524e-3 | 5.8 phút
+    step  3750/9000 | train MSE 1.0675e-3 | val MSE 1.6471e-3 | 6.2 phút
+    step  4000/9000 | train MSE 1.1268e-3 | val MSE 1.0577e-3 | 6.6 phút
+    step  4250/9000 | train MSE 1.0439e-3 | val MSE 1.0337e-3 * | 7.0 phút
+    step  4500/9000 | train MSE 1.0435e-3 | val MSE 1.0204e-3 * | 7.4 phút
+    step  4750/9000 | train MSE 1.0604e-3 | val MSE 1.0226e-3 | 7.7 phút
+    step  5000/9000 | train MSE 1.0366e-3 | val MSE 1.0161e-3 * | 8.1 phút
+    step  5250/9000 | train MSE 1.0399e-3 | val MSE 1.0453e-3 | 8.5 phút
+    step  5500/9000 | train MSE 1.0355e-3 | val MSE 1.1092e-3 | 8.9 phút
+    step  5750/9000 | train MSE 1.0395e-3 | val MSE 1.0159e-3 * | 9.2 phút
+    step  6000/9000 | train MSE 1.0266e-3 | val MSE 1.0188e-3 | 9.6 phút
+    step  6250/9000 | train MSE 1.0166e-3 | val MSE 1.0098e-3 * | 10.0 phút
