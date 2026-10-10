@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/run_hedge.py --static_tag static_k4 --datasets sdn --run_ids 0-2
