@@ -1,0 +1,13 @@
+{
+  "branch": "stwaveformer",
+  "dataset": "abilene",
+  "train_frac": 0.6,
+  "seed": 42,
+  "cut": 20079,
+  "epochs_max": 60,
+  "patience": 10,
+  "n_fit_steps": 18049,
+  "n_es_steps": 2006,
+  "n_oof_steps": 13386,
+  "fit_time_s": 2446.376636981964
+}

@@ -1,3 +1,4 @@
 
 $ /usr/bin/python3 training/run_hedge.py --static_tag static_k4 --datasets abilene --run_ids 0-2
   [ABILENE run_0] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=1.838 | hedge=1.689 | hedge_floor=1.692 | hedge_prior=1.692 | context_gate=1.809 | CV Huber e-3: static=0.2767 hedge=0.2761 hedge_floor=0.2757 hedge_prior=0.2757
+  [ABILENE run_1] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=1.841 | hedge=1.632 | hedge_floor=1.684 | hedge_prior=1.691 | context_gate=1.834 | CV Huber e-3: static=0.2788 hedge=0.2778 hedge_floor=0.2778 hedge_prior=0.2779

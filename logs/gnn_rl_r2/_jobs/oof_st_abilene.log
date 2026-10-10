@@ -52,3 +52,18 @@ Device: GPU: Tesla T4 (VRAM: 14.56 GB)
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 046/60 | LR: 0.000147 | Train Loss: 0.012055 | Val Loss: 0.010926 (Best: 0.010888)  | Patience: 1/10 | 39.3s/epoch
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 047/60 | LR: 0.000129 | Train Loss: 0.012035 | Val Loss: 0.010887 (Best: 0.010887)* | Patience: 0/10 | 39.3s/epoch
   [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 048/60 | LR: 0.000112 | Train Loss: 0.012028 | Val Loss: 0.010872 (Best: 0.010872)* | Patience: 0/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 049/60 | LR: 0.000096 | Train Loss: 0.012029 | Val Loss: 0.010929 (Best: 0.010872)  | Patience: 1/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 050/60 | LR: 0.000082 | Train Loss: 0.012090 | Val Loss: 0.010966 (Best: 0.010872)  | Patience: 2/10 | 39.4s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 051/60 | LR: 0.000068 | Train Loss: 0.012056 | Val Loss: 0.010869 (Best: 0.010869)* | Patience: 0/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 052/60 | LR: 0.000055 | Train Loss: 0.012021 | Val Loss: 0.010902 (Best: 0.010869)  | Patience: 1/10 | 39.2s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 053/60 | LR: 0.000044 | Train Loss: 0.012039 | Val Loss: 0.010870 (Best: 0.010869)  | Patience: 2/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 054/60 | LR: 0.000034 | Train Loss: 0.012052 | Val Loss: 0.010885 (Best: 0.010869)  | Patience: 3/10 | 39.5s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 055/60 | LR: 0.000025 | Train Loss: 0.012016 | Val Loss: 0.010880 (Best: 0.010869)  | Patience: 4/10 | 39.2s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 056/60 | LR: 0.000018 | Train Loss: 0.012023 | Val Loss: 0.010869 (Best: 0.010869)  | Patience: 5/10 | 39.2s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 057/60 | LR: 0.000012 | Train Loss: 0.012031 | Val Loss: 0.010867 (Best: 0.010867)* | Patience: 0/10 | 39.2s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 058/60 | LR: 0.000007 | Train Loss: 0.012038 | Val Loss: 0.010868 (Best: 0.010867)  | Patience: 1/10 | 39.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 059/60 | LR: 0.000004 | Train Loss: 0.012011 | Val Loss: 0.010867 (Best: 0.010867)* | Patience: 0/10 | 39.1s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 060/60 | LR: 0.000002 | Train Loss: 0.012039 | Val Loss: 0.010868 (Best: 0.010867)  | Patience: 1/10 | 39.2s/epoch
+[DONE] STWaveFormer ABILENE run_0 (seed 42) | 60 epoch, best epoch 59 | Test MSE=1.074e-3 MAE=14.393e-3 | 40.7 phút
+    [stwaveformer] OOF 13386 bước, 40.8 phút
+[OOF ABILENE] đã có dự báo OOF của ['stwaveformer']; file chung do bước --assemble_only ghép
