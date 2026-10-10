@@ -1,2 +1,16 @@
 
 $ /usr/bin/python3 training/build_oof.py --datasets geant --branches odgraphformer --max_steps 5400 --skip_existing
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['odgraphformer']
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/5400 | train MSE 0.9012e-3 | val MSE 0.5153e-3 * | 0.9 phút
+    step   500/5400 | train MSE 0.9063e-3 | val MSE 0.5318e-3 | 1.8 phút
+    step   750/5400 | train MSE 0.8629e-3 | val MSE 0.4978e-3 * | 2.7 phút
+    step  1000/5400 | train MSE 0.8490e-3 | val MSE 0.5070e-3 | 3.6 phút
+    step  1250/5400 | train MSE 0.8660e-3 | val MSE 0.4985e-3 | 4.5 phút
+    step  1500/5400 | train MSE 0.8854e-3 | val MSE 0.5001e-3 | 5.4 phút
+    step  1750/5400 | train MSE 0.8182e-3 | val MSE 0.4965e-3 * | 6.3 phút
+    step  2000/5400 | train MSE 0.9264e-3 | val MSE 0.4996e-3 | 7.2 phút
+    step  2250/5400 | train MSE 0.8449e-3 | val MSE 0.4988e-3 | 8.1 phút
+    step  2500/5400 | train MSE 0.8770e-3 | val MSE 0.4922e-3 * | 9.0 phút
+    step  2750/5400 | train MSE 0.8577e-3 | val MSE 0.4891e-3 * | 9.9 phút
