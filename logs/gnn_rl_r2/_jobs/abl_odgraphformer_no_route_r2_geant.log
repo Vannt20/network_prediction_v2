@@ -18,3 +18,5 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 2
     step  3000/9000 | train MSE 0.9336e-3 | val MSE 4.6833e-3 | 10.8 phút
     step  3250/9000 | train MSE 0.8991e-3 | val MSE 4.6461e-3 | 11.7 phút
     step  3500/9000 | train MSE 0.8275e-3 | val MSE 4.5887e-3 | 12.6 phút
+    step  3750/9000 | train MSE 0.8675e-3 | val MSE 4.5423e-3 | 13.5 phút
+[DONE] odgraphformer_no_route GEANT run_2 | 3750 bước (tốt nhất 2250) | Val MSE=4.430e-3 | Test MSE=0.772e-3 | 13.5 phút

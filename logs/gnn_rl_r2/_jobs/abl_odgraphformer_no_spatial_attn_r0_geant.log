@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 0 --tag odgraphformer_no_spatial_attn --max_steps 9000 --skip_existing --no_spatial_attn
