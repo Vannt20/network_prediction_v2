@@ -6,3 +6,4 @@ $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches odgraphfo
   sched.step()
 [ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
     step   250/5400 | train MSE 1.3645e-3 | val MSE 1.1391e-3 * | 0.3 phút
+    step   500/5400 | train MSE 1.2812e-3 | val MSE 1.0780e-3 * | 0.5 phút

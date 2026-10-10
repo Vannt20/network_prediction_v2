@@ -1,0 +1,18 @@
+{
+  "dataset": "abilene",
+  "rl_branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res",
+    "odgraphformer"
+  ],
+  "use_oof": true,
+  "val_mse_mean": {
+    "stwaveformer": 0.0011259938667838771,
+    "xgboost": 0.0009626524018434187,
+    "lightgbm_res": 0.0008751766290515661,
+    "odgraphformer": 0.0010041978675872087
+  },
+  "n_runs": 3,
+  "rule": "vòng 2: giữ cả 4 nhánh"
+}
