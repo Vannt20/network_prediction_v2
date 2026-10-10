@@ -1,0 +1,67 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets sdn --branches stwaveformer --skip_existing
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['stwaveformer']
+Device: GPU: Tesla T4 (VRAM: 14.56 GB)
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 001/60 | LR: 0.001000 | Train Loss: 0.078228 | Val Loss: 0.075876 (Best: 0.075876)* | Patience: 0/10 | 27.7s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 002/60 | LR: 0.000999 | Train Loss: 0.075867 | Val Loss: 0.074903 (Best: 0.074903)* | Patience: 0/10 | 24.4s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 003/60 | LR: 0.000997 | Train Loss: 0.074992 | Val Loss: 0.074663 (Best: 0.074663)* | Patience: 0/10 | 24.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 004/60 | LR: 0.000994 | Train Loss: 0.074169 | Val Loss: 0.073451 (Best: 0.073451)* | Patience: 0/10 | 26.5s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 005/60 | LR: 0.000989 | Train Loss: 0.073141 | Val Loss: 0.072785 (Best: 0.072785)* | Patience: 0/10 | 21.1s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 006/60 | LR: 0.000983 | Train Loss: 0.072321 | Val Loss: 0.072082 (Best: 0.072082)* | Patience: 0/10 | 24.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 007/60 | LR: 0.000976 | Train Loss: 0.071630 | Val Loss: 0.071484 (Best: 0.071484)* | Patience: 0/10 | 26.9s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 008/60 | LR: 0.000967 | Train Loss: 0.071052 | Val Loss: 0.070740 (Best: 0.070740)* | Patience: 0/10 | 19.9s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 009/60 | LR: 0.000957 | Train Loss: 0.070347 | Val Loss: 0.070206 (Best: 0.070206)* | Patience: 0/10 | 21.9s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 010/60 | LR: 0.000946 | Train Loss: 0.069765 | Val Loss: 0.069967 (Best: 0.069967)* | Patience: 0/10 | 22.4s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 011/60 | LR: 0.000933 | Train Loss: 0.068881 | Val Loss: 0.068549 (Best: 0.068549)* | Patience: 0/10 | 25.3s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 012/60 | LR: 0.000919 | Train Loss: 0.068118 | Val Loss: 0.068151 (Best: 0.068151)* | Patience: 0/10 | 26.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 013/60 | LR: 0.000905 | Train Loss: 0.067389 | Val Loss: 0.067743 (Best: 0.067743)* | Patience: 0/10 | 26.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 014/60 | LR: 0.000889 | Train Loss: 0.066964 | Val Loss: 0.067288 (Best: 0.067288)* | Patience: 0/10 | 27.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 015/60 | LR: 0.000872 | Train Loss: 0.066704 | Val Loss: 0.067058 (Best: 0.067058)* | Patience: 0/10 | 26.5s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 016/60 | LR: 0.000854 | Train Loss: 0.066339 | Val Loss: 0.067060 (Best: 0.067058)  | Patience: 1/10 | 24.4s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 017/60 | LR: 0.000835 | Train Loss: 0.066128 | Val Loss: 0.067034 (Best: 0.067034)* | Patience: 0/10 | 26.9s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 018/60 | LR: 0.000815 | Train Loss: 0.065852 | Val Loss: 0.066593 (Best: 0.066593)* | Patience: 0/10 | 25.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 019/60 | LR: 0.000794 | Train Loss: 0.065699 | Val Loss: 0.066480 (Best: 0.066480)* | Patience: 0/10 | 20.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 020/60 | LR: 0.000773 | Train Loss: 0.065561 | Val Loss: 0.067003 (Best: 0.066480)  | Patience: 1/10 | 25.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 021/60 | LR: 0.000750 | Train Loss: 0.065375 | Val Loss: 0.066239 (Best: 0.066239)* | Patience: 0/10 | 26.9s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 022/60 | LR: 0.000727 | Train Loss: 0.065510 | Val Loss: 0.066114 (Best: 0.066114)* | Patience: 0/10 | 25.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 023/60 | LR: 0.000704 | Train Loss: 0.065087 | Val Loss: 0.066009 (Best: 0.066009)* | Patience: 0/10 | 23.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 024/60 | LR: 0.000680 | Train Loss: 0.065253 | Val Loss: 0.065898 (Best: 0.065898)* | Patience: 0/10 | 27.1s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 025/60 | LR: 0.000655 | Train Loss: 0.064975 | Val Loss: 0.065924 (Best: 0.065898)  | Patience: 1/10 | 27.4s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 026/60 | LR: 0.000630 | Train Loss: 0.065024 | Val Loss: 0.065832 (Best: 0.065832)* | Patience: 0/10 | 22.4s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 027/60 | LR: 0.000604 | Train Loss: 0.064799 | Val Loss: 0.065700 (Best: 0.065700)* | Patience: 0/10 | 19.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 028/60 | LR: 0.000579 | Train Loss: 0.064755 | Val Loss: 0.065807 (Best: 0.065700)  | Patience: 1/10 | 26.7s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 029/60 | LR: 0.000553 | Train Loss: 0.064836 | Val Loss: 0.065636 (Best: 0.065636)* | Patience: 0/10 | 24.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 030/60 | LR: 0.000527 | Train Loss: 0.064732 | Val Loss: 0.065528 (Best: 0.065528)* | Patience: 0/10 | 27.1s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 031/60 | LR: 0.000501 | Train Loss: 0.064714 | Val Loss: 0.065493 (Best: 0.065493)* | Patience: 0/10 | 26.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 032/60 | LR: 0.000474 | Train Loss: 0.064644 | Val Loss: 0.065448 (Best: 0.065448)* | Patience: 0/10 | 26.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 033/60 | LR: 0.000448 | Train Loss: 0.064629 | Val Loss: 0.065454 (Best: 0.065448)  | Patience: 1/10 | 27.3s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 034/60 | LR: 0.000422 | Train Loss: 0.064386 | Val Loss: 0.065467 (Best: 0.065448)  | Patience: 2/10 | 25.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 035/60 | LR: 0.000397 | Train Loss: 0.064490 | Val Loss: 0.065315 (Best: 0.065315)* | Patience: 0/10 | 27.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 036/60 | LR: 0.000371 | Train Loss: 0.064537 | Val Loss: 0.065356 (Best: 0.065315)  | Patience: 1/10 | 26.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 037/60 | LR: 0.000346 | Train Loss: 0.064385 | Val Loss: 0.065262 (Best: 0.065262)* | Patience: 0/10 | 25.7s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 038/60 | LR: 0.000321 | Train Loss: 0.064312 | Val Loss: 0.065199 (Best: 0.065199)* | Patience: 0/10 | 26.5s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 039/60 | LR: 0.000297 | Train Loss: 0.064416 | Val Loss: 0.065334 (Best: 0.065199)  | Patience: 1/10 | 25.7s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 040/60 | LR: 0.000274 | Train Loss: 0.064422 | Val Loss: 0.065238 (Best: 0.065199)  | Patience: 2/10 | 25.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 041/60 | LR: 0.000251 | Train Loss: 0.064281 | Val Loss: 0.065162 (Best: 0.065162)* | Patience: 0/10 | 27.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 042/60 | LR: 0.000228 | Train Loss: 0.064111 | Val Loss: 0.065131 (Best: 0.065131)* | Patience: 0/10 | 21.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 043/60 | LR: 0.000207 | Train Loss: 0.064290 | Val Loss: 0.065077 (Best: 0.065077)* | Patience: 0/10 | 29.4s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 044/60 | LR: 0.000186 | Train Loss: 0.064308 | Val Loss: 0.065069 (Best: 0.065069)* | Patience: 0/10 | 23.3s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 045/60 | LR: 0.000166 | Train Loss: 0.064094 | Val Loss: 0.065032 (Best: 0.065032)* | Patience: 0/10 | 27.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 046/60 | LR: 0.000147 | Train Loss: 0.064245 | Val Loss: 0.065059 (Best: 0.065032)  | Patience: 1/10 | 29.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 047/60 | LR: 0.000129 | Train Loss: 0.064011 | Val Loss: 0.065029 (Best: 0.065029)* | Patience: 0/10 | 24.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 048/60 | LR: 0.000112 | Train Loss: 0.064313 | Val Loss: 0.065095 (Best: 0.065029)  | Patience: 1/10 | 26.5s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 049/60 | LR: 0.000096 | Train Loss: 0.064308 | Val Loss: 0.065011 (Best: 0.065011)* | Patience: 0/10 | 26.7s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 050/60 | LR: 0.000082 | Train Loss: 0.064266 | Val Loss: 0.064983 (Best: 0.064983)* | Patience: 0/10 | 24.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 051/60 | LR: 0.000068 | Train Loss: 0.064208 | Val Loss: 0.064978 (Best: 0.064978)* | Patience: 0/10 | 25.5s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 052/60 | LR: 0.000055 | Train Loss: 0.064014 | Val Loss: 0.064975 (Best: 0.064975)* | Patience: 0/10 | 22.0s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 053/60 | LR: 0.000044 | Train Loss: 0.063978 | Val Loss: 0.064961 (Best: 0.064961)* | Patience: 0/10 | 27.1s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 054/60 | LR: 0.000034 | Train Loss: 0.064096 | Val Loss: 0.064969 (Best: 0.064961)  | Patience: 1/10 | 24.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 055/60 | LR: 0.000025 | Train Loss: 0.064318 | Val Loss: 0.064961 (Best: 0.064961)  | Patience: 2/10 | 25.9s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 056/60 | LR: 0.000018 | Train Loss: 0.064222 | Val Loss: 0.064958 (Best: 0.064958)* | Patience: 0/10 | 29.2s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 057/60 | LR: 0.000012 | Train Loss: 0.063984 | Val Loss: 0.064962 (Best: 0.064958)  | Patience: 1/10 | 24.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 058/60 | LR: 0.000007 | Train Loss: 0.064166 | Val Loss: 0.064959 (Best: 0.064958)  | Patience: 2/10 | 23.6s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 059/60 | LR: 0.000004 | Train Loss: 0.064129 | Val Loss: 0.064959 (Best: 0.064958)  | Patience: 3/10 | 22.8s/epoch
+  [STWaveFormer/SDN | run_0 (Seed: 42)] Epoch 060/60 | LR: 0.000002 | Train Loss: 0.064100 | Val Loss: 0.064958 (Best: 0.064958)  | Patience: 4/10 | 25.2s/epoch
+[DONE] STWaveFormer SDN run_0 (seed 42) | 60 epoch, best epoch 56 | Test MSE=15.690e-3 MAE=67.472e-3 | 25.5 phút
+    [stwaveformer] OOF 1752 bước, 25.6 phút
+[OOF SDN] đã có dự báo OOF của ['stwaveformer']; file chung do bước --assemble_only ghép

@@ -1,0 +1,9 @@
+{
+  "dataset": "abilene",
+  "mse_last": 0.0014371762819048567,
+  "mse_mean": 0.00221618643128027,
+  "huber_last": 0.0003754481555719523,
+  "huber_mean": 0.000616647172987038,
+  "criterion": "huber",
+  "auto": "last"
+}

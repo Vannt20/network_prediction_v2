@@ -1,0 +1,18 @@
+{
+  "dataset": "sdn",
+  "rl_branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res",
+    "odgraphformer"
+  ],
+  "use_oof": true,
+  "val_mse_mean": {
+    "stwaveformer": 0.015049528951446215,
+    "xgboost": 0.005258090949306886,
+    "lightgbm_res": 0.004439866791168849,
+    "odgraphformer": 0.002987992096071442
+  },
+  "n_runs": 3,
+  "rule": "vòng 2: giữ cả 4 nhánh"
+}

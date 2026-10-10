@@ -1,0 +1,24 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant static_prior --phase runs --datasets abilene --run_ids 0-2 --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[rl_sac_static_prior ABILENE] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+  [rl_sac_static_prior ABILENE] tiền huấn luyện trên OOF (13386 bước), stacking ('huber', 'global'), prior static {'alpha': 1.0}
+      SAC   250/3000 | Q 0.0912 | π -1.9612 | r -0.0139 | α 0.1253 | 1.3 phút
+      SAC   500/3000 | Q 0.0968 | π -2.6521 | r -0.0169 | α 0.1161 | 3.4 phút
+      SAC   750/3000 | Q 0.0927 | π -3.1436 | r -0.0148 | α 0.1077 | 5.6 phút
+      SAC  1000/3000 | Q 0.0871 | π -3.5421 | r -0.0139 | α 0.0999 | 7.8 phút
+      SAC  1250/3000 | Q 0.0818 | π -3.8448 | r -0.0110 | α 0.0927 | 9.9 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1261
+      SAC   250/1000 | Q 0.0597 | π -4.2310 | r -0.0074 | α 0.0858 | 1.5 phút
+      SAC   500/1000 | Q 0.0428 | π -4.4126 | r -0.0053 | α 0.0796 | 3.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 539
+  [rl_sac_static_prior ABILENE run_0] Test MSE=1.8470e-3 (prior static 1.8383e-3) | lệch TB khỏi prior ‖a-p‖₁=0.024 | 4.5 phút
+      SAC   250/1000 | Q 0.0685 | π -4.2110 | r -0.0096 | α 0.0858 | 2.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 467
+  [rl_sac_static_prior ABILENE run_1] Test MSE=1.8578e-3 (prior static 1.8415e-3) | lệch TB khỏi prior ‖a-p‖₁=0.044 | 4.6 phút
+      SAC   250/1000 | Q 0.0429 | π -4.2177 | r -0.0043 | α 0.0858 | 1.0 phút
+      SAC   500/1000 | Q 0.0321 | π -4.3971 | r -0.0036 | α 0.0796 | 1.9 phút
+      SAC   750/1000 | Q 0.0253 | π -4.4623 | r -0.0034 | α 0.0738 | 2.9 phút
+      SAC  1000/1000 | Q 0.0216 | π -4.4797 | r -0.0034 | α 0.0685 | 3.9 phút
+  [rl_sac_static_prior ABILENE run_2] Test MSE=1.8600e-3 (prior static 1.8560e-3) | lệch TB khỏi prior ‖a-p‖₁=0.009 | 4.2 phút

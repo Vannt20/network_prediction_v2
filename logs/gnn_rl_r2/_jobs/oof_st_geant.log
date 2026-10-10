@@ -1,0 +1,67 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets geant --branches stwaveformer --skip_existing
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['stwaveformer']
+Device: GPU: Tesla T4 (VRAM: 14.56 GB)
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 001/60 | LR: 0.001000 | Train Loss: 0.006439 | Val Loss: 0.004062 (Best: 0.004062)* | Patience: 0/10 | 40.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 002/60 | LR: 0.000999 | Train Loss: 0.006037 | Val Loss: 0.004027 (Best: 0.004027)* | Patience: 0/10 | 46.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 003/60 | LR: 0.000997 | Train Loss: 0.006020 | Val Loss: 0.004063 (Best: 0.004027)  | Patience: 1/10 | 45.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 004/60 | LR: 0.000994 | Train Loss: 0.006023 | Val Loss: 0.004027 (Best: 0.004027)  | Patience: 2/10 | 49.5s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 005/60 | LR: 0.000989 | Train Loss: 0.005997 | Val Loss: 0.004014 (Best: 0.004014)* | Patience: 0/10 | 46.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 006/60 | LR: 0.000983 | Train Loss: 0.005996 | Val Loss: 0.004019 (Best: 0.004014)  | Patience: 1/10 | 46.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 007/60 | LR: 0.000976 | Train Loss: 0.005986 | Val Loss: 0.004013 (Best: 0.004013)* | Patience: 0/10 | 45.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 008/60 | LR: 0.000967 | Train Loss: 0.005973 | Val Loss: 0.004055 (Best: 0.004013)  | Patience: 1/10 | 44.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 009/60 | LR: 0.000957 | Train Loss: 0.005981 | Val Loss: 0.004019 (Best: 0.004013)  | Patience: 2/10 | 44.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 010/60 | LR: 0.000946 | Train Loss: 0.005968 | Val Loss: 0.004008 (Best: 0.004008)* | Patience: 0/10 | 43.5s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 011/60 | LR: 0.000933 | Train Loss: 0.005973 | Val Loss: 0.004021 (Best: 0.004008)  | Patience: 1/10 | 45.8s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 012/60 | LR: 0.000919 | Train Loss: 0.005964 | Val Loss: 0.004014 (Best: 0.004008)  | Patience: 2/10 | 49.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 013/60 | LR: 0.000905 | Train Loss: 0.005952 | Val Loss: 0.004008 (Best: 0.004008)* | Patience: 0/10 | 49.8s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 014/60 | LR: 0.000889 | Train Loss: 0.005958 | Val Loss: 0.004017 (Best: 0.004008)  | Patience: 1/10 | 45.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 015/60 | LR: 0.000872 | Train Loss: 0.005947 | Val Loss: 0.004010 (Best: 0.004008)  | Patience: 2/10 | 42.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 016/60 | LR: 0.000854 | Train Loss: 0.005953 | Val Loss: 0.003999 (Best: 0.003999)* | Patience: 0/10 | 42.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 017/60 | LR: 0.000835 | Train Loss: 0.005924 | Val Loss: 0.004010 (Best: 0.003999)  | Patience: 1/10 | 42.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 018/60 | LR: 0.000815 | Train Loss: 0.005928 | Val Loss: 0.003998 (Best: 0.003998)* | Patience: 0/10 | 42.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 019/60 | LR: 0.000794 | Train Loss: 0.005916 | Val Loss: 0.004028 (Best: 0.003998)  | Patience: 1/10 | 42.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 020/60 | LR: 0.000773 | Train Loss: 0.005927 | Val Loss: 0.003993 (Best: 0.003993)* | Patience: 0/10 | 42.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 021/60 | LR: 0.000750 | Train Loss: 0.005899 | Val Loss: 0.004035 (Best: 0.003993)  | Patience: 1/10 | 41.8s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 022/60 | LR: 0.000727 | Train Loss: 0.005920 | Val Loss: 0.004037 (Best: 0.003993)  | Patience: 2/10 | 41.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 023/60 | LR: 0.000704 | Train Loss: 0.005908 | Val Loss: 0.003988 (Best: 0.003988)* | Patience: 0/10 | 41.5s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 024/60 | LR: 0.000680 | Train Loss: 0.005890 | Val Loss: 0.004008 (Best: 0.003988)  | Patience: 1/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 025/60 | LR: 0.000655 | Train Loss: 0.005898 | Val Loss: 0.003981 (Best: 0.003981)* | Patience: 0/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 026/60 | LR: 0.000630 | Train Loss: 0.005868 | Val Loss: 0.003985 (Best: 0.003981)  | Patience: 1/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 027/60 | LR: 0.000604 | Train Loss: 0.005898 | Val Loss: 0.003988 (Best: 0.003981)  | Patience: 2/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 028/60 | LR: 0.000579 | Train Loss: 0.005899 | Val Loss: 0.004021 (Best: 0.003981)  | Patience: 3/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 029/60 | LR: 0.000553 | Train Loss: 0.005890 | Val Loss: 0.003982 (Best: 0.003981)  | Patience: 4/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 030/60 | LR: 0.000527 | Train Loss: 0.005852 | Val Loss: 0.003983 (Best: 0.003981)  | Patience: 5/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 031/60 | LR: 0.000501 | Train Loss: 0.005890 | Val Loss: 0.003971 (Best: 0.003971)* | Patience: 0/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 032/60 | LR: 0.000474 | Train Loss: 0.005903 | Val Loss: 0.004067 (Best: 0.003971)  | Patience: 1/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 033/60 | LR: 0.000448 | Train Loss: 0.005884 | Val Loss: 0.003997 (Best: 0.003971)  | Patience: 2/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 034/60 | LR: 0.000422 | Train Loss: 0.005875 | Val Loss: 0.004030 (Best: 0.003971)  | Patience: 3/10 | 41.2s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 035/60 | LR: 0.000397 | Train Loss: 0.005865 | Val Loss: 0.003976 (Best: 0.003971)  | Patience: 4/10 | 41.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 036/60 | LR: 0.000371 | Train Loss: 0.005873 | Val Loss: 0.003971 (Best: 0.003971)* | Patience: 0/10 | 41.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 037/60 | LR: 0.000346 | Train Loss: 0.005866 | Val Loss: 0.003971 (Best: 0.003971)  | Patience: 1/10 | 40.9s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 038/60 | LR: 0.000321 | Train Loss: 0.005855 | Val Loss: 0.003991 (Best: 0.003971)  | Patience: 2/10 | 41.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 039/60 | LR: 0.000297 | Train Loss: 0.005857 | Val Loss: 0.003971 (Best: 0.003971)  | Patience: 3/10 | 40.8s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 040/60 | LR: 0.000274 | Train Loss: 0.005850 | Val Loss: 0.003990 (Best: 0.003971)  | Patience: 4/10 | 40.9s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 041/60 | LR: 0.000251 | Train Loss: 0.005849 | Val Loss: 0.003990 (Best: 0.003971)  | Patience: 5/10 | 40.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 042/60 | LR: 0.000228 | Train Loss: 0.005854 | Val Loss: 0.003985 (Best: 0.003971)  | Patience: 6/10 | 40.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 043/60 | LR: 0.000207 | Train Loss: 0.005845 | Val Loss: 0.003972 (Best: 0.003971)  | Patience: 7/10 | 40.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 044/60 | LR: 0.000186 | Train Loss: 0.005849 | Val Loss: 0.003971 (Best: 0.003971)* | Patience: 0/10 | 40.2s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 045/60 | LR: 0.000166 | Train Loss: 0.005831 | Val Loss: 0.004005 (Best: 0.003971)  | Patience: 1/10 | 40.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 046/60 | LR: 0.000147 | Train Loss: 0.005859 | Val Loss: 0.003983 (Best: 0.003971)  | Patience: 2/10 | 40.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 047/60 | LR: 0.000129 | Train Loss: 0.005839 | Val Loss: 0.003973 (Best: 0.003971)  | Patience: 3/10 | 40.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 048/60 | LR: 0.000112 | Train Loss: 0.005844 | Val Loss: 0.003977 (Best: 0.003971)  | Patience: 4/10 | 40.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 049/60 | LR: 0.000096 | Train Loss: 0.005829 | Val Loss: 0.003969 (Best: 0.003969)* | Patience: 0/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 050/60 | LR: 0.000082 | Train Loss: 0.005845 | Val Loss: 0.003969 (Best: 0.003969)  | Patience: 1/10 | 40.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 051/60 | LR: 0.000068 | Train Loss: 0.005965 | Val Loss: 0.003982 (Best: 0.003969)  | Patience: 2/10 | 40.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 052/60 | LR: 0.000055 | Train Loss: 0.005839 | Val Loss: 0.003980 (Best: 0.003969)  | Patience: 3/10 | 40.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 053/60 | LR: 0.000044 | Train Loss: 0.005816 | Val Loss: 0.003968 (Best: 0.003968)* | Patience: 0/10 | 39.9s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 054/60 | LR: 0.000034 | Train Loss: 0.005833 | Val Loss: 0.003968 (Best: 0.003968)* | Patience: 0/10 | 39.8s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 055/60 | LR: 0.000025 | Train Loss: 0.005831 | Val Loss: 0.003970 (Best: 0.003968)  | Patience: 1/10 | 39.5s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 056/60 | LR: 0.000018 | Train Loss: 0.005836 | Val Loss: 0.003972 (Best: 0.003968)  | Patience: 2/10 | 39.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 057/60 | LR: 0.000012 | Train Loss: 0.005824 | Val Loss: 0.003969 (Best: 0.003968)  | Patience: 3/10 | 39.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 058/60 | LR: 0.000007 | Train Loss: 0.005823 | Val Loss: 0.003969 (Best: 0.003968)  | Patience: 4/10 | 39.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 059/60 | LR: 0.000004 | Train Loss: 0.005824 | Val Loss: 0.003969 (Best: 0.003968)  | Patience: 5/10 | 39.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 060/60 | LR: 0.000002 | Train Loss: 0.005822 | Val Loss: 0.003969 (Best: 0.003968)  | Patience: 6/10 | 39.5s/epoch
+[DONE] STWaveFormer GEANT run_0 (seed 42) | 60 epoch, best epoch 54 | Test MSE=0.765e-3 MAE=6.120e-3 | 42.2 phút
+    [stwaveformer] OOF 3016 bước, 42.2 phút
+[OOF GEANT] đã có dự báo OOF của ['stwaveformer']; file chung do bước --assemble_only ghép

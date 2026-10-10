@@ -1,0 +1,10 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets abilene --assemble_only
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[OOF ABILENE] học trên 20079 bước đầu Train, dự báo 13386 bước cuối | nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer']
+[OOF ABILENE] MSE e-3: stwaveformer=1.074 | xgboost=0.841 | lightgbm_res=0.822 | odgraphformer=0.968 -> /kaggle/working/network_prediction_v2/cache/v4_r2/abilene_oof.pt
+dataset  run        branch  mse_oof  mse_val    ratio  ks_stat     ks_p  same_rank
+abilene    0  stwaveformer 0.001074 0.001122 0.957052  0.01125 0.157850       True
+abilene    0       xgboost 0.000841 0.000958 0.877169  0.00685 0.733316       True
+abilene    0  lightgbm_res 0.000822 0.000872 0.941799  0.00690 0.725074       True
+abilene    0 odgraphformer 0.000968 0.001027 0.942931  0.01370 0.046427       True

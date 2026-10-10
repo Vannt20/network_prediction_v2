@@ -1,0 +1,18 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets abilene --run_ids 0,1,2 --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[rl_sac ABILENE] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/1000 | Q 0.1111 | π -4.0780 | r -0.0096 | α 0.0859 | 1.0 phút
+      SAC   500/1000 | Q 0.0791 | π -4.2786 | r -0.0093 | α 0.0797 | 2.0 phút
+      SAC   750/1000 | Q 0.0744 | π -4.3630 | r -0.0097 | α 0.0739 | 3.0 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 887
+  [rl_sac ABILENE run_0] Test MSE=1.7535e-3 (prior hedge 1.6923e-3) | lệch TB khỏi prior ‖a-p‖₁=0.041 | 4.9 phút
+      SAC   250/1000 | Q 0.0930 | π -4.0297 | r -0.0078 | α 0.0859 | 1.2 phút
+      SAC   500/1000 | Q 0.0724 | π -4.2437 | r -0.0090 | α 0.0797 | 3.3 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 587
+  [rl_sac ABILENE run_1] Test MSE=1.7100e-3 (prior hedge 1.6906e-3) | lệch TB khỏi prior ‖a-p‖₁=0.052 | 4.5 phút
+      SAC   250/1000 | Q 0.0917 | π -4.0937 | r -0.0061 | α 0.0859 | 1.9 phút
+      SAC   500/1000 | Q 0.0779 | π -4.2901 | r -0.0051 | α 0.0797 | 2.9 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 643
+  [rl_sac ABILENE run_2] Test MSE=1.7622e-3 (prior hedge 1.7206e-3) | lệch TB khỏi prior ‖a-p‖₁=0.023 | 4.5 phút

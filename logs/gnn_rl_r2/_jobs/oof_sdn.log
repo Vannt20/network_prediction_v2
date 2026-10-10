@@ -1,0 +1,9 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets sdn --assemble_only
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer']
+[OOF SDN] MSE e-3: stwaveformer=15.690 | xgboost=4.817 | lightgbm_res=4.179 | odgraphformer=3.451 -> /kaggle/working/network_prediction_v2/cache/v4_r2/sdn_oof.pt
+dataset  run        branch  mse_oof  mse_val    ratio  ks_stat         ks_p  same_rank
+    sdn    0  stwaveformer 0.015690 0.015555 1.008650  0.03550 2.195488e-11       True
+    sdn    0       xgboost 0.004817 0.005302 0.908587  0.01880 1.680632e-03       True
+    sdn    0  lightgbm_res 0.004179 0.004483 0.932197  0.02395 2.047963e-05       True
+    sdn    0 odgraphformer 0.003451 0.003013 1.145250  0.05180 9.253263e-24       True

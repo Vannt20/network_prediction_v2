@@ -1,0 +1,22 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 2 --tag odgraphformer_no_route --max_steps 9000 --skip_existing --graphs od,adp
+
+[odgraphformer_no_route GEANT] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['od', 'adp'] | max_steps=9000 | max_minutes=45 | mốc neo last (Val Huber last=0.1475e-3, mean=0.2446e-3)
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/9000 | train MSE 1.0032e-3 | val MSE 4.8596e-3 * | 0.9 phút
+    step   500/9000 | train MSE 0.9330e-3 | val MSE 4.8223e-3 * | 1.8 phút
+    step   750/9000 | train MSE 0.8415e-3 | val MSE 4.7370e-3 * | 2.7 phút
+    step  1000/9000 | train MSE 0.8546e-3 | val MSE 4.7315e-3 * | 3.6 phút
+    step  1250/9000 | train MSE 0.8386e-3 | val MSE 4.6897e-3 * | 4.5 phút
+    step  1500/9000 | train MSE 0.8836e-3 | val MSE 4.5824e-3 * | 5.4 phút
+    step  1750/9000 | train MSE 0.8809e-3 | val MSE 4.5656e-3 * | 6.3 phút
+    step  2000/9000 | train MSE 0.8337e-3 | val MSE 4.4817e-3 * | 7.2 phút
+    step  2250/9000 | train MSE 0.8373e-3 | val MSE 4.4304e-3 * | 8.1 phút
+    step  2500/9000 | train MSE 0.9923e-3 | val MSE 4.5588e-3 | 9.0 phút
+    step  2750/9000 | train MSE 0.8924e-3 | val MSE 4.9198e-3 | 9.9 phút
+    step  3000/9000 | train MSE 0.9336e-3 | val MSE 4.6833e-3 | 10.8 phút
+    step  3250/9000 | train MSE 0.8991e-3 | val MSE 4.6461e-3 | 11.7 phút
+    step  3500/9000 | train MSE 0.8275e-3 | val MSE 4.5887e-3 | 12.6 phút
+    step  3750/9000 | train MSE 0.8675e-3 | val MSE 4.5423e-3 | 13.5 phút
+[DONE] odgraphformer_no_route GEANT run_2 | 3750 bước (tốt nhất 2250) | Val MSE=4.430e-3 | Test MSE=0.772e-3 | 13.5 phút

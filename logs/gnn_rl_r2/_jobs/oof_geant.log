@@ -1,0 +1,9 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets geant --assemble_only
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer']
+[OOF GEANT] MSE e-3: stwaveformer=0.765 | xgboost=0.770 | lightgbm_res=0.775 | odgraphformer=0.812 -> /kaggle/working/network_prediction_v2/cache/v4_r2/geant_oof.pt
+dataset  run        branch  mse_oof  mse_val    ratio  ks_stat         ks_p  same_rank
+  geant    0  stwaveformer 0.000765 0.003579 0.213649  0.04545 2.175465e-18      False
+  geant    0       xgboost 0.000770 0.003149 0.244418  0.05405 7.842461e-26      False
+  geant    0  lightgbm_res 0.000775 0.004716 0.164361  0.04625 5.006577e-19      False
+  geant    0 odgraphformer 0.000812 0.004292 0.189271  0.04860 5.766325e-21      False

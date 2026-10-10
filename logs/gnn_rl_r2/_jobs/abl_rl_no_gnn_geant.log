@@ -1,0 +1,13 @@
+
+$ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase runs --datasets geant --run_ids 0-2 --skip_existing
+
+[rl_sac_no_gnn GEANT] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': False, 'use_temporal': True} | device cuda
+  [rl_sac_no_gnn GEANT] tiền huấn luyện trên OOF (3016 bước), stacking ('huber', 'global'), prior hedge {'eta': 30, 'beta': 0.995, 'alpha': 0.5}
+      SAC   250/3000 | Q 0.2372 | π -1.8719 | r -0.0241 | α 0.1252 | 6.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 380
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 135
+  [rl_sac_no_gnn GEANT run_0] Test MSE=0.7435e-3 (prior hedge 0.7434e-3) | lệch TB khỏi prior ‖a-p‖₁=0.055 | 4.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 136
+  [rl_sac_no_gnn GEANT run_1] Test MSE=0.7153e-3 (prior hedge 0.7248e-3) | lệch TB khỏi prior ‖a-p‖₁=0.060 | 4.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 127
+  [rl_sac_no_gnn GEANT run_2] Test MSE=0.7386e-3 (prior hedge 0.7278e-3) | lệch TB khỏi prior ‖a-p‖₁=0.029 | 4.2 phút

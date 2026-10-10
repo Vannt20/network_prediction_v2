@@ -1,0 +1,9 @@
+{
+  "dataset": "geant",
+  "mse_last": 0.004952190716731037,
+  "mse_mean": 0.003735029882517487,
+  "huber_last": 0.00014753744876748186,
+  "huber_mean": 0.00024455576246234904,
+  "criterion": "huber",
+  "auto": "last"
+}

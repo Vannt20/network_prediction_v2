@@ -1,0 +1,29 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets abilene --branches xgboost,lightgbm_res --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[OOF ABILENE] học trên 20079 bước đầu Train, dự báo 13386 bước cuối | nhánh ['xgboost', 'lightgbm_res']
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[0]	validation_0-rmse:0.09881
+[100]	validation_0-rmse:0.02899
+[200]	validation_0-rmse:0.02861
+[300]	validation_0-rmse:0.02843
+[400]	validation_0-rmse:0.02830
+[500]	validation_0-rmse:0.02823
+[600]	validation_0-rmse:0.02816
+[700]	validation_0-rmse:0.02811
+[800]	validation_0-rmse:0.02807
+[900]	validation_0-rmse:0.02804
+[999]	validation_0-rmse:0.02800
+    [xgboost] OOF 13386 bước, 507 s
+[100]	valid_0's l2: 0.000788627
+[200]	valid_0's l2: 0.00077642
+[300]	valid_0's l2: 0.0007699
+[400]	valid_0's l2: 0.000765731
+[500]	valid_0's l2: 0.000763393
+[600]	valid_0's l2: 0.000761806
+[700]	valid_0's l2: 0.0007597
+[800]	valid_0's l2: 0.000758229
+[900]	valid_0's l2: 0.00075672
+[1000]	valid_0's l2: 0.000755304
+    [lightgbm_res] OOF 13386 bước, 799 s
+[OOF ABILENE] đã có dự báo OOF của ['xgboost', 'lightgbm_res']; file chung do bước --assemble_only ghép

@@ -1,0 +1,23 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 1 --tag odgraphformer_no_spatial_attn --max_steps 4500 --skip_existing --no_spatial_attn
+
+[odgraphformer_no_spatial_attn SDN] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=4500 | max_minutes=20 | mốc neo mean (Val Huber last=3.6881e-3, mean=3.6251e-3)
+    step   250/4500 | train MSE 15.0883e-3 | val MSE 9.7354e-3 * | 0.4 phút
+    step   500/4500 | train MSE 8.7400e-3 | val MSE 7.4033e-3 * | 0.7 phút
+    step   750/4500 | train MSE 6.7753e-3 | val MSE 5.4177e-3 * | 1.0 phút
+    step  1000/4500 | train MSE 5.6696e-3 | val MSE 4.7187e-3 * | 1.4 phút
+    step  1250/4500 | train MSE 4.9725e-3 | val MSE 4.1716e-3 * | 1.7 phút
+    step  1500/4500 | train MSE 4.5186e-3 | val MSE 3.8701e-3 * | 2.1 phút
+    step  1750/4500 | train MSE 4.1299e-3 | val MSE 3.5861e-3 * | 2.4 phút
+    step  2000/4500 | train MSE 3.9097e-3 | val MSE 3.4677e-3 * | 2.8 phút
+    step  2250/4500 | train MSE 3.7690e-3 | val MSE 3.3478e-3 * | 3.1 phút
+    step  2500/4500 | train MSE 3.6403e-3 | val MSE 3.2417e-3 * | 3.5 phút
+    step  2750/4500 | train MSE 3.4640e-3 | val MSE 3.2287e-3 * | 3.8 phút
+    step  3000/4500 | train MSE 3.4136e-3 | val MSE 3.1421e-3 * | 4.2 phút
+    step  3250/4500 | train MSE 3.3169e-3 | val MSE 3.0857e-3 * | 4.5 phút
+    step  3500/4500 | train MSE 3.2503e-3 | val MSE 3.0355e-3 * | 4.8 phút
+    step  3750/4500 | train MSE 3.2233e-3 | val MSE 3.0140e-3 * | 5.2 phút
+    step  4000/4500 | train MSE 3.1950e-3 | val MSE 3.0163e-3 | 5.5 phút
+    step  4250/4500 | train MSE 3.1861e-3 | val MSE 3.0085e-3 * | 5.9 phút
+    step  4500/4500 | train MSE 3.1926e-3 | val MSE 3.0071e-3 * | 6.2 phút
+[DONE] odgraphformer_no_spatial_attn SDN run_1 | 4500 bước (tốt nhất 4500) | Val MSE=3.007e-3 | Test MSE=3.373e-3 | 6.2 phút

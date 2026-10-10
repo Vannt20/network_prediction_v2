@@ -1,0 +1,9 @@
+{
+  "dataset": "sdn",
+  "mse_last": 0.02614847167903273,
+  "mse_mean": 0.021320286056969992,
+  "huber_last": 0.0036881251120258938,
+  "huber_mean": 0.003625091044037289,
+  "criterion": "huber",
+  "auto": "mean"
+}

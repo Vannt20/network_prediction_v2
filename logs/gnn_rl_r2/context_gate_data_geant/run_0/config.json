@@ -1,0 +1,8 @@
+{
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res",
+    "odgraphformer"
+  ]
+}

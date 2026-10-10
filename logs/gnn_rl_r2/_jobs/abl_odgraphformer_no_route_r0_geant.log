@@ -1,0 +1,32 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 0 --tag odgraphformer_no_route --max_steps 9000 --skip_existing --graphs od,adp
+
+[odgraphformer_no_route GEANT] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['od', 'adp'] | max_steps=9000 | max_minutes=45 | mốc neo last (Val Huber last=0.1475e-3, mean=0.2446e-3)
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/9000 | train MSE 0.9871e-3 | val MSE 4.8730e-3 * | 0.9 phút
+    step   500/9000 | train MSE 0.8843e-3 | val MSE 4.8177e-3 * | 1.9 phút
+    step   750/9000 | train MSE 0.9032e-3 | val MSE 4.7445e-3 * | 2.8 phút
+    step  1000/9000 | train MSE 0.8174e-3 | val MSE 4.8438e-3 | 3.7 phút
+    step  1250/9000 | train MSE 0.9095e-3 | val MSE 4.7014e-3 * | 4.6 phút
+    step  1500/9000 | train MSE 0.9196e-3 | val MSE 4.6762e-3 * | 5.5 phút
+    step  1750/9000 | train MSE 0.8190e-3 | val MSE 4.6017e-3 * | 6.5 phút
+    step  2000/9000 | train MSE 0.8517e-3 | val MSE 4.5516e-3 * | 7.4 phút
+    step  2250/9000 | train MSE 0.7948e-3 | val MSE 4.4930e-3 * | 8.3 phút
+    step  2500/9000 | train MSE 0.7687e-3 | val MSE 4.5133e-3 | 9.2 phút
+    step  2750/9000 | train MSE 0.8074e-3 | val MSE 4.4379e-3 * | 10.1 phút
+    step  3000/9000 | train MSE 0.7918e-3 | val MSE 4.3714e-3 * | 11.0 phút
+    step  3250/9000 | train MSE 0.8795e-3 | val MSE 4.3715e-3 | 12.0 phút
+    step  3500/9000 | train MSE 0.8368e-3 | val MSE 4.3809e-3 | 12.9 phút
+    step  3750/9000 | train MSE 0.7522e-3 | val MSE 4.3203e-3 * | 13.8 phút
+    step  4000/9000 | train MSE 0.7843e-3 | val MSE 4.3130e-3 * | 14.7 phút
+    step  4250/9000 | train MSE 0.9154e-3 | val MSE 4.3142e-3 | 15.6 phút
+    step  4500/9000 | train MSE 0.7751e-3 | val MSE 4.3205e-3 | 16.5 phút
+    step  4750/9000 | train MSE 0.7842e-3 | val MSE 4.2673e-3 * | 17.4 phút
+    step  5000/9000 | train MSE 0.9284e-3 | val MSE 4.2902e-3 | 18.3 phút
+    step  5250/9000 | train MSE 0.8534e-3 | val MSE 4.3913e-3 | 19.2 phút
+    step  5500/9000 | train MSE 0.8306e-3 | val MSE 4.3247e-3 | 20.2 phút
+    step  5750/9000 | train MSE 0.8108e-3 | val MSE 4.2974e-3 | 21.1 phút
+    step  6000/9000 | train MSE 0.8645e-3 | val MSE 4.3022e-3 | 22.0 phút
+    step  6250/9000 | train MSE 0.8377e-3 | val MSE 4.2881e-3 | 22.9 phút
+[DONE] odgraphformer_no_route GEANT run_0 | 6250 bước (tốt nhất 4750) | Val MSE=4.267e-3 | Test MSE=0.768e-3 | 22.9 phút

@@ -1,0 +1,11 @@
+{
+  "dataset": "sdn",
+  "device": "cuda",
+  "s_per_step": 0.10073680385999978,
+  "eval_s": 0.24816086499998846,
+  "max_steps": 4500,
+  "projected_minutes": 7.6297085489999805,
+  "target_minutes": 12,
+  "recommended_max_steps": 4500,
+  "n_params": 304354
+}

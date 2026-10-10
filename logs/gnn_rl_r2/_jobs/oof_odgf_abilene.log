@@ -1,0 +1,31 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets abilene --branches odgraphformer --max_steps 5400 --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[OOF ABILENE] học trên 20079 bước đầu Train, dự báo 13386 bước cuối | nhánh ['odgraphformer']
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+    step   250/5400 | train MSE 1.3645e-3 | val MSE 1.1391e-3 * | 0.3 phút
+    step   500/5400 | train MSE 1.2812e-3 | val MSE 1.0780e-3 * | 0.5 phút
+    step   750/5400 | train MSE 1.2225e-3 | val MSE 1.0155e-3 * | 0.8 phút
+    step  1000/5400 | train MSE 1.2197e-3 | val MSE 1.0911e-3 | 1.2 phút
+    step  1250/5400 | train MSE 1.1847e-3 | val MSE 1.0394e-3 | 1.6 phút
+    step  1500/5400 | train MSE 1.1673e-3 | val MSE 1.0571e-3 | 2.0 phút
+    step  1750/5400 | train MSE 1.1685e-3 | val MSE 1.0237e-3 | 2.4 phút
+    step  2000/5400 | train MSE 1.1531e-3 | val MSE 1.0226e-3 | 2.8 phút
+    step  2250/5400 | train MSE 1.1464e-3 | val MSE 0.9652e-3 * | 3.2 phút
+    step  2500/5400 | train MSE 1.4221e-3 | val MSE 1.0881e-3 | 3.6 phút
+    step  2750/5400 | train MSE 1.1885e-3 | val MSE 0.9884e-3 | 4.0 phút
+    step  3000/5400 | train MSE 1.1560e-3 | val MSE 0.9974e-3 | 4.4 phút
+    step  3250/5400 | train MSE 1.1348e-3 | val MSE 1.0078e-3 | 4.9 phút
+    step  3500/5400 | train MSE 1.1128e-3 | val MSE 0.9597e-3 * | 5.3 phút
+    step  3750/5400 | train MSE 1.1238e-3 | val MSE 0.9464e-3 * | 5.8 phút
+    step  4000/5400 | train MSE 1.1099e-3 | val MSE 0.9443e-3 * | 6.2 phút
+    step  4250/5400 | train MSE 1.1120e-3 | val MSE 0.9393e-3 * | 6.7 phút
+    step  4500/5400 | train MSE 1.0919e-3 | val MSE 0.9382e-3 * | 7.1 phút
+    step  4750/5400 | train MSE 1.1070e-3 | val MSE 0.9410e-3 | 7.6 phút
+    step  5000/5400 | train MSE 1.1025e-3 | val MSE 0.9406e-3 | 8.0 phút
+    step  5250/5400 | train MSE 1.1198e-3 | val MSE 0.9410e-3 | 8.5 phút
+    step  5400/5400 | train MSE 1.1017e-3 | val MSE 0.9410e-3 | 8.8 phút
+    [OOF] 13386 bước, MSE=0.9683e-3
+[OOF ABILENE] đã có dự báo OOF của ['odgraphformer']; file chung do bước --assemble_only ghép

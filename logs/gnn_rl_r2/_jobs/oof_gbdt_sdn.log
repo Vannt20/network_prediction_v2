@@ -1,0 +1,27 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets sdn --branches xgboost,lightgbm_res --skip_existing
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['xgboost', 'lightgbm_res']
+[0]	validation_0-rmse:0.30309
+[100]	validation_0-rmse:0.10417
+[200]	validation_0-rmse:0.09534
+[300]	validation_0-rmse:0.08861
+[400]	validation_0-rmse:0.08341
+[500]	validation_0-rmse:0.07938
+[600]	validation_0-rmse:0.07649
+[700]	validation_0-rmse:0.07434
+[800]	validation_0-rmse:0.07226
+[900]	validation_0-rmse:0.07043
+[999]	validation_0-rmse:0.06890
+    [xgboost] OOF 1752 bước, 112 s
+[100]	valid_0's l2: 0.00968713
+[200]	valid_0's l2: 0.00788082
+[300]	valid_0's l2: 0.00687413
+[400]	valid_0's l2: 0.00614052
+[500]	valid_0's l2: 0.0056267
+[600]	valid_0's l2: 0.00520406
+[700]	valid_0's l2: 0.00486377
+[800]	valid_0's l2: 0.00457143
+[900]	valid_0's l2: 0.00433323
+[1000]	valid_0's l2: 0.00412038
+    [lightgbm_res] OOF 1752 bước, 544 s
+[OOF SDN] đã có dự báo OOF của ['xgboost', 'lightgbm_res']; file chung do bước --assemble_only ghép

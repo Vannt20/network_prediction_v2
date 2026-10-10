@@ -1,0 +1,15 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets geant --branches xgboost,lightgbm_res --skip_existing
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['xgboost', 'lightgbm_res']
+[0]	validation_0-rmse:0.04348
+[100]	validation_0-rmse:0.02122
+[200]	validation_0-rmse:0.02115
+[300]	validation_0-rmse:0.02110
+[400]	validation_0-rmse:0.02107
+[419]	validation_0-rmse:0.02106
+    [xgboost] OOF 3016 bước, 163 s
+[100]	valid_0's l2: 0.000438796
+[200]	valid_0's l2: 0.00043692
+[300]	valid_0's l2: 0.000434643
+    [lightgbm_res] OOF 3016 bước, 261 s
+[OOF GEANT] đã có dự báo OOF của ['xgboost', 'lightgbm_res']; file chung do bước --assemble_only ghép

@@ -1,0 +1,16 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets sdn --branches odgraphformer --max_steps 2700 --skip_existing
+[OOF SDN] học trên 2627 bước đầu Train, dự báo 1752 bước cuối | nhánh ['odgraphformer']
+    step   250/2700 | train MSE 15.0207e-3 | val MSE 9.4429e-3 * | 0.4 phút
+    step   500/2700 | train MSE 8.6544e-3 | val MSE 6.7417e-3 * | 0.8 phút
+    step   750/2700 | train MSE 6.8048e-3 | val MSE 5.3268e-3 * | 1.2 phút
+    step  1000/2700 | train MSE 5.7678e-3 | val MSE 4.4318e-3 * | 1.7 phút
+    step  1250/2700 | train MSE 5.0210e-3 | val MSE 3.9186e-3 * | 2.2 phút
+    step  1500/2700 | train MSE 4.5618e-3 | val MSE 3.6894e-3 * | 2.7 phút
+    step  1750/2700 | train MSE 4.3085e-3 | val MSE 3.4747e-3 * | 3.2 phút
+    step  2000/2700 | train MSE 4.1072e-3 | val MSE 3.3858e-3 * | 3.7 phút
+    step  2250/2700 | train MSE 3.9768e-3 | val MSE 3.2910e-3 * | 4.2 phút
+    step  2500/2700 | train MSE 3.9097e-3 | val MSE 3.2756e-3 * | 4.7 phút
+    step  2700/2700 | train MSE 3.8816e-3 | val MSE 3.2707e-3 * | 5.1 phút
+    [OOF] 1752 bước, MSE=3.4510e-3
+[OOF SDN] đã có dự báo OOF của ['odgraphformer']; file chung do bước --assemble_only ghép
