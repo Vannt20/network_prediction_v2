@@ -1,2 +1,9 @@
 
 $ /usr/bin/python3 training/run_hedge.py --cache_version v3 --tag_suffix _v3 --methods hedge,hedge_floor --datasets sdn --run_ids 0-2
+  [SDN run_0] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: hedge=3.988 | hedge_floor=3.988 | CV Huber e-3: static=1.1547 hedge=1.1153 hedge_floor=1.1153 hedge_prior=1.1154
+  [SDN run_1] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: hedge=3.911 | hedge_floor=3.911 | CV Huber e-3: static=1.1046 hedge=1.0900 hedge_floor=1.0900 hedge_prior=1.0906
+  [SDN run_2] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: hedge=3.943 | hedge_floor=3.943 | CV Huber e-3: static=1.1109 hedge=1.0987 hedge_floor=1.0968 hedge_prior=1.0983
+                     runs    mse_e3
+dataset method                     
+sdn     hedge           3  3.947663
+        hedge_floor     3  3.947663
