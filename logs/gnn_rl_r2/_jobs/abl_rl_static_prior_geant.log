@@ -9,3 +9,6 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant static_prior -
   [rl_sac_static_prior GEANT run_0] Test MSE=0.7177e-3 (prior static 0.7185e-3) | lệch TB khỏi prior ‖a-p‖₁=0.016 | 4.1 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 124
   [rl_sac_static_prior GEANT run_1] Test MSE=0.7222e-3 (prior static 0.7229e-3) | lệch TB khỏi prior ‖a-p‖₁=0.022 | 4.1 phút
+      SAC   250/1000 | Q 0.2742 | π -3.3376 | r -0.0365 | α 0.1136 | 3.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 270
+  [rl_sac_static_prior GEANT run_2] Test MSE=0.7271e-3 (prior static 0.7288e-3) | lệch TB khỏi prior ‖a-p‖₁=0.044 | 4.1 phút
