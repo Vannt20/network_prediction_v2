@@ -2,3 +2,11 @@
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 1 --tag odgraphformer_anchor_other --max_steps 9000 --skip_existing --anchor other
 
 [odgraphformer_anchor_other GEANT] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=9000 | max_minutes=45 | mốc neo mean (Val Huber last=0.1475e-3, mean=0.2446e-3)
+    step   250/9000 | train MSE 1.0702e-3 | val MSE 3.1241e-3 * | 0.9 phút
+    step   500/9000 | train MSE 0.8610e-3 | val MSE 3.1249e-3 | 1.8 phút
+    step   750/9000 | train MSE 0.8572e-3 | val MSE 3.2690e-3 | 2.7 phút
+    step  1000/9000 | train MSE 0.8754e-3 | val MSE 3.2647e-3 | 3.6 phút
+    step  1250/9000 | train MSE 0.7825e-3 | val MSE 3.2347e-3 | 4.5 phút
+    step  1500/9000 | train MSE 0.8127e-3 | val MSE 3.2807e-3 | 5.4 phút
+    step  1750/9000 | train MSE 0.8129e-3 | val MSE 3.2229e-3 | 6.3 phút
+[DONE] odgraphformer_anchor_other GEANT run_1 | 1750 bước (tốt nhất 250) | Val MSE=3.124e-3 | Test MSE=0.805e-3 | 6.3 phút
