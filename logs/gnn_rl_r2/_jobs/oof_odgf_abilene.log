@@ -18,3 +18,14 @@ $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches odgraphfo
     step  2750/5400 | train MSE 1.1885e-3 | val MSE 0.9884e-3 | 4.0 phút
     step  3000/5400 | train MSE 1.1560e-3 | val MSE 0.9974e-3 | 4.4 phút
     step  3250/5400 | train MSE 1.1348e-3 | val MSE 1.0078e-3 | 4.9 phút
+    step  3500/5400 | train MSE 1.1128e-3 | val MSE 0.9597e-3 * | 5.3 phút
+    step  3750/5400 | train MSE 1.1238e-3 | val MSE 0.9464e-3 * | 5.8 phút
+    step  4000/5400 | train MSE 1.1099e-3 | val MSE 0.9443e-3 * | 6.2 phút
+    step  4250/5400 | train MSE 1.1120e-3 | val MSE 0.9393e-3 * | 6.7 phút
+    step  4500/5400 | train MSE 1.0919e-3 | val MSE 0.9382e-3 * | 7.1 phút
+    step  4750/5400 | train MSE 1.1070e-3 | val MSE 0.9410e-3 | 7.6 phút
+    step  5000/5400 | train MSE 1.1025e-3 | val MSE 0.9406e-3 | 8.0 phút
+    step  5250/5400 | train MSE 1.1198e-3 | val MSE 0.9410e-3 | 8.5 phút
+    step  5400/5400 | train MSE 1.1017e-3 | val MSE 0.9410e-3 | 8.8 phút
+    [OOF] 13386 bước, MSE=0.9683e-3
+[OOF ABILENE] đã có dự báo OOF của ['odgraphformer']; file chung do bước --assemble_only ghép

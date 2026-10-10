@@ -1,2 +1,10 @@
 
 $ /usr/bin/python3 training/build_oof.py --datasets abilene --branches stwaveformer --skip_existing
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[OOF ABILENE] học trên 20079 bước đầu Train, dự báo 13386 bước cuối | nhánh ['stwaveformer']
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+Device: GPU: Tesla T4 (VRAM: 14.56 GB)
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 001/60 | LR: 0.001000 | Train Loss: 0.012733 | Val Loss: 0.011319 (Best: 0.011319)* | Patience: 0/10 | 46.0s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 002/60 | LR: 0.000999 | Train Loss: 0.012437 | Val Loss: 0.011281 (Best: 0.011281)* | Patience: 0/10 | 43.5s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 003/60 | LR: 0.000997 | Train Loss: 0.012351 | Val Loss: 0.011096 (Best: 0.011096)* | Patience: 0/10 | 43.3s/epoch
+  [STWaveFormer/ABILENE | run_0 (Seed: 42)] Epoch 004/60 | LR: 0.000994 | Train Loss: 0.012214 | Val Loss: 0.011261 (Best: 0.011096)  | Patience: 1/10 | 43.0s/epoch
