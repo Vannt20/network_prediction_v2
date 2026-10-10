@@ -14,3 +14,4 @@ $ /usr/bin/python3 training/build_oof.py --datasets geant --branches odgraphform
     step  2250/5400 | train MSE 0.8449e-3 | val MSE 0.4988e-3 | 8.1 phút
     step  2500/5400 | train MSE 0.8770e-3 | val MSE 0.4922e-3 * | 9.0 phút
     step  2750/5400 | train MSE 0.8577e-3 | val MSE 0.4891e-3 * | 9.9 phút
+    step  3000/5400 | train MSE 0.8312e-3 | val MSE 0.4877e-3 * | 10.8 phút
