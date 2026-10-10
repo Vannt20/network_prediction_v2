@@ -2,3 +2,12 @@
 $ /usr/bin/python3 training/build_oof.py --datasets geant --branches stwaveformer --skip_existing
 [OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['stwaveformer']
 Device: GPU: Tesla T4 (VRAM: 14.56 GB)
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 001/60 | LR: 0.001000 | Train Loss: 0.006439 | Val Loss: 0.004062 (Best: 0.004062)* | Patience: 0/10 | 40.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 002/60 | LR: 0.000999 | Train Loss: 0.006037 | Val Loss: 0.004027 (Best: 0.004027)* | Patience: 0/10 | 46.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 003/60 | LR: 0.000997 | Train Loss: 0.006020 | Val Loss: 0.004063 (Best: 0.004027)  | Patience: 1/10 | 45.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 004/60 | LR: 0.000994 | Train Loss: 0.006023 | Val Loss: 0.004027 (Best: 0.004027)  | Patience: 2/10 | 49.5s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 005/60 | LR: 0.000989 | Train Loss: 0.005997 | Val Loss: 0.004014 (Best: 0.004014)* | Patience: 0/10 | 46.6s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 006/60 | LR: 0.000983 | Train Loss: 0.005996 | Val Loss: 0.004019 (Best: 0.004014)  | Patience: 1/10 | 46.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 007/60 | LR: 0.000976 | Train Loss: 0.005986 | Val Loss: 0.004013 (Best: 0.004013)* | Patience: 0/10 | 45.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 008/60 | LR: 0.000967 | Train Loss: 0.005973 | Val Loss: 0.004055 (Best: 0.004013)  | Patience: 1/10 | 44.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 009/60 | LR: 0.000957 | Train Loss: 0.005981 | Val Loss: 0.004019 (Best: 0.004013)  | Patience: 2/10 | 44.0s/epoch
