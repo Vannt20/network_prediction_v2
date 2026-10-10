@@ -1,2 +1,9 @@
 
 $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant static_prior --phase runs --datasets sdn --run_ids 0-2 --skip_existing
+
+[rl_sac_static_prior SDN] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+  [rl_sac_static_prior SDN] tiền huấn luyện trên OOF (1752 bước), stacking ('huber', 'global'), prior static {'alpha': 1.0}
+      SAC   250/3000 | Q 0.4160 | π -1.8951 | r -0.1224 | α 0.1253 | 2.9 phút
+      SAC   500/3000 | Q 0.4721 | π -2.5651 | r -0.0841 | α 0.1162 | 5.8 phút
+      SAC   750/3000 | Q 0.4514 | π -3.0285 | r -0.0316 | α 0.1078 | 8.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 870

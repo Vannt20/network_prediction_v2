@@ -12,3 +12,9 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase
   [rl_sac_no_oof SDN run_0] Test MSE=2.5682e-3 (prior hedge 2.4473e-3) | lệch TB khỏi prior ‖a-p‖₁=0.347 | 10.1 phút
       SAC   250/3000 | Q 0.4382 | π -1.8908 | r -0.1537 | α 0.1253 | 2.9 phút
       SAC   500/3000 | Q 0.4622 | π -2.5869 | r -0.0857 | α 0.1162 | 5.8 phút
+      SAC   750/3000 | Q 0.4079 | π -3.0467 | r -0.0566 | α 0.1078 | 8.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 994
+  [rl_sac_no_oof SDN run_1] Test MSE=2.5518e-3 (prior hedge 2.4528e-3) | lệch TB khỏi prior ‖a-p‖₁=0.305 | 10.1 phút
+      SAC   250/3000 | Q 0.4265 | π -1.8991 | r -0.1580 | α 0.1253 | 2.9 phút
+      SAC   500/3000 | Q 0.4766 | π -2.5230 | r -0.0962 | α 0.1162 | 4.6 phút
+      SAC   750/3000 | Q 0.4230 | π -2.9844 | r -0.0516 | α 0.1078 | 7.2 phút
