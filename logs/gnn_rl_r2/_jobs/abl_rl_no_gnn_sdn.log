@@ -8,3 +8,6 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
       SAC   750/3000 | Q 0.4418 | π -2.8014 | r -0.0577 | α 0.1077 | 7.0 phút
       SAC  1000/3000 | Q 0.4235 | π -3.1689 | r -0.0459 | α 0.0999 | 9.2 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 1067
+      SAC   250/1000 | Q 2.3280 | π -3.8337 | r -0.0586 | α 0.0909 | 2.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 448
+  [rl_sac_no_gnn SDN run_0] Test MSE=2.5165e-3 (prior hedge 2.4473e-3) | lệch TB khỏi prior ‖a-p‖₁=0.224 | 4.1 phút

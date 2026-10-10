@@ -4,3 +4,5 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sup --datasets sdn --run_ids
 [rl_sup SDN] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
   [rl_sup SDN] tiền huấn luyện trên OOF (1752 bước), stacking ('huber', 'global'), prior hedge {'eta': 1000, 'beta': 0.995, 'alpha': 0.75}
   [rl_sup SDN run_0] Test MSE=2.4141e-3 (prior hedge 2.4473e-3) | lệch TB khỏi prior ‖a-p‖₁=0.522 | 2.5 phút
+  [rl_sup SDN run_1] Test MSE=2.3994e-3 (prior hedge 2.4528e-3) | lệch TB khỏi prior ‖a-p‖₁=0.352 | 1.7 phút
+  [rl_sup SDN run_2] Test MSE=2.3834e-3 (prior hedge 2.4695e-3) | lệch TB khỏi prior ‖a-p‖₁=0.493 | 1.9 phút

@@ -3,3 +3,6 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
 [ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
 
 [rl_sac ABILENE] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
+      SAC   250/1000 | Q 0.1111 | π -4.0780 | r -0.0096 | α 0.0859 | 1.0 phút
+      SAC   500/1000 | Q 0.0791 | π -4.2786 | r -0.0093 | α 0.0797 | 2.0 phút
+      SAC   750/1000 | Q 0.0744 | π -4.3630 | r -0.0097 | α 0.0739 | 3.0 phút
