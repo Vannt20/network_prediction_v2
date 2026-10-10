@@ -26,3 +26,8 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
     step  4750/9000 | train MSE 1.0464e-3 | val MSE 1.0269e-3 * | 7.0 phút
     step  5000/9000 | train MSE 1.0553e-3 | val MSE 1.0427e-3 | 7.4 phút
     step  5250/9000 | train MSE 1.0495e-3 | val MSE 1.0364e-3 | 7.8 phút
+    step  5500/9000 | train MSE 1.0257e-3 | val MSE 1.0489e-3 | 8.2 phút
+    step  5750/9000 | train MSE 1.0270e-3 | val MSE 1.0403e-3 | 8.6 phút
+    step  6000/9000 | train MSE 1.0314e-3 | val MSE 1.0519e-3 | 9.0 phút
+    step  6250/9000 | train MSE 1.0349e-3 | val MSE 1.0408e-3 | 9.5 phút
+[DONE] odgraphformer ABILENE run_0 | 6250 bước (tốt nhất 4750) | Val MSE=1.027e-3 | Test MSE=1.900e-3 | 9.5 phút
