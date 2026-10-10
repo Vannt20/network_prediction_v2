@@ -4,3 +4,6 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase
 
 [rl_sac_no_oof ABILENE] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=False | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
       SAC   250/3000 | Q 0.0766 | π -1.9326 | r -0.0118 | α 0.1253 | 2.1 phút
+      SAC   500/3000 | Q 0.0712 | π -2.6855 | r -0.0130 | α 0.1162 | 4.3 phút
+      SAC   750/3000 | Q 0.0751 | π -3.1944 | r -0.0113 | α 0.1077 | 5.4 phút
+      SAC  1000/3000 | Q 0.0770 | π -3.5920 | r -0.0091 | α 0.0999 | 6.5 phút

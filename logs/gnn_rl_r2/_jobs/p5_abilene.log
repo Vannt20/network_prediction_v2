@@ -1,2 +1,8 @@
 
 $ /usr/bin/python3 evaluation/plot_weight_trajectories.py --datasets abilene
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+[ABILENE] k = 2 cụm (silhouette 0.680)
+         corr_ext_spike  mean_switch  mean_kl  frac_dev_01  mean_ext_weight   y_std   y_max  n_flows
+cluster                                                                                             
+0                0.0605       0.0073   0.0247       0.0398           0.9779  0.0585  0.7266      125
+1                0.0405       0.0403   0.1999       0.2979           0.9423  0.2029  1.7898       19
