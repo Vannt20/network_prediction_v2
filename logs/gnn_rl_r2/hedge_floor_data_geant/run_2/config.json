@@ -1,0 +1,13 @@
+{
+  "branches": [
+    "stwaveformer",
+    "xgboost",
+    "lightgbm_res",
+    "odgraphformer"
+  ],
+  "eta": 300,
+  "beta": 0.98,
+  "alpha": 0.25,
+  "mse": 0.003135908096442201,
+  "score": 0.003135908096442201
+}

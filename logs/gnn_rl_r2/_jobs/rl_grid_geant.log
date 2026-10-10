@@ -5,3 +5,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets 
   [rl_sac GEANT] tiền huấn luyện trên OOF (3016 bước), stacking ('huber', 'global'), prior hedge {'eta': 30, 'beta': 0.995, 'alpha': 0.5}
       SAC   250/3000 | Q 0.2173 | π -1.8040 | r -0.1344 | α 0.1253 | 3.6 phút
       SAC   500/3000 | Q 0.3288 | π -2.4044 | r -0.1489 | α 0.1162 | 7.4 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 669

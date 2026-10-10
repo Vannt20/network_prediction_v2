@@ -2,3 +2,11 @@
 $ /usr/bin/python3 training/run_hedge.py --static_tag static_k4 --datasets geant --run_ids 0-2
   [GEANT run_0] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=0.718 | hedge=0.743 | hedge_floor=0.724 | hedge_prior=0.743 | context_gate=0.848 | CV Huber e-3: static=0.1315 hedge=0.1292 hedge_floor=0.1296 hedge_prior=0.1291
   [GEANT run_1] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=0.723 | hedge=0.742 | hedge_floor=0.716 | hedge_prior=0.725 | context_gate=0.821 | CV Huber e-3: static=0.1305 hedge=0.1290 hedge_floor=0.1293 hedge_prior=0.1287
+  [GEANT run_2] ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] Test MSE e-3: static=0.729 | hedge=0.755 | hedge_floor=0.732 | hedge_prior=0.728 | context_gate=0.835 | CV Huber e-3: static=0.1309 hedge=0.1289 hedge_floor=0.1291 hedge_prior=0.1286
+                      runs    mse_e3
+dataset method                      
+geant   context_gate     3  0.834937
+        hedge            3  0.746695
+        hedge_floor      3  0.723808
+        hedge_prior      3  0.731993
+        static           3  0.723388
