@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/precompute_cache.py --cache_version v4_r2 --datasets sdn --run_ids 0-2 --branches stwaveformer,xgboost,lightgbm_res,odgraphformer --skip_existing
