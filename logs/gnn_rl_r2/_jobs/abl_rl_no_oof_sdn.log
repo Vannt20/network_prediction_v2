@@ -4,3 +4,11 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_oof --phase
 [rl_sac_no_oof SDN] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=False | reward {'lam_sw': 0.0, 'lam_kl': 0.01, 'floor': 0.0, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
       SAC   250/3000 | Q 0.4166 | π -1.9226 | r -0.1534 | α 0.1253 | 1.3 phút
       SAC   500/3000 | Q 0.4538 | π -2.6348 | r -0.0880 | α 0.1162 | 3.8 phút
+      SAC   750/3000 | Q 0.4029 | π -3.0801 | r -0.0481 | α 0.1078 | 5.2 phút
+      SAC  1000/3000 | Q 0.3768 | π -3.4404 | r -0.0396 | α 0.1001 | 6.6 phút
+      SAC  1250/3000 | Q 0.3606 | π -3.7233 | r -0.0359 | α 0.0928 | 7.9 phút
+      SAC  1500/3000 | Q 0.3376 | π -3.9303 | r -0.0297 | α 0.0862 | 9.3 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1578
+  [rl_sac_no_oof SDN run_0] Test MSE=2.5682e-3 (prior hedge 2.4473e-3) | lệch TB khỏi prior ‖a-p‖₁=0.347 | 10.1 phút
+      SAC   250/3000 | Q 0.4382 | π -1.8908 | r -0.1537 | α 0.1253 | 2.9 phút
+      SAC   500/3000 | Q 0.4622 | π -2.5869 | r -0.0857 | α 0.1162 | 5.8 phút

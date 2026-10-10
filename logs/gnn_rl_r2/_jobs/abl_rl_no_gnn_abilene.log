@@ -11,3 +11,12 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
       SAC  1250/3000 | Q 0.0793 | π -3.6008 | r -0.0089 | α 0.0926 | 8.8 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 1388
       SAC   250/1000 | Q 3.0330 | π -5.8643 | r -0.0101 | α 0.0825 | 2.1 phút
+      SAC   500/1000 | Q 2.3663 | π -6.2122 | r -0.0084 | α 0.0765 | 3.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 587
+  [rl_sac_no_gnn ABILENE run_0] Test MSE=1.7061e-3 (prior hedge 1.6923e-3) | lệch TB khỏi prior ‖a-p‖₁=0.036 | 4.5 phút
+      SAC   250/1000 | Q 4.8510 | π -6.8148 | r -0.0053 | α 0.0825 | 2.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 476
+  [rl_sac_no_gnn ABILENE run_1] Test MSE=1.7129e-3 (prior hedge 1.6906e-3) | lệch TB khỏi prior ‖a-p‖₁=0.041 | 4.5 phút
+      SAC   250/1000 | Q 2.9561 | π -4.9967 | r -0.0081 | α 0.0825 | 2.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 492
+  [rl_sac_no_gnn ABILENE run_2] Test MSE=1.7507e-3 (prior hedge 1.7206e-3) | lệch TB khỏi prior ‖a-p‖₁=0.022 | 4.5 phút
