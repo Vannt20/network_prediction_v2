@@ -19,3 +19,10 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets 
       SAC   250/500 | Q 0.4264 | π -3.8275 | r -0.0432 | α 0.0722 | 2.9 phút
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 262
       SAC   250/500 | Q 0.4244 | π -3.7314 | r -0.0385 | α 0.0722 | 2.0 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 334
+  [rl_sac SDN] lưới λ_sw=0.0 f=0.2: CV Huber 0.7810e-3 | MSE 2.3389e-3
+      SAC   250/500 | Q 0.4100 | π -3.7418 | r -0.0950 | α 0.0722 | 2.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 275
+      SAC   250/500 | Q 0.4082 | π -3.6385 | r -0.0927 | α 0.0722 | 2.1 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 358
+  [rl_sac SDN] lưới λ_sw=0.1 f=0.0: CV Huber 0.7867e-3 | MSE 2.3549e-3

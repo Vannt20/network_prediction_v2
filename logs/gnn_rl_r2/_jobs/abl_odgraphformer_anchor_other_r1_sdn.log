@@ -1,2 +1,25 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 1 --tag odgraphformer_anchor_other --max_steps 4500 --skip_existing --anchor other
+
+[odgraphformer_anchor_other SDN] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=4500 | max_minutes=20 | mốc neo last (Val Huber last=3.6881e-3, mean=3.6251e-3)
+/kaggle/working/network_prediction_v2/training/train_od_graphformer.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+    step   250/4500 | train MSE 21.9906e-3 | val MSE 16.7507e-3 * | 0.4 phút
+    step   500/4500 | train MSE 15.3951e-3 | val MSE 13.6493e-3 * | 0.8 phút
+    step   750/4500 | train MSE 12.7434e-3 | val MSE 11.2151e-3 * | 1.2 phút
+    step  1000/4500 | train MSE 11.6668e-3 | val MSE 10.2801e-3 * | 1.5 phút
+    step  1250/4500 | train MSE 10.5850e-3 | val MSE 9.4390e-3 * | 1.9 phút
+    step  1500/4500 | train MSE 9.8592e-3 | val MSE 8.8419e-3 * | 2.3 phút
+    step  1750/4500 | train MSE 9.2655e-3 | val MSE 8.2940e-3 * | 2.7 phút
+    step  2000/4500 | train MSE 8.7551e-3 | val MSE 7.6588e-3 * | 3.0 phút
+    step  2250/4500 | train MSE 8.2911e-3 | val MSE 7.2591e-3 * | 3.4 phút
+    step  2500/4500 | train MSE 8.0806e-3 | val MSE 7.0503e-3 * | 3.8 phút
+    step  2750/4500 | train MSE 7.5717e-3 | val MSE 6.6004e-3 * | 4.2 phút
+    step  3000/4500 | train MSE 7.3429e-3 | val MSE 6.4615e-3 * | 4.6 phút
+    step  3250/4500 | train MSE 7.2038e-3 | val MSE 6.3237e-3 * | 4.9 phút
+    step  3500/4500 | train MSE 7.0182e-3 | val MSE 6.1552e-3 * | 5.3 phút
+    step  3750/4500 | train MSE 6.9226e-3 | val MSE 6.0616e-3 * | 5.7 phút
+    step  4000/4500 | train MSE 6.8349e-3 | val MSE 6.0235e-3 * | 6.1 phút
+    step  4250/4500 | train MSE 6.8731e-3 | val MSE 6.0400e-3 | 6.5 phút
+    step  4500/4500 | train MSE 6.8392e-3 | val MSE 6.0297e-3 | 6.9 phút
+[DONE] odgraphformer_anchor_other SDN run_1 | 4500 bước (tốt nhất 4000) | Val MSE=6.023e-3 | Test MSE=6.288e-3 | 6.9 phút

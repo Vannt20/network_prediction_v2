@@ -1,0 +1,2 @@
+
+$ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids 2 --tag odgraphformer_anchor_other --max_steps 9000 --skip_existing --anchor other
