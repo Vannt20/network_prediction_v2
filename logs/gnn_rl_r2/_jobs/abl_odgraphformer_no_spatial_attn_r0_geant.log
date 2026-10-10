@@ -24,3 +24,8 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets geant --run_ids 0
     step  4500/9000 | train MSE 0.7716e-3 | val MSE 4.3685e-3 * | 14.5 phút
     step  4750/9000 | train MSE 0.9229e-3 | val MSE 4.6778e-3 | 15.3 phút
     step  5000/9000 | train MSE 0.9352e-3 | val MSE 4.4941e-3 | 16.1 phút
+    step  5250/9000 | train MSE 0.8131e-3 | val MSE 4.4883e-3 | 16.9 phút
+    step  5500/9000 | train MSE 0.8255e-3 | val MSE 4.4753e-3 | 17.7 phút
+    step  5750/9000 | train MSE 0.8164e-3 | val MSE 4.4636e-3 | 18.5 phút
+    step  6000/9000 | train MSE 0.8683e-3 | val MSE 4.4828e-3 | 19.3 phút
+[DONE] odgraphformer_no_spatial_attn GEANT run_0 | 6000 bước (tốt nhất 4500) | Val MSE=4.369e-3 | Test MSE=0.762e-3 | 19.3 phút
