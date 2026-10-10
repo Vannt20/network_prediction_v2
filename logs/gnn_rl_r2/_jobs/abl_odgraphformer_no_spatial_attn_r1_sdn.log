@@ -18,3 +18,6 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets sdn --run_ids 1 -
     step  3500/4500 | train MSE 3.2503e-3 | val MSE 3.0355e-3 * | 4.8 phút
     step  3750/4500 | train MSE 3.2233e-3 | val MSE 3.0140e-3 * | 5.2 phút
     step  4000/4500 | train MSE 3.1950e-3 | val MSE 3.0163e-3 | 5.5 phút
+    step  4250/4500 | train MSE 3.1861e-3 | val MSE 3.0085e-3 * | 5.9 phút
+    step  4500/4500 | train MSE 3.1926e-3 | val MSE 3.0071e-3 * | 6.2 phút
+[DONE] odgraphformer_no_spatial_attn SDN run_1 | 4500 bước (tốt nhất 4500) | Val MSE=3.007e-3 | Test MSE=3.373e-3 | 6.2 phút
