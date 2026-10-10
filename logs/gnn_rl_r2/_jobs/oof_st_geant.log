@@ -19,3 +19,25 @@ Device: GPU: Tesla T4 (VRAM: 14.56 GB)
   [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 015/60 | LR: 0.000872 | Train Loss: 0.005947 | Val Loss: 0.004010 (Best: 0.004008)  | Patience: 2/10 | 42.6s/epoch
   [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 016/60 | LR: 0.000854 | Train Loss: 0.005953 | Val Loss: 0.003999 (Best: 0.003999)* | Patience: 0/10 | 42.3s/epoch
   [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 017/60 | LR: 0.000835 | Train Loss: 0.005924 | Val Loss: 0.004010 (Best: 0.003999)  | Patience: 1/10 | 42.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 018/60 | LR: 0.000815 | Train Loss: 0.005928 | Val Loss: 0.003998 (Best: 0.003998)* | Patience: 0/10 | 42.1s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 019/60 | LR: 0.000794 | Train Loss: 0.005916 | Val Loss: 0.004028 (Best: 0.003998)  | Patience: 1/10 | 42.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 020/60 | LR: 0.000773 | Train Loss: 0.005927 | Val Loss: 0.003993 (Best: 0.003993)* | Patience: 0/10 | 42.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 021/60 | LR: 0.000750 | Train Loss: 0.005899 | Val Loss: 0.004035 (Best: 0.003993)  | Patience: 1/10 | 41.8s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 022/60 | LR: 0.000727 | Train Loss: 0.005920 | Val Loss: 0.004037 (Best: 0.003993)  | Patience: 2/10 | 41.7s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 023/60 | LR: 0.000704 | Train Loss: 0.005908 | Val Loss: 0.003988 (Best: 0.003988)* | Patience: 0/10 | 41.5s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 024/60 | LR: 0.000680 | Train Loss: 0.005890 | Val Loss: 0.004008 (Best: 0.003988)  | Patience: 1/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 025/60 | LR: 0.000655 | Train Loss: 0.005898 | Val Loss: 0.003981 (Best: 0.003981)* | Patience: 0/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 026/60 | LR: 0.000630 | Train Loss: 0.005868 | Val Loss: 0.003985 (Best: 0.003981)  | Patience: 1/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 027/60 | LR: 0.000604 | Train Loss: 0.005898 | Val Loss: 0.003988 (Best: 0.003981)  | Patience: 2/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 028/60 | LR: 0.000579 | Train Loss: 0.005899 | Val Loss: 0.004021 (Best: 0.003981)  | Patience: 3/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 029/60 | LR: 0.000553 | Train Loss: 0.005890 | Val Loss: 0.003982 (Best: 0.003981)  | Patience: 4/10 | 41.4s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 030/60 | LR: 0.000527 | Train Loss: 0.005852 | Val Loss: 0.003983 (Best: 0.003981)  | Patience: 5/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 031/60 | LR: 0.000501 | Train Loss: 0.005890 | Val Loss: 0.003971 (Best: 0.003971)* | Patience: 0/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 032/60 | LR: 0.000474 | Train Loss: 0.005903 | Val Loss: 0.004067 (Best: 0.003971)  | Patience: 1/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 033/60 | LR: 0.000448 | Train Loss: 0.005884 | Val Loss: 0.003997 (Best: 0.003971)  | Patience: 2/10 | 41.3s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 034/60 | LR: 0.000422 | Train Loss: 0.005875 | Val Loss: 0.004030 (Best: 0.003971)  | Patience: 3/10 | 41.2s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 035/60 | LR: 0.000397 | Train Loss: 0.005865 | Val Loss: 0.003976 (Best: 0.003971)  | Patience: 4/10 | 41.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 036/60 | LR: 0.000371 | Train Loss: 0.005873 | Val Loss: 0.003971 (Best: 0.003971)* | Patience: 0/10 | 41.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 037/60 | LR: 0.000346 | Train Loss: 0.005866 | Val Loss: 0.003971 (Best: 0.003971)  | Patience: 1/10 | 40.9s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 038/60 | LR: 0.000321 | Train Loss: 0.005855 | Val Loss: 0.003991 (Best: 0.003971)  | Patience: 2/10 | 41.0s/epoch
+  [STWaveFormer/GEANT | run_0 (Seed: 42)] Epoch 039/60 | LR: 0.000297 | Train Loss: 0.005857 | Val Loss: 0.003971 (Best: 0.003971)  | Patience: 3/10 | 40.8s/epoch
