@@ -1,3 +1,9 @@
 
 $ /usr/bin/python3 training/run_hedge.py --cache_version v3 --tag_suffix _v3 --methods hedge,hedge_floor --datasets geant --run_ids 0-2
   [GEANT run_0] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: hedge=0.746 | hedge_floor=0.730 | CV Huber e-3: static=0.1315 hedge=0.1286 hedge_floor=0.1288 hedge_prior=0.1286
+  [GEANT run_1] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: hedge=0.749 | hedge_floor=0.725 | CV Huber e-3: static=0.1304 hedge=0.1282 hedge_floor=0.1284 hedge_prior=0.1280
+  [GEANT run_2] ['stwaveformer', 'xgboost', 'lightgbm_res'] Test MSE e-3: hedge=0.758 | hedge_floor=0.741 | CV Huber e-3: static=0.1309 hedge=0.1288 hedge_floor=0.1290 hedge_prior=0.1291
+                     runs    mse_e3
+dataset method                     
+geant   hedge           3  0.750923
+        hedge_floor     3  0.731933
