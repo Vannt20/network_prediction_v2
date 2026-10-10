@@ -7,3 +7,32 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
   sched.step()
     step   250/9000 | train MSE 1.2899e-3 | val MSE 1.2001e-3 * | 0.2 phút
     step   500/9000 | train MSE 1.2018e-3 | val MSE 1.1362e-3 * | 0.5 phút
+    step   750/9000 | train MSE 1.1439e-3 | val MSE 1.1793e-3 | 0.7 phút
+    step  1000/9000 | train MSE 1.1005e-3 | val MSE 1.0494e-3 * | 0.9 phút
+    step  1250/9000 | train MSE 1.0827e-3 | val MSE 1.0638e-3 | 1.2 phút
+    step  1500/9000 | train MSE 1.0863e-3 | val MSE 1.1014e-3 | 1.4 phút
+    step  1750/9000 | train MSE 1.1135e-3 | val MSE 1.1189e-3 | 1.6 phút
+    step  2000/9000 | train MSE 1.1124e-3 | val MSE 1.0666e-3 | 1.8 phút
+    step  2250/9000 | train MSE 1.0719e-3 | val MSE 1.0428e-3 * | 2.1 phút
+    step  2500/9000 | train MSE 1.0822e-3 | val MSE 1.0244e-3 * | 2.3 phút
+    step  2750/9000 | train MSE 1.0557e-3 | val MSE 1.0052e-3 * | 2.5 phút
+    step  3000/9000 | train MSE 1.1064e-3 | val MSE 1.0452e-3 | 2.8 phút
+    step  3250/9000 | train MSE 1.0525e-3 | val MSE 1.1813e-3 | 3.0 phút
+    step  3500/9000 | train MSE 1.0423e-3 | val MSE 1.0117e-3 | 3.2 phút
+    step  3750/9000 | train MSE 1.0443e-3 | val MSE 1.0261e-3 | 3.4 phút
+    step  4000/9000 | train MSE 1.0463e-3 | val MSE 1.0409e-3 | 3.7 phút
+    step  4250/9000 | train MSE 1.0492e-3 | val MSE 1.0037e-3 * | 3.9 phút
+    step  4500/9000 | train MSE 1.0221e-3 | val MSE 0.9950e-3 * | 4.1 phút
+    step  4750/9000 | train MSE 1.0265e-3 | val MSE 1.0076e-3 | 4.3 phút
+    step  5000/9000 | train MSE 1.0042e-3 | val MSE 0.9913e-3 * | 4.6 phút
+    step  5250/9000 | train MSE 1.0073e-3 | val MSE 1.0012e-3 | 4.8 phút
+    step  5500/9000 | train MSE 1.0086e-3 | val MSE 0.9999e-3 | 5.0 phút
+    step  5750/9000 | train MSE 1.0207e-3 | val MSE 0.9966e-3 | 5.3 phút
+    step  6000/9000 | train MSE 1.0038e-3 | val MSE 0.9795e-3 * | 5.5 phút
+    step  6250/9000 | train MSE 1.0062e-3 | val MSE 0.9963e-3 | 5.7 phút
+    step  6500/9000 | train MSE 0.9994e-3 | val MSE 0.9829e-3 | 5.9 phút
+    step  6750/9000 | train MSE 1.0018e-3 | val MSE 0.9806e-3 | 6.2 phút
+    step  7000/9000 | train MSE 0.9995e-3 | val MSE 0.9783e-3 * | 6.4 phút
+    step  7250/9000 | train MSE 0.9855e-3 | val MSE 0.9811e-3 | 6.6 phút
+    step  7500/9000 | train MSE 0.9868e-3 | val MSE 0.9793e-3 | 6.8 phút
+    step  7750/9000 | train MSE 0.9893e-3 | val MSE 0.9820e-3 | 7.1 phút
