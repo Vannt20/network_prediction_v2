@@ -1,2 +1,42 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids 1 --tag odgraphformer_anchor_other --max_steps 9000 --skip_existing --anchor other
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[odgraphformer_anchor_other ABILENE] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=9000 | max_minutes=30 | mốc neo mean (Val Huber last=0.3754e-3, mean=0.6166e-3)
+    step   250/9000 | train MSE 1.6289e-3 | val MSE 1.2068e-3 * | 0.3 phút
+    step   500/9000 | train MSE 1.2447e-3 | val MSE 1.1644e-3 * | 0.5 phút
+    step   750/9000 | train MSE 1.2213e-3 | val MSE 1.1481e-3 * | 0.8 phút
+    step  1000/9000 | train MSE 1.2133e-3 | val MSE 1.2497e-3 | 1.0 phút
+    step  1250/9000 | train MSE 1.2417e-3 | val MSE 1.1516e-3 | 1.2 phút
+    step  1500/9000 | train MSE 1.2223e-3 | val MSE 1.2695e-3 | 1.5 phút
+    step  1750/9000 | train MSE 1.2611e-3 | val MSE 1.3983e-3 | 1.7 phút
+    step  2000/9000 | train MSE 1.2841e-3 | val MSE 1.1678e-3 | 2.0 phút
+    step  2250/9000 | train MSE 1.1977e-3 | val MSE 1.1264e-3 * | 2.2 phút
+    step  2500/9000 | train MSE 1.1783e-3 | val MSE 1.1431e-3 | 2.5 phút
+    step  2750/9000 | train MSE 1.1757e-3 | val MSE 1.1281e-3 | 2.7 phút
+    step  3000/9000 | train MSE 1.1924e-3 | val MSE 1.1493e-3 | 3.0 phút
+    step  3250/9000 | train MSE 1.1507e-3 | val MSE 1.1101e-3 * | 3.2 phút
+    step  3500/9000 | train MSE 1.1423e-3 | val MSE 1.1176e-3 | 3.5 phút
+    step  3750/9000 | train MSE 1.1516e-3 | val MSE 1.1185e-3 | 3.7 phút
+    step  4000/9000 | train MSE 1.1459e-3 | val MSE 1.0972e-3 * | 4.0 phút
+    step  4250/9000 | train MSE 1.1174e-3 | val MSE 1.0771e-3 * | 4.2 phút
+    step  4500/9000 | train MSE 1.1065e-3 | val MSE 1.0541e-3 * | 4.5 phút
+    step  4750/9000 | train MSE 1.1177e-3 | val MSE 1.0708e-3 | 4.7 phút
+    step  5000/9000 | train MSE 1.0995e-3 | val MSE 1.0780e-3 | 4.9 phút
+    step  5250/9000 | train MSE 1.1102e-3 | val MSE 1.0535e-3 * | 5.2 phút
+    step  5500/9000 | train MSE 1.0897e-3 | val MSE 1.0642e-3 | 5.4 phút
+    step  5750/9000 | train MSE 1.0815e-3 | val MSE 1.0354e-3 * | 5.7 phút
+    step  6000/9000 | train MSE 1.0742e-3 | val MSE 1.0282e-3 * | 5.9 phút
+    step  6250/9000 | train MSE 1.0592e-3 | val MSE 1.0240e-3 * | 6.2 phút
+    step  6500/9000 | train MSE 1.0403e-3 | val MSE 1.0160e-3 * | 6.4 phút
+    step  6750/9000 | train MSE 1.0599e-3 | val MSE 1.0174e-3 | 6.7 phút
+    step  7000/9000 | train MSE 1.0591e-3 | val MSE 1.0130e-3 * | 6.9 phút
+    step  7250/9000 | train MSE 1.0521e-3 | val MSE 1.0100e-3 * | 7.2 phút
+    step  7500/9000 | train MSE 1.0512e-3 | val MSE 1.0091e-3 * | 7.4 phút
+    step  7750/9000 | train MSE 1.0551e-3 | val MSE 1.0073e-3 * | 7.7 phút
+    step  8000/9000 | train MSE 1.0503e-3 | val MSE 1.0072e-3 * | 7.9 phút
+    step  8250/9000 | train MSE 1.0573e-3 | val MSE 1.0056e-3 * | 8.2 phút
+    step  8500/9000 | train MSE 1.0452e-3 | val MSE 1.0045e-3 * | 8.4 phút
+    step  8750/9000 | train MSE 1.0455e-3 | val MSE 1.0044e-3 * | 8.7 phút
+    step  9000/9000 | train MSE 1.0376e-3 | val MSE 1.0045e-3 | 8.9 phút
+[DONE] odgraphformer_anchor_other ABILENE run_1 | 9000 bước (tốt nhất 8750) | Val MSE=1.004e-3 | Test MSE=1.827e-3 | 8.9 phút

@@ -4,3 +4,9 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase grid --datasets 
 
 [rl_sac ABILENE] nhánh ['stwaveformer', 'xgboost', 'lightgbm_res', 'odgraphformer'] | OOF=True | reward {'lam_sw': 0.1, 'lam_kl': 0.01, 'floor': 0.2, 'lam_floor': 1.0} | net {'use_gnn': True, 'use_temporal': True} | device cuda
   [rl_sac ABILENE] tiền huấn luyện trên OOF (13386 bước), stacking ('huber', 'global'), prior hedge {'eta': 300, 'beta': 0.995, 'alpha': 0.25}
+      SAC   250/3000 | Q 0.0827 | π -1.8845 | r -0.0780 | α 0.1253 | 2.1 phút
+      SAC   500/3000 | Q 0.0811 | π -2.5183 | r -0.0765 | α 0.1162 | 4.2 phút
+      SAC   750/3000 | Q 0.0765 | π -2.9547 | r -0.0698 | α 0.1078 | 5.7 phút
+      SAC  1000/3000 | Q 0.0714 | π -3.3014 | r -0.0640 | α 0.1000 | 7.9 phút
+      SAC  1250/3000 | Q 0.0731 | π -3.5611 | r -0.0560 | α 0.0928 | 9.9 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1260
