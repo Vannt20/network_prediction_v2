@@ -7,3 +7,6 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
   sched.step()
     step   250/9000 | train MSE 1.3157e-3 | val MSE 1.3321e-3 * | 0.5 phút
     step   500/9000 | train MSE 1.1983e-3 | val MSE 1.1647e-3 * | 1.0 phút
+    step   750/9000 | train MSE 1.1633e-3 | val MSE 1.1160e-3 * | 1.4 phút
+    step  1000/9000 | train MSE 1.1493e-3 | val MSE 1.1055e-3 * | 1.9 phút
+    step  1250/9000 | train MSE 1.1184e-3 | val MSE 1.0686e-3 * | 2.4 phút
