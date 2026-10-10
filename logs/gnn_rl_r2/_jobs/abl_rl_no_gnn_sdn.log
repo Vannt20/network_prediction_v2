@@ -7,3 +7,4 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --variant no_gnn --phase
       SAC   500/3000 | Q 0.4583 | π -2.3966 | r -0.1151 | α 0.1161 | 4.4 phút
       SAC   750/3000 | Q 0.4418 | π -2.8014 | r -0.0577 | α 0.1077 | 7.0 phút
       SAC  1000/3000 | Q 0.4235 | π -3.1689 | r -0.0459 | α 0.0999 | 9.2 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 1067
