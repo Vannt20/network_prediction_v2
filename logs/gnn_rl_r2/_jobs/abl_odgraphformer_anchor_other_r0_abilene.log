@@ -1,2 +1,6 @@
 
 $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids 0 --tag odgraphformer_anchor_other --max_steps 9000 --skip_existing --anchor other
+[ABILENE] Data Hygiene: Đã khử 288 dòng trùng lặp, đưa chuỗi về 47808 bước thời gian đơn điệu hoàn hảo.
+
+[odgraphformer_anchor_other ABILENE] device=cuda | topology=knn (đồ thị suy diễn từ *_adj.npy, không phải topo vật lý) | đồ thị ['route', 'od', 'adp'] | max_steps=9000 | max_minutes=30 | mốc neo mean (Val Huber last=0.3754e-3, mean=0.6166e-3)
+    step   250/9000 | train MSE 1.6171e-3 | val MSE 1.2229e-3 * | 0.5 phút
