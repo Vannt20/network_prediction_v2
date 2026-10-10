@@ -23,3 +23,4 @@ $ /usr/bin/python3 training/train_od_graphformer.py --datasets abilene --run_ids
     step  4000/9000 | train MSE 1.0373e-3 | val MSE 1.0042e-3 * | 6.2 phút
     step  4250/9000 | train MSE 1.0516e-3 | val MSE 0.9998e-3 * | 6.6 phút
     step  4500/9000 | train MSE 1.0267e-3 | val MSE 1.0037e-3 | 7.0 phút
+    step  4750/9000 | train MSE 1.0317e-3 | val MSE 1.0017e-3 | 7.3 phút
