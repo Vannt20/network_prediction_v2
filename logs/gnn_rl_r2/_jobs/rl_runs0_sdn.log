@@ -10,3 +10,5 @@ $ /usr/bin/python3 training/train_rl_gate.py --algo sac --phase runs --datasets 
       [CẮT THỜI GIAN] SAC dừng ở cập nhật 501
   [rl_sac SDN run_1] Test MSE=2.5295e-3 (prior hedge 2.4528e-3) | lệch TB khỏi prior ‖a-p‖₁=0.652 | 4.1 phút
       SAC   250/1000 | Q 0.4219 | π -3.7682 | r -0.0328 | α 0.0722 | 2.7 phút
+      [CẮT THỜI GIAN] SAC dừng ở cập nhật 394
+  [rl_sac SDN run_2] Test MSE=2.5001e-3 (prior hedge 2.4695e-3) | lệch TB khỏi prior ‖a-p‖₁=0.509 | 4.1 phút
