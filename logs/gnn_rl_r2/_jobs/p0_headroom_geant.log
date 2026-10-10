@@ -1,0 +1,3 @@
+
+$ /usr/bin/python3 evaluation/headroom.py --datasets geant --run_ids 0-2
+[GEANT] oracle_per_flow_fixed=0.698e-3 | oracle_per_step_global=0.631e-3 | oracle_per_step_flow=0.573e-3

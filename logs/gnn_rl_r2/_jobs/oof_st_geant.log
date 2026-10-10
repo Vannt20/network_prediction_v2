@@ -1,0 +1,4 @@
+
+$ /usr/bin/python3 training/build_oof.py --datasets geant --branches stwaveformer --skip_existing
+[OOF GEANT] học trên 4522 bước đầu Train, dự báo 3016 bước cuối | nhánh ['stwaveformer']
+Device: GPU: Tesla T4 (VRAM: 14.56 GB)
