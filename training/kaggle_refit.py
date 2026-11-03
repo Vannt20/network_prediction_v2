@@ -11,6 +11,9 @@
 - gbdt_only=True: chỉ refit XGBoost và LightGBM-Res (CPU, không cần GPU), ST-WaveFormer giữ dự báo gốc của v3;
   mọi nhánh git / file trạng thái / thư mục kết quả có hậu tố riêng (rl_v5_a_gbdt, status/refit_a_gbdt.json,
   results/refit/gbdt_only/) nên không lẫn với đợt refit đủ 3 nhánh.
+- datasets / tag: ghi đè PLAN và thêm hậu tố đợt chạy, ví dụ chia 10 run GÉANT cho 2 tài khoản (A: run 4-7,
+  B: run 0-3,8,9, tag "geant"). Tài khoản chỉ chạy một phần run thì không đánh giá riêng; bước tổng hợp đánh giá
+  mọi dataset đã đủ 10 run sau khi gộp.
 - Output chỉ là một bảng trạng thái vẽ lại mỗi 60 giây; log của từng tiến trình con ở
   {log_dir}/{model}_{ds}_run{r}.log, mở bằng mode "w" (ghi đè khi chạy lại).
 
@@ -94,16 +97,19 @@ class _Proc:
 
 class Refit:
     def __init__(self, account, git, workdir, run_ids="0-9", quick_check=False, status_every=60, dl_gap_s=60,
-                 max_retry=2, eval_workers=4, log_dir="/kaggle/working/logs_refit", gbdt_only=False):
+                 max_retry=2, eval_workers=4, log_dir="/kaggle/working/logs_refit", gbdt_only=False, datasets=None, tag=""):
         assert account in PLAN, f"ACCOUNT phải là một trong {list(PLAN)}"
         self.account, self.git, self.wd = account, git, workdir
         self.quick = quick_check
-        self.datasets = ["sdn"] if quick_check else PLAN[account]
+        self.datasets = ["sdn"] if quick_check else list(datasets or PLAN[account])
         self.ids = [0] if quick_check else _parse_ids(run_ids)
         self.run_ids = "0" if quick_check else run_ids
         self.gbdt_only = gbdt_only
         self.models = GBDT if gbdt_only else MODELS
-        self.sfx = "_gbdt" if gbdt_only else ""          # hậu tố nhánh / trạng thái / kết quả của chế độ chỉ GBDT
+        # hậu tố nhánh / trạng thái / khóa: chế độ chỉ GBDT và nhãn đợt chạy (ví dụ "geant" khi chia run GÉANT cho 2 tài khoản)
+        self.sfx = ("_gbdt" if gbdt_only else "") + (f"_{tag}" if tag else "")
+        # tài khoản chỉ chạy một phần run: không đánh giá riêng, bước tổng hợp đánh giá trên đủ 10 run sau khi gộp
+        self.split = not quick_check and self.ids != list(range(10))
         self.branch = SMOKE_BRANCH + self.sfx if quick_check else branch_of(account, self.sfx)
         self.others = [] if quick_check or account == "SOLO" else [a for a in ("A", "B") if a != account]
         self.status_file = f"status/refit_{account.lower() if not quick_check else 'smoke'}{self.sfx}.json"
@@ -159,11 +165,11 @@ class Refit:
     def eval_files(self, ds):
         return [f"{self.eval_dir}/{ds}_summary.md", f"{self.eval_dir}/{ds}_runs.json"]
 
-    def evaluated(self, ds):
+    def evaluated(self, ds, ids=None):
         try:
             with open(os.path.join(self.wd, self.eval_files(ds)[1]), encoding="utf-8") as f:
                 rows = json.load(f)["rows"]
-            return sorted(x["run"] for x in rows) == self.ids and all(x["quick_check"] == self.quick for x in rows)
+            return sorted(x["run"] for x in rows) == (ids or self.ids) and all(x["quick_check"] == self.quick for x in rows)
         except (OSError, ValueError, KeyError):
             return False
 
@@ -189,10 +195,12 @@ class Refit:
         return self._spawn((m, ds, r), cmd, f"{m}_{ds}_run{r}.log", gpu=gpu,
                            one_thread=m == "stwaveformer" and gpu is not None)
 
+    def _eval_cmd(self, ds, run_ids):
+        return ([self.py, "rl_gate/eval_refit.py", "--datasets", ds, "--runs", run_ids, "--workers", str(self.eval_workers),
+                 "--out", self.eval_dir] + (["--allow_partial"] if self.quick else []) + (["--gbdt_only"] if self.gbdt_only else []))
+
     def _launch_eval(self, ds):
-        cmd = [self.py, "rl_gate/eval_refit.py", "--datasets", ds, "--runs", self.run_ids,
-               "--workers", str(self.eval_workers), "--out", self.eval_dir] + (["--allow_partial"] if self.quick else []) +               (["--gbdt_only"] if self.gbdt_only else [])
-        return self._spawn(ds, cmd, f"eval_{ds}.log")
+        return self._spawn(ds, self._eval_cmd(ds, self.run_ids), f"eval_{ds}.log")
 
     def _reap_unit(self, pr, requeue, retries):
         rc = pr.p.poll()
@@ -269,7 +277,8 @@ class Refit:
                 if not self.done(*u):
                     cpu_run = self._launch_unit(*u)
             if eval_run is None:
-                ready = [ds for ds in self.datasets if not self.evaluated(ds) and retries[("eval", ds)] <= self.max_retry
+                ready = [ds for ds in self.datasets if not self.split and not self.evaluated(ds)
+                         and retries[("eval", ds)] <= self.max_retry
                          and self.ds_complete(ds)]
                 if ready:
                     eval_run = self._launch_eval(ready[0])
@@ -277,7 +286,7 @@ class Refit:
             self.running_desc = ([f"{u[0]} {u[1]} run_{u[2]}" for u in (p.key for p in dl_run.values())] +
                                  ([f"{cpu_run.key[0]} {cpu_run.key[1]} run_{cpu_run.key[2]}"] if cpu_run else []) +
                                  ([f"eval {eval_run.key}"] if eval_run else []))
-            eval_wait = any(not self.evaluated(ds) and retries[("eval", ds)] <= self.max_retry and self.ds_complete(ds)
+            eval_wait = not self.split and any(not self.evaluated(ds) and retries[("eval", ds)] <= self.max_retry and self.ds_complete(ds)
                             for ds in self.datasets)
             finished = not dl_run and not dl_q and cpu_run is None and not cpu_q and eval_run is None and not eval_wait
             if time.time() - last_status >= self.status_every or finished:
@@ -420,7 +429,7 @@ class Refit:
     # ---------- kết thúc phần của tài khoản ----------
     def missing(self):
         return ([f"{m} {ds} run_{r}" for m, ds, r in self.units if not self.done(m, ds, r)] +
-                [f"đánh giá {ds}" for ds in self.datasets if not self.evaluated(ds)])
+                [f"đánh giá {ds}" for ds in self.datasets if not self.split and not self.evaluated(ds)])
 
     def _remote_status(self, account):
         """Đọc status/refit_{x}.json trên nhánh của tài khoản kia (chỉ tải các commit sau rl_v5)."""
@@ -506,6 +515,17 @@ class Refit:
         print(f"Đã push {self.results_branch}.")
 
     def _summary_all(self):
+        # dataset đủ 10 run sau khi gộp (ví dụ GÉANT chia cho 2 tài khoản) nhưng chưa có đánh giá đủ 10 run -> đánh giá ngay
+        full = list(range(10))
+        for ds in ["sdn", "geant", "abilene"]:
+            if self.evaluated(ds, full) or not all(self.done(m, ds, r) for m in self.models for r in full):
+                continue
+            print(f"Đánh giá {ds.upper()} trên đủ 10 run", flush=True)
+            r = subprocess.run(self._eval_cmd(ds, "0-9"), cwd=self.wd, capture_output=True, text=True, encoding="utf-8",
+                               errors="replace", env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONWARNINGS": "ignore"})
+            if r.returncode or not self.evaluated(ds, full):
+                print((r.stdout + r.stderr)[-3000:])
+                raise RuntimeError(f"eval_refit.py {ds} lỗi")
         r = subprocess.run([self.py, "rl_gate/eval_refit.py", "--summary_all", "--out", self.eval_dir], cwd=self.wd,
                            capture_output=True, text=True, encoding="utf-8", errors="replace",
                            env={**os.environ, "PYTHONIOENCODING": "utf-8"})
@@ -515,9 +535,11 @@ class Refit:
 
     def _commit_summary_all(self):
         g = self.git
-        g("add", "--", f"{self.eval_dir}/summary_all.md", cwd=self.wd, quiet=True)
+        files = [f"{self.eval_dir}/summary_all.md"] + [f for ds in ["sdn", "geant", "abilene"] for f in self.eval_files(ds)
+                                                       if os.path.exists(os.path.join(self.wd, f))]
+        g("add", "--", *files, cwd=self.wd, quiet=True)
         if g("diff", "--cached", "--quiet", cwd=self.wd, check=False, quiet=True).returncode:
-            g("commit", "-q", "-m", f"[refit {self.account}] tổng hợp 3 dataset: {self.eval_dir}/summary_all.md",
+            g("commit", "-q", "-m", f"[refit {self.account}] tổng hợp: {self.eval_dir}/summary_all.md",
               cwd=self.wd, quiet=True)
 
     def summary(self):
