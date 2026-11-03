@@ -8,14 +8,14 @@
  "quick_check": false,
  "state": "running",
  "started_utc": "2026-11-03 03:04:04",
- "updated_utc": "2026-11-03 03:23:51",
- "session_hours": 0.33,
- "n_done": 6,
+ "updated_utc": "2026-11-03 03:25:51",
+ "session_hours": 0.36,
+ "n_done": 7,
  "n_total": 12,
  "running": [
   "stwaveformer geant run_7",
   "stwaveformer geant run_6",
-  "xgboost geant run_7"
+  "lightgbm_res geant run_7"
  ],
  "done_units": [
   "xgboost geant run_4",
@@ -23,10 +23,11 @@
   "xgboost geant run_5",
   "lightgbm_res geant run_5",
   "xgboost geant run_6",
-  "lightgbm_res geant run_6"
+  "lightgbm_res geant run_6",
+  "xgboost geant run_7"
  ],
  "evaluated": [],
  "failed": [],
- "commits": 6,
+ "commits": 7,
  "push_blocked": null
 }
