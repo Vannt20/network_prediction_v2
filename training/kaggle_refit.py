@@ -6,8 +6,11 @@
 - GPU: mỗi run ST-WaveFormer là một tiến trình, 1 run / GPU, GPU rảnh nhận run kế tiếp (run dài nhất theo E* × s/epoch trước để
   cân tải 2 GPU), giãn cách 60 giây giữa hai lần khởi tạo. CPU, song song: XGBoost rồi LightGBM-Res.
 - Dataset đủ 3 nhánh × mọi run -> rl_gate/eval_refit.py -> results/refit/{ds}_summary.md, {ds}_runs.json.
-- Tài khoản xong sau giữ khóa rl_v5_final_lock, gộp nhánh của tài khoản kia vào rl_v5_results (merge --no-ff)
-  và tạo results/refit/summary_all.md.
+- SOLO tạo summary_all.md ngay trên nhánh của mình. Với A/B: tài khoản xong sau giữ khóa rl_v5_final_lock,
+  gộp nhánh của tài khoản kia vào rl_v5_results (merge --no-ff) và tạo results/refit/summary_all.md.
+- gbdt_only=True: chỉ refit XGBoost và LightGBM-Res (CPU, không cần GPU), ST-WaveFormer giữ dự báo gốc của v3;
+  mọi nhánh git / file trạng thái / thư mục kết quả có hậu tố riêng (rl_v5_a_gbdt, status/refit_a_gbdt.json,
+  results/refit/gbdt_only/) nên không lẫn với đợt refit đủ 3 nhánh.
 - Output chỉ là một bảng trạng thái vẽ lại mỗi 60 giây; log của từng tiến trình con ở
   {log_dir}/{model}_{ds}_run{r}.log, mở bằng mode "w" (ghi đè khi chạy lại).
 
@@ -41,8 +44,8 @@ SEC_PER_EPOCH = {"sdn": 37, "geant": 77, "abilene": 83}
 EPOCH_RE = re.compile(r"Epoch (\d+)/(\d+) \|.*\| ([\d.]+) s/epoch \| VRAM ([\d.]+) GB")
 
 
-def branch_of(account):
-    return f"rl_v5_{account.lower()}"
+def branch_of(account, suffix=""):
+    return f"rl_v5_{account.lower()}{suffix}"
 
 
 def _now():
@@ -91,16 +94,21 @@ class _Proc:
 
 class Refit:
     def __init__(self, account, git, workdir, run_ids="0-9", quick_check=False, status_every=60, dl_gap_s=60,
-                 max_retry=2, eval_workers=4, log_dir="/kaggle/working/logs_refit"):
+                 max_retry=2, eval_workers=4, log_dir="/kaggle/working/logs_refit", gbdt_only=False):
         assert account in PLAN, f"ACCOUNT phải là một trong {list(PLAN)}"
         self.account, self.git, self.wd = account, git, workdir
         self.quick = quick_check
         self.datasets = ["sdn"] if quick_check else PLAN[account]
         self.ids = [0] if quick_check else _parse_ids(run_ids)
         self.run_ids = "0" if quick_check else run_ids
-        self.branch = SMOKE_BRANCH if quick_check else branch_of(account)
+        self.gbdt_only = gbdt_only
+        self.models = GBDT if gbdt_only else MODELS
+        self.sfx = "_gbdt" if gbdt_only else ""          # hậu tố nhánh / trạng thái / kết quả của chế độ chỉ GBDT
+        self.branch = SMOKE_BRANCH + self.sfx if quick_check else branch_of(account, self.sfx)
         self.others = [] if quick_check or account == "SOLO" else [a for a in ("A", "B") if a != account]
-        self.status_file = f"status/refit_{account.lower() if not quick_check else 'smoke'}.json"
+        self.status_file = f"status/refit_{account.lower() if not quick_check else 'smoke'}{self.sfx}.json"
+        self.eval_dir = "results/refit/gbdt_only" if gbdt_only else "results/refit"
+        self.lock_branch, self.results_branch = LOCK_BRANCH + self.sfx, RESULTS_BRANCH + self.sfx
         self.status_every, self.dl_gap_s, self.max_retry = status_every, dl_gap_s, max_retry
         self.eval_workers, self.log_dir = eval_workers, log_dir
         os.makedirs(log_dir, exist_ok=True)
@@ -112,8 +120,9 @@ class Refit:
             self.gpus = []
         self.slots = self.gpus or [None]              # không có GPU (kiểm tra nhanh trên CPU): 1 làn DL trên CPU
 
-        self.units = [(m, ds, r) for ds in self.datasets for r in self.ids for m in MODELS]
-        self.e_star = {(ds, r): n_rounds("stwaveformer", ds, r)[0] for ds in self.datasets for r in self.ids}
+        self.units = [(m, ds, r) for ds in self.datasets for r in self.ids for m in self.models]
+        self.e_star = ({} if gbdt_only else
+                       {(ds, r): n_rounds("stwaveformer", ds, r)[0] for ds in self.datasets for r in self.ids})
         self.events = collections.deque(maxlen=10)
         self.git_lock = threading.Lock()
         self.commit_q = queue.Queue()
@@ -148,7 +157,7 @@ class Refit:
             return json.load(f)
 
     def eval_files(self, ds):
-        return [f"results/refit/{ds}_summary.md", f"results/refit/{ds}_runs.json"]
+        return [f"{self.eval_dir}/{ds}_summary.md", f"{self.eval_dir}/{ds}_runs.json"]
 
     def evaluated(self, ds):
         try:
@@ -159,7 +168,7 @@ class Refit:
             return False
 
     def ds_complete(self, ds):
-        return all(self.done(m, ds, r) for m in MODELS for r in self.ids)
+        return all(self.done(m, ds, r) for m in self.models for r in self.ids)
 
     # ---------- tiến trình con ----------
     def _spawn(self, key, cmd, log_name, gpu=None, one_thread=False):
@@ -182,7 +191,7 @@ class Refit:
 
     def _launch_eval(self, ds):
         cmd = [self.py, "rl_gate/eval_refit.py", "--datasets", ds, "--runs", self.run_ids,
-               "--workers", str(self.eval_workers)] + (["--allow_partial"] if self.quick else [])
+               "--workers", str(self.eval_workers), "--out", self.eval_dir] + (["--allow_partial"] if self.quick else []) +               (["--gbdt_only"] if self.gbdt_only else [])
         return self._spawn(ds, cmd, f"eval_{ds}.log")
 
     def _reap_unit(self, pr, requeue, retries):
@@ -330,7 +339,8 @@ class Refit:
         lines.append(f"CPU   {cpu_run.key[0]} {cpu_run.key[1].upper()} run_{cpu_run.key[2]} ({_hm(time.time() - cpu_run.t0)})"
                      if cpu_run else "CPU   rảnh")
         lines.append(f"EVAL  {eval_run.key.upper()} ({_hm(time.time() - eval_run.t0)})" if eval_run else "EVAL  rảnh")
-        lines.append(f"Xong  {n_ok}/{n} đơn vị (ST-WaveFormer {n_dl}/{len(self.datasets) * len(self.ids)}) | đánh giá "
+        dl_txt = "chỉ GBDT" if self.gbdt_only else f"ST-WaveFormer {n_dl}/{len(self.datasets) * len(self.ids)}"
+        lines.append(f"Xong  {n_ok}/{n} đơn vị ({dl_txt}) | đánh giá "
                      f"{sum(self.evaluated(d) for d in self.datasets)}/{len(self.datasets)} dataset | commit {self.n_commits}, "
                      f"đã push {self.n_pushed} | lỗi {len(self.failed)} | push: {'DỪNG - ' + self.push_blocked if self.push_blocked else 'OK'}")
         events = list(self.events)                     # luồng commit có thể đang ghi thêm sự kiện
@@ -414,14 +424,14 @@ class Refit:
 
     def _remote_status(self, account):
         """Đọc status/refit_{x}.json trên nhánh của tài khoản kia (chỉ tải các commit sau rl_v5)."""
-        br = branch_of(account)
+        br = branch_of(account, self.sfx)
         if not self._remote_has(br):
             return None
         r = self.git("fetch", "-q", f"--shallow-exclude={BASE_BRANCH}", "origin", f"+refs/heads/{br}:refs/remotes/origin/{br}",
                      cwd=self.wd, auth=True, check=False, quiet=True)
         if r.returncode:
             return None
-        r = self.git("show", f"origin/{br}:status/refit_{account.lower()}.json", cwd=self.wd, check=False, quiet=True)
+        r = self.git("show", f"origin/{br}:status/refit_{account.lower()}{self.sfx}.json", cwd=self.wd, check=False, quiet=True)
         try:
             return json.loads(r.stdout) if r.returncode == 0 else None
         except ValueError:
@@ -438,62 +448,82 @@ class Refit:
         print(f"Tài khoản {self.account}: đủ kết quả {','.join(self.datasets)} run {self.run_ids}, đã push lên {self.branch}.")
         if self.quick:
             return False
+        if self.account == "SOLO":                     # không có tài khoản khác: tổng hợp ngay trên nhánh của mình
+            self.do_final = True
+            return True
         waiting = [o for o in self.others if (self._remote_status(o) or {}).get("state") != "done"]
         if waiting:
             print(f"Tài khoản {', '.join(waiting)} chưa xong -> dừng tại đây; tài khoản xong sau sẽ làm bước tổng hợp.")
             return False
         with self.git_lock:
-            if self._remote_has(LOCK_BRANCH):
-                print(f"Nhánh {LOCK_BRANCH} đã có (tài khoản khác đang/đã tổng hợp) -> bỏ qua bước tổng hợp.")
+            if self._remote_has(self.lock_branch):
+                print(f"Nhánh {self.lock_branch} đã có (tài khoản khác đang/đã tổng hợp) -> bỏ qua bước tổng hợp.")
                 return False
             # khóa = một commit rỗng không có cha; nếu nhánh vừa được tạo bởi tài khoản kia thì push bị từ chối
             sha = self.git("commit-tree", EMPTY_TREE, "-m", f"khóa tổng hợp refit: tài khoản {self.account} {_utc()}",
                            cwd=self.wd, quiet=True).stdout.strip()
-            if self.git("push", "-q", "origin", f"{sha}:refs/heads/{LOCK_BRANCH}", cwd=self.wd, auth=True,
+            if self.git("push", "-q", "origin", f"{sha}:refs/heads/{self.lock_branch}", cwd=self.wd, auth=True,
                         check=False, quiet=True).returncode:
-                print(f"Không tạo được {LOCK_BRANCH} (tài khoản khác vừa giữ khóa) -> bỏ qua bước tổng hợp.")
+                print(f"Không tạo được {self.lock_branch} (tài khoản khác vừa giữ khóa) -> bỏ qua bước tổng hợp.")
                 return False
         self.do_final = True
-        print(f"Đã giữ khóa {LOCK_BRANCH}: tài khoản {self.account} làm bước tổng hợp.")
+        print(f"Đã giữ khóa {self.lock_branch}: tài khoản {self.account} làm bước tổng hợp.")
         return True
 
     # ---------- tổng hợp cuối: rl_v5_results = rl_v5 + merge --no-ff các nhánh tài khoản ----------
     def final(self):
         g = self.git
+        if self.account == "SOLO":
+            self._summary_all()
+            with self.git_lock:
+                self._commit_summary_all()
+                if not self._push():
+                    raise RuntimeError(f"Push {self.branch} lỗi: {self.push_blocked or 'lỗi mạng'}")
+            print(f"Đã push {self.eval_dir}/summary_all.md lên {self.branch}.")
+            return
         with self.git_lock:
             g("fetch", "-q", "--depth", "1", "origin", f"+refs/heads/{BASE_BRANCH}:refs/remotes/origin/{BASE_BRANCH}",
               cwd=self.wd, auth=True, quiet=True)
             own = g("rev-parse", "HEAD", cwd=self.wd, quiet=True).stdout.strip()
-            sources = [(self.branch, own)] + [(branch_of(o), f"origin/{branch_of(o)}") for o in self.others]
+            sources = [(self.branch, own)] + [(branch_of(o, self.sfx), f"origin/{branch_of(o, self.sfx)}") for o in self.others]
             for o in self.others:
-                assert (self._remote_status(o) or {}).get("state") == "done", f"Nhánh {branch_of(o)} chưa hoàn tất"
-            g("checkout", "-q", "-B", RESULTS_BRANCH, f"origin/{BASE_BRANCH}", cwd=self.wd, quiet=True)
+                assert (self._remote_status(o) or {}).get("state") == "done", f"Nhánh {branch_of(o, self.sfx)} chưa hoàn tất"
+            g("checkout", "-q", "-B", self.results_branch, f"origin/{BASE_BRANCH}", cwd=self.wd, quiet=True)
             for name, ref in sources:
                 # clone nông: lịch sử chung bị cắt nên cần --allow-unrelated-histories; đường dẫn của các tài khoản
                 # tách biệt, file chung giống hệt nhau nên không có xung đột
-                r = g("merge", "--no-ff", "--allow-unrelated-histories", "-q", "-m", f"Gộp {name} vào {RESULTS_BRANCH}",
+                r = g("merge", "--no-ff", "--allow-unrelated-histories", "-q", "-m", f"Gộp {name} vào {self.results_branch}",
                       ref, cwd=self.wd, check=False, quiet=True)
                 if r.returncode:
                     g("merge", "--abort", cwd=self.wd, check=False, quiet=True)
                     raise RuntimeError(f"Gộp {name} bị xung đột -> đã abort, không push. Kiểm tra trên máy.")
-        r = subprocess.run([self.py, "rl_gate/eval_refit.py", "--summary_all"], cwd=self.wd, capture_output=True,
-                           text=True, encoding="utf-8", errors="replace", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+        self._summary_all()
+        with self.git_lock:
+            self._commit_summary_all()
+            self.push_blocked = None
+            if not self._push(self.results_branch):
+                raise RuntimeError(f"Push {self.results_branch} lỗi: {self.push_blocked or 'lỗi mạng'}")
+        print(f"Đã push {self.results_branch}.")
+
+    def _summary_all(self):
+        r = subprocess.run([self.py, "rl_gate/eval_refit.py", "--summary_all", "--out", self.eval_dir], cwd=self.wd,
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           env={**os.environ, "PYTHONIOENCODING": "utf-8"})
         if r.returncode:
             print((r.stdout + r.stderr)[-3000:])
             raise RuntimeError("eval_refit.py --summary_all lỗi")
-        with self.git_lock:
-            g("add", "--", "results/refit/summary_all.md", cwd=self.wd, quiet=True)
-            if g("diff", "--cached", "--quiet", cwd=self.wd, check=False, quiet=True).returncode:
-                g("commit", "-q", "-m", "[refit] tổng hợp 3 dataset: results/refit/summary_all.md", cwd=self.wd, quiet=True)
-            self.push_blocked = None
-            if not self._push(RESULTS_BRANCH):
-                raise RuntimeError(f"Push {RESULTS_BRANCH} lỗi: {self.push_blocked or 'lỗi mạng'}")
-        print(f"Đã push {RESULTS_BRANCH}.")
+
+    def _commit_summary_all(self):
+        g = self.git
+        g("add", "--", f"{self.eval_dir}/summary_all.md", cwd=self.wd, quiet=True)
+        if g("diff", "--cached", "--quiet", cwd=self.wd, check=False, quiet=True).returncode:
+            g("commit", "-q", "-m", f"[refit {self.account}] tổng hợp 3 dataset: {self.eval_dir}/summary_all.md",
+              cwd=self.wd, quiet=True)
 
     def summary(self):
         """Bảng tóm tắt cuối (thay cho bảng trạng thái)."""
         _clear()
-        f = os.path.join(self.wd, "results/refit/summary_all.md")
+        f = os.path.join(self.wd, f"{self.eval_dir}/summary_all.md")
         if self.do_final and os.path.exists(f):
             print(open(f, encoding="utf-8").read())
             return

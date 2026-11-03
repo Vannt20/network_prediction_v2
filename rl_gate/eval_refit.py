@@ -15,6 +15,7 @@ dùng để đối chiếu với results/rl_gate.
 
 Ví dụ:  python rl_gate/eval_refit.py --datasets geant
         python rl_gate/eval_refit.py --summary_all
+        python rl_gate/eval_refit.py --gbdt_only --out results/refit/gbdt_only   (chỉ refit 2 nhánh GBDT)
         python rl_gate/eval_refit.py --datasets sdn --runs 0 --allow_partial --out <thư mục tạm>   (kiểm tra nhanh)
 """
 import argparse
@@ -32,6 +33,7 @@ from run_rl_gate import HEDGE_GRID, mae, mse
 
 DATASETS = ['sdn', 'geant', 'abilene']
 BRANCHES = ['stwaveformer', 'xgboost', 'lightgbm_res']
+GBDT = ['xgboost', 'lightgbm_res']
 V3_THESIS = {'sdn': 4.019, 'geant': 0.723, 'abilene': 1.844}     # Test MSE ×10⁻³ của v3 trong luận văn
 PRIMARY = 'rl_gate_refit_safe'
 VARIANTS = (['v3'] + [f'branch_refit[{b}]' for b in BRANCHES] +
@@ -59,10 +61,18 @@ def parse_runs(s):
     return out
 
 
-def load_refit(root, ds, r, shape):
-    """P_refit [K,T,N] float64 theo thứ tự BRANCHES, kèm meta.json của từng nhánh."""
+def load_refit(root, ds, r, P_v3, refit=BRANCHES):
+    """
+    P_refit [K,T,N] float64 theo thứ tự BRANCHES, kèm meta.json của từng nhánh refit.
+    Nhánh không nằm trong `refit` (chế độ --gbdt_only: ST-WaveFormer) giữ nguyên dự báo gốc của cache/v3.
+    """
+    shape = P_v3.shape[1:]
     P, metas = [], {}
-    for b in BRANCHES:
+    for k, b in enumerate(BRANCHES):
+        if b not in refit:
+            P.append(P_v3[k])
+            metas[b] = {'source': 'cache/v3 (không refit)'}
+            continue
         d = os.path.join(root, f'{b}_data_{ds}', f'run_{r}')
         with open(os.path.join(d, 'meta.json'), encoding='utf-8') as f:
             metas[b] = json.load(f)
@@ -73,9 +83,9 @@ def load_refit(root, ds, r, shape):
     return np.stack(P), metas
 
 
-def available_runs(root, ds, runs):
+def available_runs(root, ds, runs, refit=BRANCHES):
     return [r for r in runs if all(os.path.exists(os.path.join(root, f'{b}_data_{ds}', f'run_{r}', 'meta.json'))
-                                   for b in BRANCHES)]
+                                   for b in refit)]
 
 
 def hedge_val_mse(args):
@@ -91,15 +101,13 @@ def select_hedge(repo, ds, runs, pool):
 
 
 def eval_run(args):
-    repo, root, ds, r, hedge_cfg, margin = args
+    repo, root, ds, r, hedge_cfg, margin, refit = args
     d = load_run(repo, ds, r)
     with open(os.path.join(repo, 'logs', LOG_DIRS[ds], f'run_{r}', 'stacking.json')) as f:
         assert json.load(f)['branch_names'] == BRANCHES, 'Thứ tự nhánh của stacking.json khác BRANCHES'
     Pv, yv, Pt, yt, W = d['val_P'], d['val_y'], d['test_P'], d['test_y'], d['W']
-    Pr, metas = load_refit(root, ds, r, yt.shape)
+    Pr, metas = load_refit(root, ds, r, Pt, refit)
     quick = any(m.get('quick_check') for m in metas.values())
-    if Pr.shape != Pt.shape:
-        raise RuntimeError(f'{ds} run_{r}: P_refit {Pr.shape} khác cache {Pt.shape}')
     prior = np.log(W + 1e-6)
 
     # RL-Gate: học trên Val với dự báo gốc, đúng như run_rl_gate.run_one
@@ -150,14 +158,16 @@ def _fmt_p(p):
     return 'nan' if not np.isfinite(p) else f'{p:.1e}'
 
 
-def summarize_dataset(ds, rows, hedge_cfg):
+def summarize_dataset(ds, rows, hedge_cfg, refit=BRANCHES):
     from scipy.stats import ttest_rel
     R = sorted(rows, key=lambda x: x['run'])
     n = len(R)
     v3 = np.array([x['v3_mse'] for x in R])
     lines = [f'### {ds.upper()} ({n} run: {", ".join(str(x["run"]) for x in R)})', '',
              f'Hedge (η, decay) chọn trên Val: {tuple(hedge_cfg)}. '
-             f'Phương án chính, chốt trước khi xem Test: `{PRIMARY}`.', '',
+             f'Phương án chính, chốt trước khi xem Test: `{PRIMARY}`. Nhánh refit trên Train+Val: {", ".join(refit)}'
+             + ('' if list(refit) == BRANCHES else
+                f' (ST-WaveFormer giữ dự báo gốc của v3 -> v3_refit trùng v3_refit_gbdt_only)') + '.', '',
              '| Biến thể | Mô tả | Test MSE ×10⁻³ (TB ± std) | so với v3 | run tốt hơn v3 | p (t ghép cặp, vs v3) | MAE ×10⁻³ | MSE bỏ 0,1% đỉnh v3 |',
              '|---|---|---|---|---|---|---|---|']
     stats = {}
@@ -167,7 +177,12 @@ def summarize_dataset(ds, rows, hedge_cfg):
         stats[name] = {'mean': float(v.mean()), 'std': float(v.std()), 'rel': float(v.mean() / v3.mean() - 1),
                        'n_better': int((v < v3).sum()), 'p': p}
         label = f'**{name}**' if name == PRIMARY else (f'_{name}_' if name in REFERENCE else name)
-        lines.append(f'| {label} | {DESCRIPTION[name]} | {v.mean():.4f} ± {v.std():.4f} | {100 * stats[name]["rel"]:+.2f}% | '
+        desc = DESCRIPTION[name]
+        if name.startswith('branch_refit[') and name[13:-1] not in refit:
+            desc = f'Không refit: nhánh {name[13:-1]} gốc của v3'
+        elif name == 'v3_refit' and list(refit) != BRANCHES:
+            desc = 'Trọng số stacking v3 × nhánh refit (chỉ GBDT, ST-WaveFormer gốc)'
+        lines.append(f'| {label} | {desc} | {v.mean():.4f} ± {v.std():.4f} | {100 * stats[name]["rel"]:+.2f}% | '
                      f'{stats[name]["n_better"]}/{n} | {_fmt_p(p)} | '
                      f'{np.mean([x[f"{name}_mae"] for x in R]):.3f} | {np.mean([x[f"{name}_mse_trim"] for x in R]):.4f} |')
     lines.append('')
@@ -200,7 +215,7 @@ def write_summary_all(out_dir):
             continue
         with open(f, encoding='utf-8') as fh:
             J = json.load(fh)
-        table, stats, flags = summarize_dataset(ds, J['rows'], J['hedge_cfg'])
+        table, stats, flags = summarize_dataset(ds, J['rows'], J['hedge_cfg'], J.get('refit_branches', BRANCHES))
         parts += [table, '']
         verdict.append(f'| {ds.upper()} | {stats["v3"]["mean"]:.4f} | {stats[PRIMARY]["mean"]:.4f} | '
                        f'{100 * stats[PRIMARY]["rel"]:+.2f}% | {stats[PRIMARY]["n_better"]}/{len(J["rows"])} | '
@@ -224,6 +239,8 @@ def main():
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--allow_partial', action='store_true', help='đánh giá cả khi chưa đủ mọi run (kiểm tra nhanh)')
     ap.add_argument('--summary_all', action='store_true', help='chỉ gộp {ds}_runs.json đã có thành summary_all.md')
+    ap.add_argument('--gbdt_only', action='store_true',
+                    help='chỉ 2 nhánh GBDT được refit, ST-WaveFormer giữ dự báo gốc (cache/v3)')
     ap.add_argument('--out', default=os.path.join(root, 'results', 'refit'))
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
@@ -232,9 +249,10 @@ def main():
         return
 
     runs = parse_runs(args.runs)
+    refit = GBDT if args.gbdt_only else BRANCHES
     with Pool(args.workers) as pool:
         for ds in args.datasets.split(','):
-            have = available_runs(args.refit_root, ds, runs)
+            have = available_runs(args.refit_root, ds, runs, refit)
             if have != runs and not args.allow_partial:
                 raise SystemExit(f'{ds}: thiếu kết quả refit của run {sorted(set(runs) - set(have))}')
             if not have:
@@ -242,11 +260,12 @@ def main():
                 continue
             # (eta, decay) của Hedge chọn trên Val của đủ 10 run như run_rl_gate.py, không phụ thuộc số run đã refit
             hedge_cfg = select_hedge(args.repo, ds, list(range(10)), pool)
-            rows = sorted(pool.map(eval_run, [(args.repo, args.refit_root, ds, r, hedge_cfg, args.margin) for r in have]),
-                          key=lambda x: x['run'])
-            table, stats, flags = summarize_dataset(ds, rows, hedge_cfg)
+            rows = sorted(pool.map(eval_run, [(args.repo, args.refit_root, ds, r, hedge_cfg, args.margin, refit)
+                                              for r in have]), key=lambda x: x['run'])
+            table, stats, flags = summarize_dataset(ds, rows, hedge_cfg, refit)
             with open(os.path.join(args.out, f'{ds}_runs.json'), 'w', encoding='utf-8') as f:
                 json.dump({'dataset': ds, 'primary': PRIMARY, 'hedge_cfg': list(hedge_cfg), 'margin': args.margin,
+                           'refit_branches': refit,
                            'stats': stats, **flags, 'rows': rows}, f, indent=1)
             with open(os.path.join(args.out, f'{ds}_summary.md'), 'w', encoding='utf-8') as f:
                 f.write(table + '\n')
