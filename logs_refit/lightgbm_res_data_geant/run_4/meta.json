@@ -1,0 +1,27 @@
+{
+ "model": "lightgbm_res",
+ "dataset": "geant",
+ "run": 4,
+ "seed": 46,
+ "quick_check": false,
+ "shape": [
+  2131,
+  529
+ ],
+ "n_train_samples": 4544110,
+ "rounds_source": "logs/lightgbm_res_data_geant_shared/run_4/model.bin",
+ "test_mse": 0.0007754320654227829,
+ "test_mse_orig_branch": 0.0007526455766673004,
+ "y_test_max_abs_diff": 0.0,
+ "time_s": 347.0,
+ "finished_utc": "2026-11-03 03:12:18",
+ "versions": {
+  "numpy": "2.0.2",
+  "torch": "2.10.0+cu128",
+  "xgboost": "3.2.0",
+  "lightgbm": "4.6.0",
+  "sklearn": "1.6.1"
+ },
+ "n_trees": 580,
+ "fit_time_s": 312.4
+}
