@@ -1,0 +1,27 @@
+{
+ "model": "lightgbm_res",
+ "dataset": "abilene",
+ "run": 5,
+ "seed": 47,
+ "quick_check": false,
+ "shape": [
+  9539,
+  144
+ ],
+ "n_train_samples": 5503824,
+ "rounds_source": "logs/lightgbm_res_data_abilene_shared/run_5/model.bin",
+ "test_mse": 0.0018284463597632032,
+ "test_mse_orig_branch": 0.0018580490493920584,
+ "y_test_max_abs_diff": 0.0,
+ "time_s": 139.7,
+ "finished_utc": "2026-11-03 02:15:40",
+ "versions": {
+  "numpy": "2.4.6",
+  "torch": "2.15.0+cpu",
+  "xgboost": "3.2.0",
+  "lightgbm": "4.7.0",
+  "sklearn": "1.9.1"
+ },
+ "n_trees": 899,
+ "fit_time_s": 111.3
+}

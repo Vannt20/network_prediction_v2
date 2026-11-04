@@ -1,0 +1,27 @@
+{
+ "model": "xgboost",
+ "dataset": "sdn",
+ "run": 7,
+ "seed": 49,
+ "quick_check": false,
+ "shape": [
+  1193,
+  196
+ ],
+ "n_train_samples": 969024,
+ "rounds_source": "logs/xgboost_data_sdn_shared/run_7/model.bin",
+ "test_mse": 0.005311392882465889,
+ "test_mse_orig_branch": 0.005524100977849116,
+ "y_test_max_abs_diff": 0.0,
+ "time_s": 68.6,
+ "finished_utc": "2026-11-03 01:04:42",
+ "versions": {
+  "numpy": "2.4.6",
+  "torch": "2.15.0+cpu",
+  "xgboost": "3.2.0",
+  "lightgbm": "4.7.0",
+  "sklearn": "1.9.1"
+ },
+ "n_trees": 1000,
+ "fit_time_s": 63.1
+}

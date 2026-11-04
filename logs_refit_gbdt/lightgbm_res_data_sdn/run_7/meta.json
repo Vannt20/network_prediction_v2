@@ -1,0 +1,27 @@
+{
+ "model": "lightgbm_res",
+ "dataset": "sdn",
+ "run": 7,
+ "seed": 49,
+ "quick_check": false,
+ "shape": [
+  1193,
+  196
+ ],
+ "n_train_samples": 969024,
+ "rounds_source": "logs/lightgbm_res_data_sdn_shared/run_7/model.bin",
+ "test_mse": 0.004693679297706997,
+ "test_mse_orig_branch": 0.004741527213254863,
+ "y_test_max_abs_diff": 0.0,
+ "time_s": 32.2,
+ "finished_utc": "2026-11-03 01:05:17",
+ "versions": {
+  "numpy": "2.4.6",
+  "torch": "2.15.0+cpu",
+  "xgboost": "3.2.0",
+  "lightgbm": "4.7.0",
+  "sklearn": "1.9.1"
+ },
+ "n_trees": 1000,
+ "fit_time_s": 24.7
+}
