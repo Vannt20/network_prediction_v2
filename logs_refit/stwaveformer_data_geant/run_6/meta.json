@@ -1,0 +1,31 @@
+{
+ "model": "stwaveformer",
+ "dataset": "geant",
+ "run": 6,
+ "seed": 48,
+ "quick_check": false,
+ "shape": [
+  2131,
+  529
+ ],
+ "n_train_samples": 8590,
+ "rounds_source": "logs/stwaveformer_data_geant_seq_24/run_6/train_metrics.csv",
+ "test_mse": 0.0008530237890571192,
+ "test_mse_orig_branch": 0.0007380628526446603,
+ "y_test_max_abs_diff": 0.0,
+ "time_s": 14842.4,
+ "finished_utc": "2026-11-03 07:12:28",
+ "versions": {
+  "numpy": "2.0.2",
+  "torch": "2.10.0+cu128",
+  "xgboost": "3.2.0",
+  "lightgbm": "4.6.0",
+  "sklearn": "1.6.1"
+ },
+ "n_epochs": 198,
+ "e_star": 198,
+ "T_max": 200,
+ "fit_time_s": 14826.6,
+ "s_epoch_mean": 74.85,
+ "device": "cuda"
+}

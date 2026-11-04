@@ -1,0 +1,34 @@
+{
+ "account": "A",
+ "branch": "rl_v5_a_geant",
+ "datasets": [
+  "geant"
+ ],
+ "run_ids": "4-7",
+ "quick_check": false,
+ "state": "done",
+ "started_utc": "2026-11-03 23:05:24",
+ "updated_utc": "2026-11-04 02:27:52",
+ "session_hours": 3.37,
+ "n_done": 12,
+ "n_total": 12,
+ "running": [],
+ "done_units": [
+  "stwaveformer geant run_4",
+  "xgboost geant run_4",
+  "lightgbm_res geant run_4",
+  "stwaveformer geant run_5",
+  "xgboost geant run_5",
+  "lightgbm_res geant run_5",
+  "stwaveformer geant run_6",
+  "xgboost geant run_6",
+  "lightgbm_res geant run_6",
+  "stwaveformer geant run_7",
+  "xgboost geant run_7",
+  "lightgbm_res geant run_7"
+ ],
+ "evaluated": [],
+ "failed": [],
+ "commits": 3,
+ "push_blocked": null
+}
